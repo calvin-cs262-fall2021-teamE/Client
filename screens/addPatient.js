@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Alert, Modal, Text, Pressable, View, KeyboardAvoidingView, TextInput } from "react-native";
 import {modalStyles} from "../styles/modalStyles"
 
-export default addPatient = () => {
+export default function addPatient () {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={modalStyles.centeredView}>
