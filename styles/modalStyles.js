@@ -5,12 +5,12 @@ export const modalStyles = StyleSheet.create({
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
-      marginTop: 22
+      marginTop: 5
     },
     modalView: {
-      height: 750,
+      height: 775,
       width: 375,
-      margin: 20,
+      margin: 10,
       backgroundColor: "white",
       borderRadius: 10,
       padding: 35,
@@ -33,7 +33,7 @@ export const modalStyles = StyleSheet.create({
       height: 60,
       alignItems: "center",
       justifyContent: "center",
-      bottom: 40,
+      bottom: 35,
       right: 40,
       shadowColor: "#000",
       shadowOffset: {
@@ -69,34 +69,32 @@ export const modalStyles = StyleSheet.create({
     },
     modalText: {
       marginBottom: 15,
-      textAlign: "center"
+      textAlign: "left",
+      fontSize: 25,
+      fontWeight: 'bold',
+      right: 60,
+      bottom: 10,
     },
     input: {
-      fontSize: 30,
+      fontSize: 10,
       color: 'gray',
+      paddingVertical: 1,
+      paddingHorizontal: 5,
+      borderColor: 'gray',
+      backgroundColor: '#E8EAED',
+      borderRadius: 5,
+      borderWidth: 1,
+      width: 200,
+ 
     },  
-    fname: {
-      top: 20,
-      right: 105,
+    field: {
+      fontSize: 15,
+      lineHeight: 50,
+      textAlign: 'left',
+      right: 90,
     },
-    lname: {
-      top: -7,
-      right: 10,
-    },
-    dob: {
-      top: 10,
-      right: 97,
-    },
-    age: {
-      top: 10,
-      right: 97,
-    },
-    height: {
-      top: 10,
-      right: 97,
-    },
-    weight: {
-      top: 10,
-      right: 97,
-    },
+    fieldWrapper: {
+      position: 'absolute',
+      flexDirection: 'column',
+    }
   });

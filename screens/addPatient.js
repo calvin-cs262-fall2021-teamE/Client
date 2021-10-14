@@ -54,24 +54,6 @@ export default function App() {
 
         </View>
 
-        {/*Add a Patient*/}
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={styles.writeTaskWrapper}
-        >
-          <TextInput style={styles.input} placeholder={'...'} value={task}
-            onChangeText={text => setTask(text)}
-          />
-
-          <TouchableOpacity onPress={() => setModalVisible(true)}>
-            <View style={styles.addWrapper}>
-              <Text style={styles.addText}>+</Text>
-            </View>
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-
-
-
         {/*the patient form modal */}
         <View style={modalStyles.centeredView}>
           <Modal
@@ -87,12 +69,31 @@ export default function App() {
               <View style={modalStyles.modalView}>
                 <Text style={modalStyles.modalText}>Add a new patient</Text>
 
-              
-                  <TextInput style={modalStyles.input, modalStyles.fname} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} /> 
-                  <TextInput style={modalStyles.input, modalStyles.dob} placeholder={'Date of birth'} value={DOB} onChangeText={text => setDOB(text)} />
-                  <TextInput style={modalStyles.input, modalStyles.age} placeholder={'Age'} />
-                  <TextInput style={modalStyles.input, modalStyles.height} placeholder={'Height'} />
-                  <TextInput style={modalStyles.input, modalStyles.weight} placeholder={'Weight'} />
+          {/* Names of information fields */}
+            <View style={modalStyles.fieldStyle}>
+            <Text style={modalStyles.field}>Name:</Text> 
+            <Text style={modalStyles.field}>Date of Birth:</Text> 
+            <Text style={modalStyles.field}>Registration number:</Text> 
+            <Text style={modalStyles.field}>Sex:</Text> 
+            <Text style={modalStyles.field}>City (town/village):</Text> 
+            <Text style={modalStyles.field}>Region:</Text> 
+            <Text style={modalStyles.field}>Ethnicity:</Text> 
+            <Text style={modalStyles.field}>Language:</Text> 
+            </View>
+
+          {/* Fields where information is entered*/}
+            <KeyboardAvoidingView
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+              style={modalStyles.fieldWrapper} >
+              <TextInput style={[modalStyles.input, { top: 100, right: 15}]} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} /> 
+              <TextInput style={[modalStyles.input, { top: 120, left: 10}]} placeholder={'Date of birth'} value={DOB} onChangeText={text => setDOB(text)} />
+              <TextInput style={[modalStyles.input, { top: 140, left: 20}]} placeholder={'Registration number'} />
+              <TextInput style={[modalStyles.input, { top: 160, right: 10}]} placeholder={'Sex'} />
+              <TextInput style={[modalStyles.input, { top: 185, left: 40}]} placeholder={'City (town/village)'} />
+              <TextInput style={[modalStyles.input, { top: 205, right: 5}]} placeholder={'Region'} />
+              <TextInput style={[modalStyles.input, { top: 245, leftt: 25}]} placeholder={'Ethnicity'} />
+              <TextInput style={[modalStyles.input, { top: 255, left: 15}]} placeholder={'Language'} />
+             </KeyboardAvoidingView>
 
                 <Pressable
                   style={[modalStyles.buttonClose]}
@@ -109,6 +110,12 @@ export default function App() {
             </View>
           </Modal>
         </View>
+        <Pressable
+        style={[modalStyles.buttonAdd]}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={modalStyles.textStyle}>+</Text>
+      </Pressable>
       </View>
 
   );
