@@ -3,18 +3,20 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8EAED',
+    backgroundColor: '#F9F9F9',
   },
   tasksWrapper: {
-    paddingTop: 165,
-    paddingHorizontal: 20,
+    paddingTop: 75,
+    paddingHorizontal: 10,
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    bottom: 10,
   },
   items: {
-    marginTop: 30,
+    marginTop: 10,
+    borderColor: 'gray',
   },
   writeTaskWrapper: {
     position: 'absolute',
