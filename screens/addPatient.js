@@ -2,32 +2,42 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { Alert, KeyboardAvoidingView, StyleSheet, Text, View, TextInput, Modal, Pressable,
   Platform, TouchableOpacity, Keyboard} from 'react-native';
-import Task from './Task';
+import PatientEntry from '../patient/PatientEntry';
 import {modalStyles} from "../styles/modalStyles";
 import {styles} from "../styles/homework1Styles";
-import {Patient} from "../PatientClass";
 
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [task, setTask] = useState();
-  const [taskItems, setTaskItems] = useState([]);
+  const [patientList, setPatientList] = useState([]);
   const [name, setName] = useState();
   const [DOB, setDOB] = useState();
-  const [patientList, setPatientList] = useState();
+  const [registrationNumber, setRegistrationNumber] = useState();
+  const [sex, setSex] = useState();
+  const [city, setCity] = useState();
+  const [region, setRegion] = useState();
+  const [ethnicity, setEthnicity] = useState();
+  const [language, setLanguage] = useState();
 
-  const handleAddTask = () => {
+
+  const handleAddPatientEntry = () => {
     Keyboard.dismiss();
-    //let patient = Patient(name, DOB);        Need to create patient object here and replace name with this patient on the following line (but error :( 
-    setTaskItems([...taskItems, name]);
+    let patient = {name, DOB, sex, city, region, ethnicity, language}    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
+    setPatientList([...patientList, patient]);
     setName(null);    //resets the memory of the patient form for next entry
-    setTask(null);    //maybe this can be deleted
     setDOB(null);
+    setRegistrationNumber(null);
+    setSex(null);
+    setCity(null);
+    setRegion(null);
+    setEthnicity(null);
+    setLanguage(null);
   }
 
-  const completeTask = (index) => {
-    let itemsCopy = [...taskItems]
+  const completePatientEntry = (index) => {
+    
+    let itemsCopy = [...patientList]
     itemsCopy.splice(index, 1);
-    setTaskItems(itemsCopy);
+    setPatientList(itemsCopy);
   }
 
   return (
@@ -42,10 +52,10 @@ export default function App() {
           <View style={styles.items}>
             {/* Tasks will go here */}
             {
-              taskItems.map((item, index) => {
+              patientList.map((item, index) => {
                 return (
-                  <TouchableOpacity key={index} onPress={() => completeTask(index)}>
-                    <Task text={item} />
+                  <TouchableOpacity key={index} onPress={() => completePatientEntry(index)}>
+                    <PatientEntry text={item.name} />
                   </TouchableOpacity>
                 )
               })
@@ -87,19 +97,19 @@ export default function App() {
               style={modalStyles.fieldWrapper} >
               <TextInput style={[modalStyles.input, { top: 100, right: 15}]} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} /> 
               <TextInput style={[modalStyles.input, { top: 120, left: 10}]} placeholder={'Date of birth'} value={DOB} onChangeText={text => setDOB(text)} />
-              <TextInput style={[modalStyles.input, { top: 140, left: 20}]} placeholder={'Registration number'} />
-              <TextInput style={[modalStyles.input, { top: 160, right: 10}]} placeholder={'Sex'} />
-              <TextInput style={[modalStyles.input, { top: 185, left: 40}]} placeholder={'City (town/village)'} />
-              <TextInput style={[modalStyles.input, { top: 205, right: 5}]} placeholder={'Region'} />
-              <TextInput style={[modalStyles.input, { top: 245, leftt: 25}]} placeholder={'Ethnicity'} />
-              <TextInput style={[modalStyles.input, { top: 255, left: 15}]} placeholder={'Language'} />
+              <TextInput style={[modalStyles.input, { top: 140, left: 20}]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
+              <TextInput style={[modalStyles.input, { top: 160, right: 10}]} placeholder={'Sex'} value={sex} onChangeText={text => setSex(text)}/>
+              <TextInput style={[modalStyles.input, { top: 185, left: 40}]} placeholder={'City (town/village)'} value={city} onChangeText={text => setCity(text)}/>
+              <TextInput style={[modalStyles.input, { top: 205, right: 5}]} placeholder={'Region'} value={region} onChangeText={text => setRegion(text)}/>
+              <TextInput style={[modalStyles.input, { top: 245, leftt: 25}]} placeholder={'Ethnicity'} value={ethnicity} onChangeText={text => setEthnicity(text)}/>
+              <TextInput style={[modalStyles.input, { top: 255, left: 15}]} placeholder={'Language'} value={language} onChangeText={text => setLanguage(text)}/>
              </KeyboardAvoidingView>
 
                 <Pressable
                   style={[modalStyles.buttonClose]}
                   onPress={() => { 
                     setModalVisible(!modalVisible)
-                    handleAddTask()
+                    handleAddPatientEntry()
                     {/* let patient = Patient(name, DOB) */}
                     
                   }}
