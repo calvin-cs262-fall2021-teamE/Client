@@ -1,12 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { Alert, KeyboardAvoidingView, StyleSheet, Text, View, TextInput, Modal, Pressable,
-  Platform, TouchableOpacity, Keyboard} from 'react-native';
+  Platform, TouchableOpacity, Keyboard, FlatList} from 'react-native';
 import PatientEntry from '../patient/PatientEntry';
 import {modalStyles} from "../styles/modalStyles";
 import {styles} from "../styles/homework1Styles";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function App() {
+export default function addPatient({navigation}) {
+
+  /* Patient information variables */
   const [modalVisible, setModalVisible] = useState(false);
   const [patientList, setPatientList] = useState([]);
   const [name, setName] = useState();
@@ -18,7 +22,7 @@ export default function App() {
   const [ethnicity, setEthnicity] = useState();
   const [language, setLanguage] = useState();
 
-
+ /* Lets entered patient object be filled */ 
   const handleAddPatientEntry = () => {
     Keyboard.dismiss();
     let patient = {name, DOB, sex, city, region, ethnicity, language}    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
@@ -33,38 +37,29 @@ export default function App() {
     setLanguage(null);
   }
 
-  const completePatientEntry = (index) => {
-    
-    let itemsCopy = [...patientList]
-    itemsCopy.splice(index, 1);
-    setPatientList(itemsCopy);
-  }
-
   return (
-    /*code from homework 1 that allows and shows creation of patients */
+    /* Creation and display of patients */
     <View style={styles.container}>
-      
 
-        {/*Today's Tasks*/}
+        {/*Patients*/}
         <View style={styles.tasksWrapper}>
           <Text style={styles.sectionTitle}>Patients</Text> 
-
           <View style={styles.items}>
-            {/* Tasks will go here */}
+
+            {/* Patients will go here */}
             {
               patientList.map((item, index) => {
                 return (
-                  <TouchableOpacity key={index} onPress={() => completePatientEntry(index)}>
+                  <TouchableOpacity key={index} onPress={() => navigation.navigate('Patient Profile', item)}>
                     <PatientEntry text={item.name} />
                   </TouchableOpacity>
                 )
               })
             }
           </View>
-
         </View>
 
-        {/*the patient form modal */}
+        {/* Patient form modal */}
         <View style={modalStyles.centeredView}>
           <Modal
             animationType="slide"
@@ -105,13 +100,12 @@ export default function App() {
               <TextInput style={[modalStyles.input, { top: 255, left: 15}]} placeholder={'Language'} value={language} onChangeText={text => setLanguage(text)}/>
              </KeyboardAvoidingView>
 
+            {/* Button to close modal and add patient */}
                 <Pressable
                   style={[modalStyles.buttonClose]}
                   onPress={() => { 
                     setModalVisible(!modalVisible)
-                    handleAddPatientEntry()
-                    {/* let patient = Patient(name, DOB) */}
-                    
+                    handleAddPatientEntry()                    
                   }}
                 >
                   <Text style={modalStyles.textStyle2}>Add Patient</Text>
@@ -120,6 +114,8 @@ export default function App() {
             </View>
           </Modal>
         </View>
+
+        {/* Plus button to open modal */}
         <Pressable
         style={[modalStyles.buttonAdd]}
         onPress={() => setModalVisible(true)}
