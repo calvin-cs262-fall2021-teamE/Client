@@ -38,6 +38,7 @@ export default function addPatient({navigation}) {
     setEthnicity(null);
     setLanguage(null);
   }
+  
   const addStartingPatient = () => {
     let patient = {name:"Fitsum Maru", DOB:"05/14/1999", sex:"Male", city:"Addis Ababa", region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic"}
     setPatientList([...patientList, patient]);
@@ -45,6 +46,7 @@ export default function addPatient({navigation}) {
   useEffect(() => {
     addStartingPatient();
     }, [])
+
   return (
     /* Creation and display of patients */
     <View style={styles.container}>
@@ -128,8 +130,6 @@ export default function addPatient({navigation}) {
                 >
                   <Text style={modalStyles.close}>x</Text>
                 </Pressable>
-
-
 
               </View>
             </View>

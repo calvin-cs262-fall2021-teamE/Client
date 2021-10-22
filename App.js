@@ -26,10 +26,10 @@ export default function App(){
           headerLeft: () => (
               <Header navigation={navigation}/>
           )
-      })}/>
+      })}  />
 
-        <Stack.Screen name="Patient Profile" component={PatientProfile} />
-          {/* // options={({ navigation }) => ({
+      <Stack.Screen name="Patient Profile" component={PatientProfile} />
+         {/* // options={({ navigation }) => ({
           //   headerRight: () => (
           //     <Header navigation={navigation}/>)})} />  */}
 
