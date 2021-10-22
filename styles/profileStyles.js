@@ -12,7 +12,7 @@ export const profileStyles = StyleSheet.create({
         paddingVertical: 8,
         borderWidth: 4,
         borderColor: "#20232a",
-        borderRadius: 100000,
+        borderRadius: 10,
         backgroundColor: "#808080",
         color: "#20232a",
         textAlign: "center",
