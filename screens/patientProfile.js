@@ -11,9 +11,9 @@ export default function PatientProfile({ route, navigation }) {
 
         /* Displays patient information */
         <View style={profileStyles.container}>
-            <Text>{ route.params.name }</Text>
-            <Text>{ route.params.city }</Text>
-            <Text>{ route.params.sex }</Text>
+            <Text>Name: { route.params.name }</Text>
+            <Text style={profileStyles.title}>City: { route.params.city }</Text>
+            <Text>Sex:  { route.params.sex }</Text>
             <Text>Hi, this is the patient profile</Text>
         </View>
     );

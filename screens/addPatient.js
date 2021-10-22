@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Alert, KeyboardAvoidingView, StyleSheet, Text, View, TextInput, Modal, Pressable,
   Platform, TouchableOpacity, Keyboard, FlatList} from 'react-native';
 import PatientEntry from '../patient/PatientEntry';
@@ -22,6 +22,7 @@ export default function addPatient({navigation}) {
   const [ethnicity, setEthnicity] = useState();
   const [language, setLanguage] = useState();
 
+
  /* Lets entered patient object be filled */ 
   const handleAddPatientEntry = () => {
     Keyboard.dismiss();
@@ -36,6 +37,14 @@ export default function addPatient({navigation}) {
     setEthnicity(null);
     setLanguage(null);
   }
+  const addStartingPatient = () => {
+    let patient = {name:"Josiah Ryan", DOB:"11/29/1999", sex:"M", city:"Siloam Spings", region:"North West Arkansas", ethnicity:"White", language:"English"}
+    setPatientList([...patientList, patient]);
+  }
+
+  useEffect(() => {
+    addStartingPatient();
+    }, [])
 
   return (
     /* Creation and display of patients */
