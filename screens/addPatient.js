@@ -91,13 +91,13 @@ export default function addPatient({navigation}) {
               behavior={Platform.OS === "ios" ? "padding" : "height"}
               style={modalStyles.fieldWrapper} >
               <TextInput style={[modalStyles.input, { top: 100, right: 15}]} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} /> 
-              <TextInput style={[modalStyles.input, { top: 120, left: 10}]} placeholder={'Date of birth'} value={DOB} onChangeText={text => setDOB(text)} />
-              <TextInput style={[modalStyles.input, { top: 140, left: 20}]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
-              <TextInput style={[modalStyles.input, { top: 160, right: 10}]} placeholder={'Sex'} value={sex} onChangeText={text => setSex(text)}/>
-              <TextInput style={[modalStyles.input, { top: 185, left: 40}]} placeholder={'City (town/village)'} value={city} onChangeText={text => setCity(text)}/>
-              <TextInput style={[modalStyles.input, { top: 205, right: 5}]} placeholder={'Region'} value={region} onChangeText={text => setRegion(text)}/>
-              <TextInput style={[modalStyles.input, { top: 245, leftt: 25}]} placeholder={'Ethnicity'} value={ethnicity} onChangeText={text => setEthnicity(text)}/>
-              <TextInput style={[modalStyles.input, { top: 255, left: 15}]} placeholder={'Language'} value={language} onChangeText={text => setLanguage(text)}/>
+              <TextInput style={[modalStyles.input, { top: 124, left: 40}]} placeholder={'Date of birth'} value={DOB} onChangeText={text => setDOB(text)} />
+              <TextInput style={[modalStyles.input, { top: 145, left: 88}]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
+              <TextInput style={[modalStyles.input, { top: 170, right: 30}]} placeholder={'Sex'} value={sex} onChangeText={text => setSex(text)}/>
+              <TextInput style={[modalStyles.input, { top: 193, left: 80}]} placeholder={'City (town/village)'} value={city} onChangeText={text => setCity(text)}/>
+              <TextInput style={[modalStyles.input, { top: 215, right: 7}]} placeholder={'Region'} value={region} onChangeText={text => setRegion(text)}/>
+              <TextInput style={[modalStyles.input, { top: 240, left: 12}]} placeholder={'Ethnicity'} value={ethnicity} onChangeText={text => setEthnicity(text)}/>
+              <TextInput style={[modalStyles.input, { top: 263, left: 15}]} placeholder={'Language'} value={language} onChangeText={text => setLanguage(text)}/>
              </KeyboardAvoidingView>
 
             {/* Button to close modal and add patient */}
@@ -110,6 +110,19 @@ export default function addPatient({navigation}) {
                 >
                   <Text style={modalStyles.textStyle2}>Add Patient</Text>
                 </Pressable>
+
+            {/* Button to close modal without adding patient */}
+            <Pressable
+                  style={[modalStyles.bClose]}
+                  onPress={() => { 
+                    setModalVisible(!modalVisible)                  
+                  }}
+                >
+                  <Text style={modalStyles.close}>x</Text>
+                </Pressable>
+
+
+
               </View>
             </View>
           </Modal>
