@@ -7,6 +7,8 @@ import {modalStyles} from "../styles/modalStyles";
 import {styles} from "../styles/homework1Styles";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Header from "../shared/header";
+
 
 export default function addPatient({navigation}) {
 
