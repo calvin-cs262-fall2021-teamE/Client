@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Alert, KeyboardAvoidingView, StyleSheet, Text, View, TextInput, Modal, Pressable,
   Platform, TouchableOpacity, Keyboard, FlatList} from 'react-native';
 import PatientEntry from '../patient/PatientEntry';
@@ -7,6 +7,8 @@ import {modalStyles} from "../styles/modalStyles";
 import {styles} from "../styles/homework1Styles";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Header from "../shared/header";
+
 
 export default function addPatient({navigation}) {
 
@@ -36,7 +38,13 @@ export default function addPatient({navigation}) {
     setEthnicity(null);
     setLanguage(null);
   }
-
+  const addStartingPatient = () => {
+    let patient = {name:"Fitsum Maru", DOB:"05/14/1999", sex:"Male", city:"Addis Ababa", region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic"}
+    setPatientList([...patientList, patient]);
+  }
+  useEffect(() => {
+    addStartingPatient();
+    }, [])
   return (
     /* Creation and display of patients */
     <View style={styles.container}>

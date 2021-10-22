@@ -10,11 +10,15 @@ export default function PatientProfile({ route, navigation }) {
     return (
 
         /* Displays patient information */
-        <View style={profileStyles.container}>
-            <Text>{ route.params.name }</Text>
-            <Text>{ route.params.city }</Text>
-            <Text>{ route.params.sex }</Text>
-            <Text>Hi, this is the patient profile</Text>
+        <View style={profileStyles.title}>
+            <Text>Name:  { route.params.name }</Text>
+            <Text>City of birth:  { route.params.city }</Text>
+            <Text>Sex:  { route.params.sex }</Text>
+            <Text>Registration Number:  { route.params.registrationNumber }</Text>
+            <Text>Date of Birth:  { route.params.DOB }</Text>
+            <Text>Langugage:  { route.params.language }</Text>
+            <Text>Region:  { route.params.region }</Text>
+            <Text>Ethnicity:  { route.params.ethnicity }</Text>
         </View>
     );
   }
