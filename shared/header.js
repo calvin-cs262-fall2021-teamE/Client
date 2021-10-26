@@ -12,12 +12,12 @@ import { NavigationContainer } from '@react-navigation/native';
 
 
 
-export default function Header({ navigation }) {
-    return (
-        <View>
-            <TouchableOpacity /*onPress={() => navigation.openDrawer()}*/>
-                <Text style={globalStyles.menu}>=</Text>
+ export default function Header({ navigation }) {
+     return (
+         <View>
+             <TouchableOpacity /*onPress={() => navigation.openDrawer()}*/>
+                 <Text style={globalStyles.menu}>=</Text>
             </TouchableOpacity>
-        </View>
+         </View>
     );
-};
+ };
