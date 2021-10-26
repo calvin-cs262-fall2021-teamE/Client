@@ -5,7 +5,7 @@ export const profileStyles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 24,
-        backgroundColor: "#eaeaea"
+        backgroundColor: "gray"
       },
     title: {
         marginTop: 10,

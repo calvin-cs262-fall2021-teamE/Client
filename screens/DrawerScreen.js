@@ -12,8 +12,7 @@ import Instructions from './Instructions'
 import About from './About'
 import Home from './Home'
 
-{/* This screen contains the drawer navigation to switch between the Home, Instructions, and About Screens.*/}
-
+/* This screen contains the drawer navigation to switch between the Home, Instructions, and About Screens.*/
 export default function DrawerScreen({navigation}) {
  
   const Drawer = createDrawerNavigator();
