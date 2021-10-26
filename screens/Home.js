@@ -9,7 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Swiper from 'react-native-swiper';
 //import  Visit  from './visit';
-// import Header from "../shared/header";
+
 
 
 export default function addPatient({navigation}) {
@@ -195,8 +195,6 @@ export default function addPatient({navigation}) {
                 >
                   <Text style={modalStyles.close}>x</Text>
                 </Pressable>
-
-
                 </View>
               </View>
 
