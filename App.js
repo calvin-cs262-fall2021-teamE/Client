@@ -9,7 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PatientProfile from "./screens/patientProfile";
 import Header from "./shared/header";
-import { createDrawerNavigator } from '@react-navigation/drawer';
+//import { createDrawerNavigator } from '@react-navigation/drawer';
 //import { NavigationContainer } from '@react-navigation/native';
 
 

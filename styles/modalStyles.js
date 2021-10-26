@@ -22,7 +22,8 @@ export const modalStyles = StyleSheet.create({
       },
       shadowOpacity: 0.25,
       shadowRadius: 4,
-      elevation: 5
+      elevation: 5,
+      flex: 1,
     },
     buttonAdd: {
       position: "absolute",
@@ -63,8 +64,8 @@ export const modalStyles = StyleSheet.create({
       height: 20,
       alignItems: "center",
       justifyContent: "center",
-      bottom: 510,
-      left: 160, 
+      bottom: 490,
+      left: 140, 
     },
     close: {
       color: 'white',
@@ -114,5 +115,11 @@ export const modalStyles = StyleSheet.create({
     fieldWrapper: {
       position: 'absolute',
       flexDirection: 'column',
-    }
+    },
+    add: {
+      alignItems: 'center',
+      justifyContent: 'center',
+ 
+     // flex: 1,
+    },
   });

@@ -3,11 +3,11 @@ import { TouchableOpacity, View, Text } from 'react-native';
 
 import { globalStyles } from '../styles/global';
 import AddPatient from "../screens/addPatient";
-import { createDrawerNavigator,
-    DrawerContentScrollView,
-    DrawerItemList,
-    DrawerItem, 
-} from '@react-navigation/drawer';
+// import { createDrawerNavigator,
+//     DrawerContentScrollView,
+//     DrawerItemList,
+//     DrawerItem, 
+// } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 
 
