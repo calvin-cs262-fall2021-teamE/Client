@@ -8,6 +8,8 @@ import {styles} from "../styles/homework1Styles";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Swiper from 'react-native-swiper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 //import  Visit  from './visit';
 
 
@@ -127,7 +129,7 @@ export default function addPatient({navigation}) {
              </KeyboardAvoidingView>
 
             {/* Button to close modal and add patient */}
-                <Pressable
+                <TouchableOpacity
                   style={[modalStyles.buttonClose]}
                   onPress={() => { 
                     setModalVisible(!modalVisible)
@@ -135,7 +137,7 @@ export default function addPatient({navigation}) {
                   }}
                 >
                   <Text style={modalStyles.textStyle2}>Add Patient</Text>
-                </Pressable>
+                </TouchableOpacity>
               
               </View> 
 
@@ -166,7 +168,7 @@ export default function addPatient({navigation}) {
                 </KeyboardAvoidingView>
 
               {/* Button to close modal and add visit */}
-                <Pressable
+                <TouchableOpacity
                   style={[modalStyles.buttonClose, {left: 120, top: 600}]}
                   onPress={() => { 
                     setModalVisible(!modalVisible)
@@ -174,20 +176,20 @@ export default function addPatient({navigation}) {
                   }}
                 >
                   <Text style={modalStyles.textStyle2}>Add Visit</Text>
-                </Pressable>
+                </TouchableOpacity>
                 </View>
               </View>
               </Swiper>
 
               {/* Button to close modal without adding patient */}
-            <Pressable
-                  style={[modalStyles.bClose]}
+            <TouchableOpacity
+                  style={[modalStyles.close]}
                   onPress={() => { 
                     setModalVisible(!modalVisible)                  
                   }}
                 >
-                  <Text style={modalStyles.close}>x</Text>
-                </Pressable>
+                  <Icon name={'close-circle'} color={'#B72303'} size={30}/>
+                </TouchableOpacity>
 
               </View>
             </View>
@@ -195,12 +197,12 @@ export default function addPatient({navigation}) {
         </View>
 
         {/* Plus button to open modal */}
-        <Pressable
+        <TouchableOpacity
         style={[modalStyles.buttonAdd]}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={modalStyles.textStyle}>+</Text>
-      </Pressable>
+        <Icon name={'plus-circle'} color={'#B72303'} size={70}/>
+      </TouchableOpacity>
       </View>
   );
 }
