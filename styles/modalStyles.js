@@ -76,7 +76,7 @@ export const modalStyles = StyleSheet.create({
       height: 31,
       //borderWidth: 1,
       //borderRadius: 15,
-      bottom: 740,
+      bottom: 732,
       left: 167,
       shadowColor: "#000",
       shadowOffset: {

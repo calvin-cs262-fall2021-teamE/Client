@@ -158,7 +158,7 @@ export default function addPatient({navigation}) {
 
                 {/* Fields where information is entered */}
                 <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              //  behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={modalStyles.fieldWrapper} >
                 <TextInput style={[modalStyles.input, ]} placeholder={'Full Name'} value={name} onChangeText={text => setName(text)} /> 
                 <TextInput style={[modalStyles.input, ]} placeholder={'Full Name'} value={DOB} onChangeText={text => setDOB(text)} />
@@ -169,26 +169,16 @@ export default function addPatient({navigation}) {
                 </KeyboardAvoidingView>
 
               {/* Button to close modal and add visit */}
-<<<<<<< HEAD
                 <Pressable
                   style={[modalStyles.buttonClose,]}
-=======
-                <TouchableOpacity
-                  style={[modalStyles.buttonClose, {left: 120, top: 600}]}
->>>>>>> ce1fe24faf8b060004d9548003c0a56dd78e53cb
                   onPress={() => { 
                     setModalVisible(!modalVisible)
                     handleAddPatientEntry()                    
                   }}
                 >
                   <Text style={modalStyles.textStyle2}>Add Visit</Text>
-<<<<<<< HEAD
                 </Pressable>
                 
-=======
-                </TouchableOpacity>
-                </View>
->>>>>>> ce1fe24faf8b060004d9548003c0a56dd78e53cb
               </View>
               </Swiper>
 
