@@ -100,7 +100,7 @@ export default function addPatient({navigation}) {
                       }}
                     > 
                <KeyboardAvoidingView style={modalStyles.add}
-               behavior = 'padding'>
+               behavior = 'postion'>
                 <Text style={modalStyles.modalText}>Add a new patient</Text>
 
           {/* Names of information fields */}

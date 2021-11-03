@@ -130,7 +130,7 @@ export const modalStyles = StyleSheet.create({
     },
     add: {
      flex: 1,
-  //   justifyContent: 'flex-end',
+    // justifyContent: 'flex-beginning',
     },
     swiper: {
     },
