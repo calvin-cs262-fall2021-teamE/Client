@@ -28,21 +28,22 @@ export const modalStyles = StyleSheet.create({
     buttonAdd: {
       position: "absolute",
       borderRadius: 60,
+      flex: 1,
       //padding: 10,
       //backgroundColor: "#B72303",
       width: 80,
       height: 80,
       alignItems: "center",
-      justifyContent: "center",
-      bottom: 34,
-      right: 10,
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
+      justifyContent: "flex-end",
+      bottom: 35,
+      right: 30,
+      // shadowColor: "#000",
+      // shadowOffset: {
+      //   width: 0,
+      //   height: 2
+      //},
+      //shadowOpacity: 0.25,
+      //shadowRadius: 4,
       elevation: 5
     },
     buttonClose: {
