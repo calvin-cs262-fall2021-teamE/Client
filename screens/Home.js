@@ -99,7 +99,8 @@ export default function addPatient({navigation}) {
                         dotsTouchable: true,
                       }}
                     > 
-               <View style={modalStyles.add}>
+               <KeyboardAvoidingView style={modalStyles.add}
+               behavior = 'postion'>
                 <Text style={modalStyles.modalText}>Add a new patient</Text>
 
           {/* Names of information fields */}
@@ -115,9 +116,7 @@ export default function addPatient({navigation}) {
               </View>
 
           {/* Fields where information is entered */}
-            <KeyboardAvoidingView 
-              behavior={Platform.OS === "ios" ? "padding" : "height"}
-              style={modalStyles.fieldWrapper} >
+            <View style={modalStyles.fieldWrapper} >
               <TextInput style={[modalStyles.input, ]} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} /> 
               <TextInput style={[modalStyles.input, ]} placeholder={'mm/dd/yyyy'} value={DOB} onChangeText={text => setDOB(text)} />
               <TextInput style={[modalStyles.input, ]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
@@ -126,7 +125,7 @@ export default function addPatient({navigation}) {
               <TextInput style={[modalStyles.input, ]} placeholder={'Region'} value={region} onChangeText={text => setRegion(text)}/>
               <TextInput style={[modalStyles.input, ]} placeholder={'Ethnicity'} value={ethnicity} onChangeText={text => setEthnicity(text)}/>
               <TextInput style={[modalStyles.input, ]} placeholder={'Language'} value={language} onChangeText={text => setLanguage(text)}/>
-             </KeyboardAvoidingView>
+             </View>
 
             {/* Button to close modal and add patient */}
                 <TouchableOpacity
@@ -139,10 +138,10 @@ export default function addPatient({navigation}) {
                   <Text style={modalStyles.textStyle2}>Add Patient</Text>
                 </TouchableOpacity>
               
-              </View> 
+              </KeyboardAvoidingView> 
 
             {/* 'Add Visit' form */}
-              <View style={modalStyles.add}>
+              <KeyboardAvoidingView style={modalStyles.add}>
 
               <Text style={[modalStyles.modalText]}>Add a new visit</Text>
               {/* Names of information fields */}
@@ -157,16 +156,14 @@ export default function addPatient({navigation}) {
                   </View>
 
                 {/* Fields where information is entered */}
-                <KeyboardAvoidingView
-              //  behavior={Platform.OS === "ios" ? "padding" : "height"}
-                style={modalStyles.fieldWrapper} >
+                <View style={modalStyles.fieldWrapper} >
                 <TextInput style={[modalStyles.input, ]} placeholder={'Full Name'} value={name} onChangeText={text => setName(text)} /> 
                 <TextInput style={[modalStyles.input, ]} placeholder={'Full Name'} value={DOB} onChangeText={text => setDOB(text)} />
                 <TextInput style={[modalStyles.input,]} placeholder={'Disease'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
                 <TextInput style={[modalStyles.input,]} placeholder={'Disease'} value={sex} onChangeText={text => setSex(text)}/>
                 <TextInput style={[modalStyles.input, ]} placeholder={'mm/dd/yyyy'} value={city} onChangeText={text => setCity(text)}/>
                 <TextInput style={[modalStyles.input, ]} placeholder={'Notes'} value={region} onChangeText={text => setRegion(text)}/>
-                </KeyboardAvoidingView>
+                </View>
 
               {/* Button to close modal and add visit */}
                 <Pressable
@@ -179,7 +176,7 @@ export default function addPatient({navigation}) {
                   <Text style={modalStyles.textStyle2}>Add Visit</Text>
                 </Pressable>
                 
-              </View>
+              </KeyboardAvoidingView>
               </Swiper>
 
               {/* Button to close modal without adding patient */}
@@ -199,7 +196,7 @@ export default function addPatient({navigation}) {
 
         {/* Plus button to open modal */}
         <TouchableOpacity
-        style={[modalStyles.buttonAdd]}
+       style={[modalStyles.buttonAdd]}
         onPress={() => setModalVisible(true)}
       >
         <Icon name={'plus-circle'} color={'#B72303'} size={70}/>

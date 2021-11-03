@@ -35,16 +35,15 @@ export const modalStyles = StyleSheet.create({
       height: 80,
       alignItems: "center",
       justifyContent: "flex-end",
-      bottom: 35,
+      bottom: 28,
       right: 30,
       // shadowColor: "#000",
       // shadowOffset: {
       //   width: 0,
       //   height: 2
-      //},
-      //shadowOpacity: 0.25,
-      //shadowRadius: 4,
-      elevation: 5
+      // },
+      // shadowOpacity: 0.25,
+      // shadowRadius: 4,
     },
     buttonClose: {
       position: "absolute",
@@ -124,10 +123,14 @@ export const modalStyles = StyleSheet.create({
       position: 'absolute',
       paddingTop: 64,
       paddingLeft: 5,
+
     },
     fieldStyle: {
+
     },
     add: {
+     flex: 1,
+    // justifyContent: 'flex-beginning',
     },
     swiper: {
     },
