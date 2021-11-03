@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
 import { Alert, KeyboardAvoidingView, StyleSheet, Text, View, TextInput, Modal, Pressable,
-  Platform, TouchableOpacity, Keyboard, FlatList} from 'react-native';
+  Platform, TouchableOpacity, Keyboard, FlatList, ScrollView} from 'react-native';
 import PatientEntry from '../patient/PatientEntry';
 import {modalStyles} from "../styles/modalStyles";
 import {styles} from "../styles/homework1Styles";
@@ -42,14 +42,14 @@ export default function addPatient({navigation}) {
   }
 
   /* Adds a patient at start of app */
-  const addStartingPatient = () => {
-    let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
-                    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic"}
-    setPatientList([...patientList, patient]);
-  }
-  useEffect(() => {
-    addStartingPatient();
-    }, [])
+  // const addStartingPatient = () => {
+  //   let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
+  //                   region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic"}
+  //   setPatientList([...patientList, patient]);
+  // }
+  // useEffect(() => {
+  //   addStartingPatient();
+  //   }, [])
 
 
   return (
@@ -59,7 +59,7 @@ export default function addPatient({navigation}) {
         {/*Patients*/}
         <View style={styles.tasksWrapper}>
           <Text style={styles.sectionTitle}>Patients</Text> 
-          <View style={styles.items}>
+          <ScrollView style={styles.items}>
 
             {/* Patients will go here */}
             {
@@ -68,10 +68,11 @@ export default function addPatient({navigation}) {
                   <TouchableOpacity key={index} onPress={() => navigation.navigate('Patient Profile', item)}>
                     <PatientEntry text={item.name} />
                   </TouchableOpacity>
+                  
                 )
               })
             }
-          </View>
+          </ScrollView>
         </View>
 
         {/* 'Add Patient' + 'Add Visit' form modal */}
@@ -81,7 +82,6 @@ export default function addPatient({navigation}) {
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
               setModalVisible(true);
             }}
           >
@@ -89,7 +89,7 @@ export default function addPatient({navigation}) {
             <View style={modalStyles.centeredView}>
               <View style={modalStyles.modalView}>
 
-              <Swiper
+              <Swiper style={modalStyles.swiper}
                       from={0}
                       minDistanceForAction={0.1}
                       loop={false}
@@ -116,14 +116,14 @@ export default function addPatient({navigation}) {
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "padding" : "height"}
               style={modalStyles.fieldWrapper} >
-              <TextInput style={[modalStyles.input, { top: 100, right: 15}]} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} /> 
-              <TextInput style={[modalStyles.input, { top: 124, left: 40}]} placeholder={'Date of birth'} value={DOB} onChangeText={text => setDOB(text)} />
-              <TextInput style={[modalStyles.input, { top: 145, left: 88}]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
-              <TextInput style={[modalStyles.input, { top: 170, right: 30}]} placeholder={'Sex'} value={sex} onChangeText={text => setSex(text)}/>
-              <TextInput style={[modalStyles.input, { top: 193, left: 80}]} placeholder={'City (town/village)'} value={city} onChangeText={text => setCity(text)}/>
-              <TextInput style={[modalStyles.input, { top: 215, right: 7}]} placeholder={'Region'} value={region} onChangeText={text => setRegion(text)}/>
-              <TextInput style={[modalStyles.input, { top: 240, left: 12}]} placeholder={'Ethnicity'} value={ethnicity} onChangeText={text => setEthnicity(text)}/>
-              <TextInput style={[modalStyles.input, { top: 263, left: 15}]} placeholder={'Language'} value={language} onChangeText={text => setLanguage(text)}/>
+              <TextInput style={[modalStyles.input, { top: 169, right: 23}]} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} /> 
+              <TextInput style={[modalStyles.input, { top: 195, left: 32}]} placeholder={'mm/dd/yyyy'} value={DOB} onChangeText={text => setDOB(text)} />
+              <TextInput style={[modalStyles.input, { top: 223, left: 80}]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
+              <TextInput style={[modalStyles.input, { top: 250, right: 38}]} placeholder={'M/F'} value={sex} onChangeText={text => setSex(text)}/>
+              <TextInput style={[modalStyles.input, { top: 277, left: 70}]} placeholder={'City (town/village)'} value={city} onChangeText={text => setCity(text)}/>
+              <TextInput style={[modalStyles.input, { top: 305, right: 15}]} placeholder={'Region'} value={region} onChangeText={text => setRegion(text)}/>
+              <TextInput style={[modalStyles.input, { top: 331, left: 3}]} placeholder={'Ethnicity'} value={ethnicity} onChangeText={text => setEthnicity(text)}/>
+              <TextInput style={[modalStyles.input, { top: 358, left: 5}]} placeholder={'Language'} value={language} onChangeText={text => setLanguage(text)}/>
              </KeyboardAvoidingView>
 
             {/* Button to close modal and add patient */}
@@ -136,23 +136,13 @@ export default function addPatient({navigation}) {
                 >
                   <Text style={modalStyles.textStyle2}>Add Patient</Text>
                 </Pressable>
-
-            {/* Button to close modal without adding patient */}
-            <Pressable
-                  style={[modalStyles.bClose]}
-                  onPress={() => { 
-                    setModalVisible(!modalVisible)                  
-                  }}
-                >
-                  <Text style={modalStyles.close}>x</Text>
-                </Pressable>
               
               </View> 
 
             {/* 'Add Visit' form */}
               <View style={modalStyles.add}>
 
-              <Text style={modalStyles.modalText}>Add a new visit</Text>
+              <Text style={[modalStyles.modalText, {right: 80}]}>Add a new visit</Text>
               {/* Names of information fields */}
                 <View>
                     <Text style={modalStyles.field}>Doctor:</Text> 
@@ -167,17 +157,17 @@ export default function addPatient({navigation}) {
                 <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={modalStyles.fieldWrapper} >
-                <TextInput style={[modalStyles.input, { top: 100, right: 15}]} placeholder={'Name'} value={name} onChangeText={text => setName(text)} /> 
-                <TextInput style={[modalStyles.input, { top: 124, left: 40}]} placeholder={'Name'} value={DOB} onChangeText={text => setDOB(text)} />
-                <TextInput style={[modalStyles.input, { top: 145, left: 88}]} placeholder={'Disease'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
-                <TextInput style={[modalStyles.input, { top: 170, right: 30}]} placeholder={'Disease'} value={sex} onChangeText={text => setSex(text)}/>
-                <TextInput style={[modalStyles.input, { top: 193, left: 80}]} placeholder={'Date'} value={city} onChangeText={text => setCity(text)}/>
-                <TextInput style={[modalStyles.input, { top: 215, right: 7}]} placeholder={'Notes'} value={region} onChangeText={text => setRegion(text)}/>
+                <TextInput style={[modalStyles.input, { top: 17, right: 30}]} placeholder={'Full Name'} value={name} onChangeText={text => setName(text)} /> 
+                <TextInput style={[modalStyles.input, { top: 43, right: 20}]} placeholder={'Full Name'} value={DOB} onChangeText={text => setDOB(text)} />
+                <TextInput style={[modalStyles.input, { top: 70, left: 40}]} placeholder={'Disease'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
+                <TextInput style={[modalStyles.input, { top: 97, left: 57}]} placeholder={'Disease'} value={sex} onChangeText={text => setSex(text)}/>
+                <TextInput style={[modalStyles.input, { top: 123, left: 38}]} placeholder={'mm/dd/yyyy'} value={city} onChangeText={text => setCity(text)}/>
+                <TextInput style={[modalStyles.input, { top: 150, right: 38}]} placeholder={'Notes'} value={region} onChangeText={text => setRegion(text)}/>
                 </KeyboardAvoidingView>
 
               {/* Button to close modal and add visit */}
                 <Pressable
-                  style={[modalStyles.buttonClose]}
+                  style={[modalStyles.buttonClose, {left: 120, top: 600}]}
                   onPress={() => { 
                     setModalVisible(!modalVisible)
                     handleAddPatientEntry()                    
@@ -185,8 +175,11 @@ export default function addPatient({navigation}) {
                 >
                   <Text style={modalStyles.textStyle2}>Add Visit</Text>
                 </Pressable>
+                </View>
+              </View>
+              </Swiper>
 
-            {/* Button to close modal without adding patient */}
+              {/* Button to close modal without adding patient */}
             <Pressable
                   style={[modalStyles.bClose]}
                   onPress={() => { 
@@ -195,10 +188,6 @@ export default function addPatient({navigation}) {
                 >
                   <Text style={modalStyles.close}>x</Text>
                 </Pressable>
-                </View>
-              </View>
-
-              </Swiper>
 
               </View>
             </View>

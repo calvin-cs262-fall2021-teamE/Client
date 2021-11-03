@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#F9F9F9',
   },
   tasksWrapper: {
-    paddingTop: 75,
+    paddingTop: 25,
     paddingHorizontal: 10,
   },
   sectionTitle: {

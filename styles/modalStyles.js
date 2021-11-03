@@ -12,8 +12,8 @@ export const modalStyles = StyleSheet.create({
       width: 380,
       margin: 10,
       backgroundColor: "white",
-      borderRadius: 10,
-      padding: 35,
+      borderRadius: 8,
+      padding: 15,
       alignItems: "center",
       shadowColor: "#000",
       shadowOffset: {
@@ -47,8 +47,8 @@ export const modalStyles = StyleSheet.create({
     },
     buttonClose: {
       position: "absolute",
-      bottom: 20,
-      right: 20,
+      top: 650,
+      right: 15,
       borderRadius: 5,
       width: 110,
       height: 40,
@@ -57,22 +57,24 @@ export const modalStyles = StyleSheet.create({
       justifyContent: "center",
     },
     bClose: {
+      //position: 'absolute',
       borderRadius: 60,
       padding: 10,
       backgroundColor: "#E1E1E1",
       width: 20,
       height: 20,
-      alignItems: "center",
-      justifyContent: "center",
-      bottom: 490,
-      left: 140, 
+      alignItems: 'center',
+      justifyContent: 'center',
+      bottom: 740,
+      left: 167, 
     },
     close: {
       color: 'white',
       fontSize: 30,
       textAlign: 'center',
       position: 'absolute',
-      justifyContent: 'center', 
+      justifyContent: 'center',
+       
     },
     textStyle: {
       color: "white",
@@ -92,7 +94,7 @@ export const modalStyles = StyleSheet.create({
       fontSize: 25,
       fontWeight: 'bold',
       right: 60,
-      bottom: 10,
+
     },
     input: {
       fontSize: 10,
@@ -103,7 +105,10 @@ export const modalStyles = StyleSheet.create({
       backgroundColor: '#E8EAED',
       borderRadius: 5,
       borderWidth: 1,
-      width: 200,
+      width: 180,
+      flexDirection: 'column',
+      padding: 3,
+      
  
     },  
     field: {
@@ -111,15 +116,23 @@ export const modalStyles = StyleSheet.create({
       lineHeight: 50,
       textAlign: 'left',
       right: 90,
+      padding: 2,
     },
     fieldWrapper: {
       position: 'absolute',
       flexDirection: 'column',
+      
+    },
+    fieldStyle: {
+      flex: 1,
     },
     add: {
       alignItems: 'center',
       justifyContent: 'center',
  
      // flex: 1,
+    },
+    swiper: {
+      
     },
   });
