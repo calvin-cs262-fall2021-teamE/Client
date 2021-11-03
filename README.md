@@ -10,3 +10,4 @@ npm installs to run:
 * npm install @react-navigation/drawer
 * npm install react-native-gesture-handler react-native-reanimated
 * npm install npm i react-native-web-swiper --save
+* npm install react-native-vector-icons
