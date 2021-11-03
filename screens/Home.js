@@ -113,17 +113,17 @@ export default function addPatient({navigation}) {
               </View>
 
           {/* Fields where information is entered */}
-            <KeyboardAvoidingView
+            <KeyboardAvoidingView 
               behavior={Platform.OS === "ios" ? "padding" : "height"}
               style={modalStyles.fieldWrapper} >
-              <TextInput style={[modalStyles.input, { top: 169, right: 23}]} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} /> 
-              <TextInput style={[modalStyles.input, { top: 195, left: 32}]} placeholder={'mm/dd/yyyy'} value={DOB} onChangeText={text => setDOB(text)} />
-              <TextInput style={[modalStyles.input, { top: 223, left: 80}]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
-              <TextInput style={[modalStyles.input, { top: 250, right: 38}]} placeholder={'M/F'} value={sex} onChangeText={text => setSex(text)}/>
-              <TextInput style={[modalStyles.input, { top: 277, left: 70}]} placeholder={'City (town/village)'} value={city} onChangeText={text => setCity(text)}/>
-              <TextInput style={[modalStyles.input, { top: 305, right: 15}]} placeholder={'Region'} value={region} onChangeText={text => setRegion(text)}/>
-              <TextInput style={[modalStyles.input, { top: 331, left: 3}]} placeholder={'Ethnicity'} value={ethnicity} onChangeText={text => setEthnicity(text)}/>
-              <TextInput style={[modalStyles.input, { top: 358, left: 5}]} placeholder={'Language'} value={language} onChangeText={text => setLanguage(text)}/>
+              <TextInput style={[modalStyles.input, ]} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} /> 
+              <TextInput style={[modalStyles.input, ]} placeholder={'mm/dd/yyyy'} value={DOB} onChangeText={text => setDOB(text)} />
+              <TextInput style={[modalStyles.input, ]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
+              <TextInput style={[modalStyles.input, ]} placeholder={'M/F'} value={sex} onChangeText={text => setSex(text)}/>
+              <TextInput style={[modalStyles.input, ]} placeholder={'City (town/village)'} value={city} onChangeText={text => setCity(text)}/>
+              <TextInput style={[modalStyles.input, ]} placeholder={'Region'} value={region} onChangeText={text => setRegion(text)}/>
+              <TextInput style={[modalStyles.input, ]} placeholder={'Ethnicity'} value={ethnicity} onChangeText={text => setEthnicity(text)}/>
+              <TextInput style={[modalStyles.input, ]} placeholder={'Language'} value={language} onChangeText={text => setLanguage(text)}/>
              </KeyboardAvoidingView>
 
             {/* Button to close modal and add patient */}
@@ -142,7 +142,7 @@ export default function addPatient({navigation}) {
             {/* 'Add Visit' form */}
               <View style={modalStyles.add}>
 
-              <Text style={[modalStyles.modalText, {right: 80}]}>Add a new visit</Text>
+              <Text style={[modalStyles.modalText]}>Add a new visit</Text>
               {/* Names of information fields */}
                 <View>
                     <Text style={modalStyles.field}>Doctor:</Text> 
@@ -152,22 +152,23 @@ export default function addPatient({navigation}) {
                     <Text style={modalStyles.field}>Discharged date:</Text> 
                     <Text style={modalStyles.field}>Notes:</Text> 
                     <Text style={modalStyles.field}>Attatchments:</Text> 
+                  </View>
 
                 {/* Fields where information is entered */}
                 <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={modalStyles.fieldWrapper} >
-                <TextInput style={[modalStyles.input, { top: 17, right: 30}]} placeholder={'Full Name'} value={name} onChangeText={text => setName(text)} /> 
-                <TextInput style={[modalStyles.input, { top: 43, right: 20}]} placeholder={'Full Name'} value={DOB} onChangeText={text => setDOB(text)} />
-                <TextInput style={[modalStyles.input, { top: 70, left: 40}]} placeholder={'Disease'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
-                <TextInput style={[modalStyles.input, { top: 97, left: 57}]} placeholder={'Disease'} value={sex} onChangeText={text => setSex(text)}/>
-                <TextInput style={[modalStyles.input, { top: 123, left: 38}]} placeholder={'mm/dd/yyyy'} value={city} onChangeText={text => setCity(text)}/>
-                <TextInput style={[modalStyles.input, { top: 150, right: 38}]} placeholder={'Notes'} value={region} onChangeText={text => setRegion(text)}/>
+                <TextInput style={[modalStyles.input, ]} placeholder={'Full Name'} value={name} onChangeText={text => setName(text)} /> 
+                <TextInput style={[modalStyles.input, ]} placeholder={'Full Name'} value={DOB} onChangeText={text => setDOB(text)} />
+                <TextInput style={[modalStyles.input,]} placeholder={'Disease'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
+                <TextInput style={[modalStyles.input,]} placeholder={'Disease'} value={sex} onChangeText={text => setSex(text)}/>
+                <TextInput style={[modalStyles.input, ]} placeholder={'mm/dd/yyyy'} value={city} onChangeText={text => setCity(text)}/>
+                <TextInput style={[modalStyles.input, ]} placeholder={'Notes'} value={region} onChangeText={text => setRegion(text)}/>
                 </KeyboardAvoidingView>
 
               {/* Button to close modal and add visit */}
                 <Pressable
-                  style={[modalStyles.buttonClose, {left: 120, top: 600}]}
+                  style={[modalStyles.buttonClose,]}
                   onPress={() => { 
                     setModalVisible(!modalVisible)
                     handleAddPatientEntry()                    
@@ -175,7 +176,7 @@ export default function addPatient({navigation}) {
                 >
                   <Text style={modalStyles.textStyle2}>Add Visit</Text>
                 </Pressable>
-                </View>
+                
               </View>
               </Swiper>
 

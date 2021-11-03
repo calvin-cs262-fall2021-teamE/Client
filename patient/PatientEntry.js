@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: 'gray',
         opacity: 0.4,
-        borderRadius: 5,
+        borderRadius: 60,
         marginRight: 15,
     },
     itemText: {

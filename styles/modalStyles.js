@@ -93,46 +93,34 @@ export const modalStyles = StyleSheet.create({
       textAlign: "left",
       fontSize: 25,
       fontWeight: 'bold',
-      right: 60,
-
     },
     input: {
-      fontSize: 10,
+      fontSize: 12,
       color: 'gray',
       paddingVertical: 1,
-      paddingHorizontal: 5,
+      paddingHorizontal: 10,
       borderColor: 'gray',
       backgroundColor: '#E8EAED',
-      borderRadius: 5,
-      borderWidth: 1,
-      width: 180,
-      flexDirection: 'column',
-      padding: 3,
-      
- 
+      borderRadius: 2,
+      borderWidth: 0.5,
+      width: 300,
+      marginTop:39,
     },  
     field: {
       fontSize: 15,
-      lineHeight: 50,
+      lineHeight: 60,
       textAlign: 'left',
-      right: 90,
       padding: 2,
     },
     fieldWrapper: {
       position: 'absolute',
-      flexDirection: 'column',
-      
+      paddingTop: 64,
+      paddingLeft: 5,
     },
     fieldStyle: {
-      flex: 1,
     },
     add: {
-      alignItems: 'center',
-      justifyContent: 'center',
- 
-     // flex: 1,
     },
     swiper: {
-      
     },
   });

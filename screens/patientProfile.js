@@ -14,11 +14,11 @@ export default function PatientProfile({ route, navigation }) {
                 <View style={profileStyles.square} />
                 <View style={profileStyles.container}>
                     <Text style={profileStyles.name}>{route.params.name}</Text>
-                    <Text>City of birth: {route.params.city}</Text>
-                    <Text>Sex: {route.params.sex}</Text>
-                    <Text>Registration Number: {route.params.registrationNumber}</Text>
                     <Text>Date of Birth: {route.params.DOB}</Text>
-                    <Text>Langugage: {route.params.language}</Text>
+                    <Text>Sex: {route.params.sex}</Text>
+                    <Text>City of birth: {route.params.city}</Text>                  
+                    <Text>Registration Number: {route.params.registrationNumber}</Text>   
+                    <Text>Language: {route.params.language}</Text>
                     <Text>Region: {route.params.region}</Text>
                     <Text>Ethnicity: {route.params.ethnicity}</Text>
                 </View>
