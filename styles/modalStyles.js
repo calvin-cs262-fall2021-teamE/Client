@@ -28,21 +28,22 @@ export const modalStyles = StyleSheet.create({
     buttonAdd: {
       position: "absolute",
       borderRadius: 60,
-      padding: 10,
-      backgroundColor: "#B72303",
-      width: 60,
-      height: 60,
+      flex: 1,
+      //padding: 10,
+      //backgroundColor: "#B72303",
+      width: 80,
+      height: 80,
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "flex-end",
       bottom: 35,
-      right: 40,
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
+      right: 30,
+      // shadowColor: "#000",
+      // shadowOffset: {
+      //   width: 0,
+      //   height: 2
+      //},
+      //shadowOpacity: 0.25,
+      //shadowRadius: 4,
       elevation: 5
     },
     buttonClose: {
@@ -68,14 +69,21 @@ export const modalStyles = StyleSheet.create({
       bottom: 740,
       left: 167, 
     },
-    close: {
-      color: 'white',
-      fontSize: 30,
-      textAlign: 'center',
-      position: 'absolute',
-      justifyContent: 'center',
-       
-    },
+    close:{
+      justifyContent:'center',
+      alignItems:'center',
+      width: 31,
+      height: 31,
+      //borderWidth: 1,
+      //borderRadius: 15,
+      bottom: 740,
+      left: 167,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      }
+  },
     textStyle: {
       color: "white",
       fontWeight: "bold",
