@@ -34,6 +34,8 @@ export default function addPatient({navigation}) {
   const [secondaryDiseases, setSecondaryDiseases] = useState();
   const [dischargedDate, setDischargedDate] = useState();
   const [notes, setNotes] = useState();
+  const [date, setDate] = useState();
+  const [searchBar, setSearchBar] = useState();
 
 
  /* Lets entered patient object be filled */ 
@@ -45,7 +47,7 @@ export default function addPatient({navigation}) {
 
     //let form = {doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, notes}    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
     setVisitList([...visitList, visit]);
-    let patient = {name, DOB, registrationNumber, sex, city, region, ethnicity, language, doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, notes}    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
+    let patient = {name, DOB, registrationNumber, sex, city, region, ethnicity, language, date, doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, notes}    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
     setPatientList([...patientList, patient]);
     setName(null);    //resets the memory of the patient form for next entry
     setDOB(null);
@@ -66,7 +68,7 @@ export default function addPatient({navigation}) {
   /* Adds a patient at start of app */
    const addStartingPatient = () => {
      let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
-                     region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", notes:"gagonitic"}
+                     region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", date: "11/04/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", notes:"gagonitic"}
      setPatientList([...patientList, patient]);
    }
    useEffect(() => {
@@ -81,7 +83,7 @@ export default function addPatient({navigation}) {
         {/*searchbar*/}
         {/*  In case the search bar affects our app on the phone, this is the code we get rid of   */}
         <View style={modalStyles.fieldStyle}>
-        <TextInput style={[modalStyles.searchBar, ]} placeholder={'search'} value={name} onChangeText={text => setName(text)} /> 
+        <TextInput style={[modalStyles.searchBar, ]} placeholder={'search'} value={searchBar} onChangeText={text => setSearchBar(text)} /> 
         </View>
 
         {/*Patients*/}
@@ -172,6 +174,7 @@ export default function addPatient({navigation}) {
               <Text style={[modalStyles.modalText]}>Add a new visit</Text>
               {/* Names of information fields */}
                 <View>
+                    <Text style={modalStyles.field}>Date:</Text> 
                     <Text style={modalStyles.field}>Doctor:</Text> 
                     <Text style={modalStyles.field}>Student:</Text> 
                     <Text style={modalStyles.field}>Primary diseases:</Text> 
@@ -183,6 +186,7 @@ export default function addPatient({navigation}) {
 
                 {/* Fields where information is entered */}
                 <View style={modalStyles.fieldWrapper} >
+                <TextInput style={[modalStyles.input, ]} placeholder={'Date'} value={date} onChangeText={text => setDate(text)} /> 
                 <TextInput style={[modalStyles.input, ]} placeholder={'Doctor'} value={doctor} onChangeText={text => setDoctor(text)} /> 
                 <TextInput style={[modalStyles.input, ]} placeholder={'Student'} value={student} onChangeText={text => setStudent(text)} />
                 <TextInput style={[modalStyles.input,]} placeholder={'Primary diseases'} value={primaryDiseases} onChangeText={text => setPrimaryDiseases(text)}/>
