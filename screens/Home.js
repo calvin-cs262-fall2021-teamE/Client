@@ -7,7 +7,7 @@ import {modalStyles} from "../styles/modalStyles";
 import {styles} from "../styles/homework1Styles";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Swiper from 'react-native-swiper';
+import Swiper from 'react-native-swiper/src';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //import  Visit  from './visit';
@@ -57,6 +57,12 @@ export default function addPatient({navigation}) {
   return (
     /* Creation and display of patients */
     <View style={styles.container}>
+
+        {/*searchbar*/}
+        {/*  In case the search bar affects our app on the phone, this is the code we get rid of   */}
+        <View style={modalStyles.fieldStyle}>
+        <TextInput style={[modalStyles.searchBar, ]} placeholder={'search'} value={name} onChangeText={text => setName(text)} /> 
+        </View>
 
         {/*Patients*/}
         <View style={styles.tasksWrapper}>
