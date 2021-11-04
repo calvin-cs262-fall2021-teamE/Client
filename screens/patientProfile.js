@@ -6,6 +6,7 @@ import { profileStyles } from '../styles/profileStyles';
 import { modalStyles } from '../styles/modalStyles';
 import {styles} from "../styles/homework1Styles";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon2 from 'react-native-vector-icons/AntDesign';
 
 
 
@@ -34,7 +35,7 @@ export default function PatientProfile({ route, navigation }) {
                     style={[modalStyles.patientFormButton]} /*style={[modalStyles.buttonAdd]}  */
                     onPress={() => setModalVisible(true)}
                     >
-                    <Icon name={'plus-circle'} color={'#B72303'} size={70}/>
+                    <Icon2 name={'filetext1'} color={'#B72303'} size={70}/>
                 </TouchableOpacity>
             </View>
 
@@ -55,12 +56,13 @@ export default function PatientProfile({ route, navigation }) {
 
                             {/* Form */}
                             <View style={modalStyles.fieldStyle}>
+                                <Text style={modalStyles.field}>Date: {route.params.date}</Text> 
                                 <Text style={modalStyles.field}>Doctor: {route.params.doctor}</Text> 
                                 <Text style={modalStyles.field}>Student: {route.params.student}</Text> 
                                 <Text style={modalStyles.field}>Primary diseases: {route.params.primaryDiseases}</Text> 
                                 <Text style={modalStyles.field}>Secondary diseases: {route.params.secondaryDiseases}</Text> 
                                 <Text style={modalStyles.field}>Discharged Date: {route.params.dischargedDate}</Text> 
-                                <Text style={modalStyles.field}>Notes: {route.params.notes}</Text> 
+                                <Text style={modalStyles.field}>Notes: {route.params.notes}</Text>
                             </View>
 
                             {/* Button to close modal without adding patient */}
