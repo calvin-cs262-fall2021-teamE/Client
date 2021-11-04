@@ -134,4 +134,16 @@ export const modalStyles = StyleSheet.create({
     },
     swiper: {
     },
+    searchBar: {
+      fontSize: 18,
+      color: 'gray',
+      paddingVertical: 1,
+      paddingHorizontal: 10,
+      borderColor: 'gray',
+      backgroundColor: '#E8EAED',
+      borderRadius: 2,
+      borderWidth: 0.5,
+      width: 300,
+      marginTop:39,
+    },  
   });
