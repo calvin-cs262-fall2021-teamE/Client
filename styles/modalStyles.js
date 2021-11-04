@@ -83,6 +83,7 @@ export const modalStyles = StyleSheet.create({
         height: 2
       }
   },
+  
     textStyle: {
       color: "white",
       fontWeight: "bold",
@@ -146,4 +147,24 @@ export const modalStyles = StyleSheet.create({
       width: 300,
       marginTop:39,
     },  
+    patientFormButton: {
+      position: "absolute",
+      borderRadius: 60,
+      flex: 1,
+      //padding: 10,
+      //backgroundColor: "#B72303",
+      width: 80,
+      height: 80,
+      alignItems: "center",
+      //justifyContent: "flex-end",
+      top: 100,
+      left: 100,
+      // shadowColor: "#000",
+      // shadowOffset: {
+      //   width: 0,
+      //   height: 2
+      // },
+      // shadowOpacity: 0.25,
+      // shadowRadius: 4,
+    },
   });
