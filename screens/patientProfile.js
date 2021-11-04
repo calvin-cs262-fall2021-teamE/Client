@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Button, View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { Button, View, Text, TouchableOpacity, FlatList, Modal } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { profileStyles } from '../styles/profileStyles';
+import { modalStyles } from '../styles/modalStyles';
 import {styles} from "../styles/homework1Styles";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 
 export default function PatientProfile({ route, navigation }) {
+    const [modalVisible, setModalVisible] = useState(false);
     return (
         <View>
             <View style={profileStyles.top}>
@@ -25,6 +28,54 @@ export default function PatientProfile({ route, navigation }) {
             </View>
             <View> 
                 <Text style={profileStyles.visit}>Visits</Text>
+
+                {/* Plus button to open modal */}
+                <TouchableOpacity
+                    style={[modalStyles.patientFormButton]} /*style={[modalStyles.buttonAdd]}  */
+                    onPress={() => setModalVisible(true)}
+                    >
+                    <Icon name={'plus-circle'} color={'#B72303'} size={70}/>
+                </TouchableOpacity>
+            </View>
+
+            {/* 'Add Patient' + 'Add Visit' form modal */}
+            <View style={modalStyles.centeredView}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                    setModalVisible(true);
+                    }}
+                >
+
+                    <View style={modalStyles.centeredView}>
+                        <View style={modalStyles.modalView}> 
+
+
+                            {/* Form */}
+                            <View style={modalStyles.fieldStyle}>
+                                <Text style={modalStyles.field}>Doctor: {route.params.doctor}</Text> 
+                                <Text style={modalStyles.field}>Student: {route.params.student}</Text> 
+                                <Text style={modalStyles.field}>Primary diseases: {route.params.primaryDiseases}</Text> 
+                                <Text style={modalStyles.field}>Secondary diseases: {route.params.secondaryDiseases}</Text> 
+                                <Text style={modalStyles.field}>Discharged Date: {route.params.dischargedDate}</Text> 
+                                <Text style={modalStyles.field}>Notes: {route.params.notes}</Text> 
+                            </View>
+
+                            {/* Button to close modal without adding patient */}
+                            <TouchableOpacity
+                                style={[modalStyles.close]}
+                                onPress={() => { 
+                                    setModalVisible(!modalVisible)                  
+                                }}
+                                >
+                                <Icon name={'close-circle'} color={'#B72303'} size={30}/>
+                                </TouchableOpacity>
+
+                        </View>
+                    </View>
+                </Modal>
             </View>
         </View>
     );

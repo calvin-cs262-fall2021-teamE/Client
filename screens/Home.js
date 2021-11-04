@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
 import { Alert, KeyboardAvoidingView, StyleSheet, Text, View, TextInput, Modal, Pressable,
-  Platform, TouchableOpacity, Keyboard, FlatList, ScrollView} from 'react-native';
+  Platform, TouchableOpacity, Keyboard, FlatList, ScrollView, SnapshotViewIOSComponent} from 'react-native';
 import PatientEntry from '../patient/PatientEntry';
 import {modalStyles} from "../styles/modalStyles";
 import {styles} from "../styles/homework1Styles";
@@ -19,6 +19,7 @@ export default function addPatient({navigation}) {
   /* Patient information variables */
   const [modalVisible, setModalVisible] = useState(false);
   const [patientList, setPatientList] = useState([]);
+  const [visitList, setVisitList] = useState([]);
   const [name, setName] = useState();
   const [DOB, setDOB] = useState();
   const [registrationNumber, setRegistrationNumber] = useState();
@@ -27,11 +28,24 @@ export default function addPatient({navigation}) {
   const [region, setRegion] = useState();
   const [ethnicity, setEthnicity] = useState();
   const [language, setLanguage] = useState();
+  const [doctor, setDoctor] = useState();
+  const [student, setStudent] = useState();
+  const [primaryDiseases, setPrimaryDiseases] = useState();
+  const [secondaryDiseases, setSecondaryDiseases] = useState();
+  const [dischargedDate, setDischargedDate] = useState();
+  const [notes, setNotes] = useState();
+
 
  /* Lets entered patient object be filled */ 
   const handleAddPatientEntry = () => {
     Keyboard.dismiss();
-    let patient = {name, DOB, registrationNumber, sex, city, region, ethnicity, language}    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
+    //setDoctor("Josiah");
+
+    // ********************************* we need to implement a visit list to have multiple visits **********************************
+
+    //let form = {doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, notes}    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
+    setVisitList([...visitList, visit]);
+    let patient = {name, DOB, registrationNumber, sex, city, region, ethnicity, language, doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, notes}    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
     setPatientList([...patientList, patient]);
     setName(null);    //resets the memory of the patient form for next entry
     setDOB(null);
@@ -41,17 +55,23 @@ export default function addPatient({navigation}) {
     setRegion(null);
     setEthnicity(null);
     setLanguage(null);
+    setDoctor(null);
+    setStudent(null);
+    setPrimaryDiseases(null);
+    setSecondaryDiseases(null);
+    setDischargedDate(null);
+    setNotes(null);
   }
 
   /* Adds a patient at start of app */
-  // const addStartingPatient = () => {
-  //   let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
-  //                   region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic"}
-  //   setPatientList([...patientList, patient]);
-  // }
-  // useEffect(() => {
-  //   addStartingPatient();
-  //   }, [])
+   const addStartingPatient = () => {
+     let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
+                     region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", notes:"gagonitic"}
+     setPatientList([...patientList, patient]);
+   }
+   useEffect(() => {
+     addStartingPatient();
+     }, [])
 
 
   return (
@@ -163,12 +183,12 @@ export default function addPatient({navigation}) {
 
                 {/* Fields where information is entered */}
                 <View style={modalStyles.fieldWrapper} >
-                <TextInput style={[modalStyles.input, ]} placeholder={'Full Name'} value={name} onChangeText={text => setName(text)} /> 
-                <TextInput style={[modalStyles.input, ]} placeholder={'Full Name'} value={DOB} onChangeText={text => setDOB(text)} />
-                <TextInput style={[modalStyles.input,]} placeholder={'Disease'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)}/>
-                <TextInput style={[modalStyles.input,]} placeholder={'Disease'} value={sex} onChangeText={text => setSex(text)}/>
-                <TextInput style={[modalStyles.input, ]} placeholder={'mm/dd/yyyy'} value={city} onChangeText={text => setCity(text)}/>
-                <TextInput style={[modalStyles.input, ]} placeholder={'Notes'} value={region} onChangeText={text => setRegion(text)}/>
+                <TextInput style={[modalStyles.input, ]} placeholder={'Doctor'} value={doctor} onChangeText={text => setDoctor(text)} /> 
+                <TextInput style={[modalStyles.input, ]} placeholder={'Student'} value={student} onChangeText={text => setStudent(text)} />
+                <TextInput style={[modalStyles.input,]} placeholder={'Primary diseases'} value={primaryDiseases} onChangeText={text => setPrimaryDiseases(text)}/>
+                <TextInput style={[modalStyles.input,]} placeholder={'Secondary diseases'} value={secondaryDiseases} onChangeText={text => setSecondaryDiseases(text)}/>
+                <TextInput style={[modalStyles.input, ]} placeholder={'mm/dd/yyyy'} value={dischargedDate} onChangeText={text => setDischargedDate(text)}/>
+                <TextInput style={[modalStyles.input, ]} placeholder={'Notes'} value={notes} onChangeText={text => setNotes(text)}/>
                 </View>
 
               {/* Button to close modal and add visit */}
