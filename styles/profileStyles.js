@@ -28,15 +28,18 @@ export const profileStyles = StyleSheet.create({
       backgroundColor: "gray",
       borderRadius: 5,
       borderRadius: 60,
-
       },
     visit: {
     fontSize: 24,
     fontWeight: 'bold',
     bottom: 10,
     marginTop: 20,
-    marginLeft: 20
-    }
+    marginLeft: 20,
+    marginBottom: 20,
+    },
+    form: {
+    right: 90,
+    },
     });
 
     //textAlign: "center",

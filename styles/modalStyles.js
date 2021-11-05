@@ -144,27 +144,22 @@ export const modalStyles = StyleSheet.create({
       backgroundColor: '#E8EAED',
       borderRadius: 2,
       borderWidth: 0.5,
-      width: 300,
-      marginTop:39,
+      width: 372,
+      marginTop: 20,
+      marginLeft: 20,
     },  
     patientFormButton: {
       position: "absolute",
       borderRadius: 60,
-      flex: 1,
       //padding: 10,
       //backgroundColor: "#B72303",
       width: 80,
       height: 80,
-      alignItems: "center",
-      //justifyContent: "flex-end",
-      top: 100,
-      left: 100,
-      // shadowColor: "#000",
-      // shadowOffset: {
-      //   width: 0,
-      //   height: 2
-      // },
-      // shadowOpacity: 0.25,
-      // shadowRadius: 4,
+     // alignItems: "center",
+    //  top: 100,
+      //left: 100,
+      paddingTop: 60,
+      paddingLeft: 20
+
     },
   });
