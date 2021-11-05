@@ -30,7 +30,7 @@ export default function PatientProfile({ route, navigation }) {
             <View> 
                 <Text style={profileStyles.visit}>Visits</Text>
 
-                {/* Plus button to open modal */}
+          {/* Icon to open form */}
                 <TouchableOpacity
                     style={[modalStyles.patientFormButton]} /*style={[modalStyles.buttonAdd]}  */
                     onPress={() => setModalVisible(true)}
@@ -42,27 +42,31 @@ export default function PatientProfile({ route, navigation }) {
             {/* 'Add Patient' + 'Add Visit' form modal */}
             <View style={modalStyles.centeredView}>
                 <Modal
-                    animationType="slide"
+                    animationType="fade"
                     transparent={true}
                     visible={modalVisible}
                     onRequestClose={() => {
                     setModalVisible(true);
                     }}
                 >
-
                     <View style={modalStyles.centeredView}>
                         <View style={modalStyles.modalView}> 
-
-
+                        
                             {/* Form */}
-                            <View style={modalStyles.fieldStyle}>
-                                <Text style={modalStyles.field}>Date: {route.params.date}</Text> 
-                                <Text style={modalStyles.field}>Doctor: {route.params.doctor}</Text> 
-                                <Text style={modalStyles.field}>Student: {route.params.student}</Text> 
-                                <Text style={modalStyles.field}>Primary diseases: {route.params.primaryDiseases}</Text> 
-                                <Text style={modalStyles.field}>Secondary diseases: {route.params.secondaryDiseases}</Text> 
-                                <Text style={modalStyles.field}>Discharged Date: {route.params.dischargedDate}</Text> 
-                                <Text style={modalStyles.field}>Notes: {route.params.notes}</Text>
+                            <View style={modalStyles.add}>
+
+                            <Text style={[modalStyles.modalText, {right: 60}]}> Visit - {route.params.date}</Text>
+                            
+
+                                <View style={profileStyles.form}>
+                                    <Text style={modalStyles.field}>Date: {route.params.date}</Text> 
+                                    <Text style={modalStyles.field}>Doctor: {route.params.doctor}</Text> 
+                                    <Text style={modalStyles.field}>Student: {route.params.student}</Text> 
+                                    <Text style={modalStyles.field}>Primary diseases: {route.params.primaryDiseases}</Text> 
+                                    <Text style={modalStyles.field}>Secondary diseases: {route.params.secondaryDiseases}</Text> 
+                                    <Text style={modalStyles.field}>Discharged Date: {route.params.dischargedDate}</Text> 
+                                    <Text style={modalStyles.field}>Notes: {route.params.notes}</Text>
+                                </View>   
                             </View>
 
                             {/* Button to close modal without adding patient */}
