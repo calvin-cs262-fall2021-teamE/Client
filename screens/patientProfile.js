@@ -25,10 +25,15 @@ export default function PatientProfile({ route, navigation }) {
     let visitClickedIndex = 0;   //This var is set to the index of the visit clicked to allow that visit's info to be shown
     let visitList = route.params.visits;    //list of visit objects is stored in this variable.  Passed here from home page
 
+    {/*Updates a visit variable*/}
     const setVisitClickedIndex = (index) => {
         visitClickedIndex = index;
       }
+
+
     return (
+
+        /*Displays the Patient information*/
         <View>
             <View style={profileStyles.top}>
                 <View style={profileStyles.square} />
@@ -43,16 +48,15 @@ export default function PatientProfile({ route, navigation }) {
                     <Text>Ethnicity: {route.params.ethnicity}</Text>
                 </View>
             </View>
-            <View style={styles.container}>
 
-                    {/*Patients*/}
+            {/*Visit list contatiner*/}
+            <View style={styles.container}>
                     <View style={styles.tasksWrapper}>
                         <Text style={styles.sectionTitle}>Visits</Text> 
                         <ScrollView style={styles.items}>
 
-                            {/* Patients will go here */}
-                            {
-                            visitList.map((item, index) => {
+                            {/* Visits displayed here */}
+                            {visitList.map((item, index) => {
                                 return (
                                     <TouchableOpacity key={index} onPress={() => {
                                         setVisitClickedIndex(index);
@@ -61,13 +65,12 @@ export default function PatientProfile({ route, navigation }) {
                                         }}>
                                         <PatientEntry text={item.date} />
                                     </TouchableOpacity>
-
                                 )}) }
-
                         </ScrollView>
                     </View>
 
-                    {/* 'Add Patient' + 'Add Visit' form modal */}
+
+                    {/* 'Add Visit' form modal */}
                     <View style={modalStyles.centeredView}>
                         <Modal
                             animationType="slide"
@@ -77,14 +80,11 @@ export default function PatientProfile({ route, navigation }) {
                             setAddVisitModalVisible(true);
                             }}
                         >
-
                             <View style={modalStyles.centeredView}>
                                 <View style={modalStyles.modalView}>
-
-                                    {/* 'Add Visit' form */}
                                     <KeyboardAvoidingView style={modalStyles.add}>
-
                                         <Text style={[modalStyles.modalText]}>Add a new visit</Text>
+
                                         {/* Names of information fields */}
                                         <View>
                                             <Text style={modalStyles.field}>Date:</Text> 
@@ -119,8 +119,8 @@ export default function PatientProfile({ route, navigation }) {
                                         >
                                             <Text style={modalStyles.textStyle2}>Add Visit</Text>
                                         </Pressable>
-                                        
                                     </KeyboardAvoidingView>
+
 
                                     {/* Button to close modal without adding patient */}
                                     <TouchableOpacity
@@ -131,22 +131,22 @@ export default function PatientProfile({ route, navigation }) {
                                         >
                                             <Icon name={'close-circle'} color={'#B72303'} size={30}/>
                                     </TouchableOpacity>
-
                                 </View>
                             </View>
                         </Modal>
                     </View>
 
-                    {/* Plus button to open modal */}
+
+                    {/* Plus button to open ADD visit modal */}
                     <TouchableOpacity
                     style={[modalStyles.buttonAdd]}
                     onPress={() => setAddVisitModalVisible(true)}
                     >
                         <Icon name={'plus-circle'} color={'#B72303'} size={70}/>
                     </TouchableOpacity>
-                {/*</View>*/}
 
-                {/* 'Add Patient' + 'Add Visit' form modal */}
+
+                {/* DISPLAY visit modal button */}
                 <View style={modalStyles.centeredView}>
                     <Modal
                         animationType="fade"
@@ -159,12 +159,10 @@ export default function PatientProfile({ route, navigation }) {
                         <View style={modalStyles.centeredView}>
                             <View style={modalStyles.modalView}> 
                             
-                                {/* Form */}
+                                {/* Displays clicked Patient Visit */}
                                 <View style={modalStyles.add}>
-
                                     <Text style={[modalStyles.modalText, {right: 60}]}> Visit - {visitClickedIndex}</Text>
                                 
-
                                     <View style={profileStyles.form}>
                                         <Text style={modalStyles.field}>Date: {visitList[visitClickedIndex].date}</Text> 
                                         <Text style={modalStyles.field}>Doctor: {route.params.visits[0].doctor}</Text> 
@@ -176,7 +174,8 @@ export default function PatientProfile({ route, navigation }) {
                                     </View>   
                                 </View>
 
-                                {/* Button to close modal without adding patient */}
+
+                                {/* Button to close modal */}
                                 <TouchableOpacity
                                     style={[modalStyles.close]}
                                     onPress={() => { 
