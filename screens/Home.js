@@ -57,21 +57,30 @@ export default function addPatient({navigation}) {
     setRegion(null);
     setEthnicity(null);
     setLanguage(null);
+    setDate(null);
     setDoctor(null);
     setStudent(null);
     setPrimaryDiseases(null);
     setSecondaryDiseases(null);
     setDischargedDate(null);
     setNotes(null);
+
   }
+
 
   /* Adds a patient at start of app */
    const addStartingPatient = () => {
      setNotes(34);
      let note = notes;
-     let visits = [{date: "11/04/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note"} ]
+     let visitss = [{date: "11/04/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note"},
+     {date: "11/05/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note"},
+     {date: "11/05/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note"},
+     {date: "11/05/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note"},
+     {date: "11/05/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note"},
+
+     {date: "11/06/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note"} ]
      let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
-                     region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
+                     region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visitss}
      setPatientList([...patientList, patient]);
    }
    useEffect(() => {
@@ -240,7 +249,7 @@ export default function addPatient({navigation}) {
       >
         <Icon name={'plus-circle'} color={'#B72303'} size={70}/>
       </TouchableOpacity>
-      </View>
+    </View>
   );
 }
 
