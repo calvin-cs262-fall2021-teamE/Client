@@ -55,17 +55,17 @@ export default function PatientProfile({ route, navigation }) {
                             {/* Form */}
                             <View style={modalStyles.add}>
 
-                            <Text style={[modalStyles.modalText, {right: 60}]}> Visit - {route.params.date}</Text>
+                            <Text style={[modalStyles.modalText, {right: 60}]}> Visit - {route.params.visits[0].date}</Text>
                             
 
                                 <View style={profileStyles.form}>
-                                    <Text style={modalStyles.field}>Date: {route.params.date}</Text> 
-                                    <Text style={modalStyles.field}>Doctor: {route.params.doctor}</Text> 
-                                    <Text style={modalStyles.field}>Student: {route.params.student}</Text> 
-                                    <Text style={modalStyles.field}>Primary diseases: {route.params.primaryDiseases}</Text> 
-                                    <Text style={modalStyles.field}>Secondary diseases: {route.params.secondaryDiseases}</Text> 
-                                    <Text style={modalStyles.field}>Discharged Date: {route.params.dischargedDate}</Text> 
-                                    <Text style={modalStyles.field}>Notes: {route.params.notes}</Text>
+                                    <Text style={modalStyles.field}>Date: {route.params.visits[0].date}</Text> 
+                                    <Text style={modalStyles.field}>Doctor: {route.params.visits[0].doctor}</Text> 
+                                    <Text style={modalStyles.field}>Student: {route.params.visits[0].student}</Text> 
+                                    <Text style={modalStyles.field}>Primary diseases: {route.params.visits[0].primaryDiseases}</Text> 
+                                    <Text style={modalStyles.field}>Secondary diseases: {route.params.visits[0].secondaryDiseases}</Text> 
+                                    <Text style={modalStyles.field}>Discharged Date: {route.params.visits[0].dischargedDate}</Text> 
+                                    <Text style={modalStyles.field}>Notes: {route.params.visits[0].note}</Text>
                                 </View>   
                             </View>
 
@@ -86,3 +86,10 @@ export default function PatientProfile({ route, navigation }) {
         </View>
     );
   }
+
+
+{/* To Do:
+
+- make the icon for each visit
+- make them clickable
+- make add visit option in patient profile*/}
