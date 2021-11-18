@@ -8,7 +8,7 @@ export const profileStyles = StyleSheet.create({
     height: 250,
     backgroundColor: 'white',
   },
-  container: {
+  container: {       //if the visit list looks weird, copy the container from homework1Styles.js and see if that is better
     marginTop: 10,
     paddingVertical: 6,
     left: 150,
@@ -39,6 +39,19 @@ export const profileStyles = StyleSheet.create({
   },
   form: {
     right: 80,
+  },
+  items: {
+    marginTop: 10,
+    borderColor: 'gray',
+  },
+  tasksWrapper: {
+    paddingTop: 25,
+    paddingHorizontal: 10,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    bottom: 10,
   },
 });
 
