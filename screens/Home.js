@@ -46,12 +46,12 @@ export default function addPatient({ navigation }) {
     Keyboard.dismiss();
     //let form = {doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, notes}    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
     //  setVisitList([...visitList, visit]);
-    let patient = {
-      name, DOB, registrationNumber, sex, city, region, ethnicity, language, date, doctor, student,
-      primaryDiseases, secondaryDiseases, dischargedDate, notes
-    }    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
+
+    let patient = { name, DOB, registrationNumber, sex, city, region, ethnicity, language, date, doctor, student, 
+                    primaryDiseases, secondaryDiseases, dischargedDate, notes }    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
     setPatientList([...patientList, patient]);
-    setName(null);
+    setName(null);    
+
     setDOB(null);
     setRegistrationNumber(null);
     setSex(null);
@@ -59,6 +59,15 @@ export default function addPatient({ navigation }) {
     setRegion(null);
     setEthnicity(null);
     setLanguage(null);
+  }
+
+  /* Lets entered visit object be filled */ 
+  const handleAddVisitEntry = (visits) => {
+    Keyboard.dismiss();
+    let patient = paitentList.pop();    //removes most recently created patient from patient list *******pop may not work on this variable
+    patient.visits = [{date, doctor, student,primaryDiseases, secondaryDiseases, dischargedDate, notes}] //adds forms to that patient
+    setPatientList([...patientList, patient]);     //pushes that patient back onto list
+    setDate(null);
     setDoctor(null);
     setStudent(null);
     setPrimaryDiseases(null);
@@ -69,14 +78,19 @@ export default function addPatient({ navigation }) {
 
 
   /* Adds a patient at start of app */
-  //  const addStartingPatient = () => {
-  //    let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
-  //                    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", date: "11/04/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", notes:"gagonitic"}
-  //    setPatientList([...patientList, patient]);
-  //  }
-  //  useEffect(() => {
-  //    addStartingPatient();
-  //    }, [])
+  
+  const addStartingPatient = () => {
+    let visits = [
+    {date: "11/04/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note1"},
+    {date: "11/05/2021", doctor:"Owen", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note2"},
+    {date: "11/06/2021", doctor:"Adam", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note3"} ]
+    let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
+                    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
+    setPatientList([...patientList, patient]);
+  }
+  useEffect(() => {
+    addStartingPatient();
+    }, [])  
 
 
   return (
@@ -85,7 +99,9 @@ export default function addPatient({ navigation }) {
 
       {/* searchbar */}
       <View>
-        <TextInput style={[modalStyles.searchBar,]} placeholder={'search'} value={searchBar} onChangeText={text =>
+
+        <TextInput style={[modalStyles.searchBar,]} placeholder={'search'} value={searchBar} onChangeText={text => 
+
           setSearchBar(text)} />
       </View>
 
@@ -98,6 +114,7 @@ export default function addPatient({ navigation }) {
             return (
               <TouchableOpacity key={index} onPress={() => navigation.navigate('Patient Profile', item)}>
                 <PatientEntry text={item.name} />
+
               </TouchableOpacity>)
           })
         }
@@ -115,7 +132,6 @@ export default function addPatient({ navigation }) {
           }} >
           <View style={modalStyles.centeredView}>
             <View style={modalStyles.modalView}>
-
 
               {/* Allows for swiping between 'Add Patient' and 'Add Visit' views */}
               <Swiper style={modalStyles.swiper}
@@ -167,7 +183,9 @@ export default function addPatient({ navigation }) {
                   <TouchableOpacity
                     style={[modalStyles.buttonClose]}
                     onPress={() => {
-                      setModalVisible(!modalVisible)
+
+                      //setModalVisible(!modalVisible)  if code runs right, we can delete this line
+
                       handleAddPatientEntry()
                     }}>
                     <Text style={modalStyles.textStyle2}>Add Patient</Text>
@@ -214,7 +232,9 @@ export default function addPatient({ navigation }) {
                     style={[modalStyles.buttonClose,]}
                     onPress={() => {
                       setModalVisible(!modalVisible)
-                      handleAddPatientEntry()
+
+                      handleAddVisitEntry()
+
                     }} >
                     <Text style={modalStyles.textStyle2}>Add Visit</Text>
                   </Pressable>
@@ -244,7 +264,8 @@ export default function addPatient({ navigation }) {
       </TouchableOpacity>
     </View>
 
-
   );
 }
+
+
 
