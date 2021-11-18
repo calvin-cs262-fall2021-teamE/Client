@@ -58,6 +58,8 @@ export default function addPatient({ navigation }) {
     setRegion(null);
     setEthnicity(null);
     setLanguage(null);
+    setModalVisible(false);
+    navigation.navigate('Patient Profile', patient);
   }
 
   /* Lets entered visit object be filled */ 
@@ -87,9 +89,9 @@ export default function addPatient({ navigation }) {
                     region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
     setPatientList([...patientList, patient]);
   }
-  useEffect(() => {
-    addStartingPatient();
-    }, [])  
+  // useEffect(() => {
+  //   addStartingPatient();
+  //   }, [])  
 
 
   return (
@@ -186,6 +188,7 @@ export default function addPatient({ navigation }) {
                       //setModalVisible(!modalVisible)  if code runs right, we can delete this line
 
                       handleAddPatientEntry()
+                      
                     }}>
                     <Text style={modalStyles.textStyle2}>Add Patient</Text>
                   </TouchableOpacity>
