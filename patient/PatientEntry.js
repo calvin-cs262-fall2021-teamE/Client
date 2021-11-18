@@ -1,8 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
+
+/*
+ * PatientEntry displays list of patients on the main screen (home)
+ */
 const PatientEntry = (props) => {
-    
+
     return (
         <View style={styles.item}>
             <View style={styles.itemLeft}>

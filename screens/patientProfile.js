@@ -4,14 +4,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { profileStyles } from '../styles/profileStyles';
 import { modalStyles } from '../styles/modalStyles';
-import {styles} from "../styles/homework1Styles";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/AntDesign';
 import PatientEntry from '../patient/PatientEntry';
 
 
-
+/* 
+ * PatientProfile displays Patient-specific information along with various forms corresponding to the patients visit
+ * to the doctor.
+ */
 export default function PatientProfile({ route, navigation }) {
+
     const [addVisitModalVisible, setAddVisitModalVisible] = useState(false);
     const [visitModalVisible, setVisitModalVisible] = useState(false);
     const [doctor, setDoctor] = useState();
@@ -39,6 +42,7 @@ export default function PatientProfile({ route, navigation }) {
     return (
 
         /*Displays the Patient information*/
+
         <View>
             <View style={profileStyles.top}>
                 <View style={profileStyles.square} />
@@ -46,8 +50,8 @@ export default function PatientProfile({ route, navigation }) {
                     <Text style={profileStyles.name}>{route.params.name}</Text>
                     <Text>Date of Birth: {route.params.DOB}</Text>
                     <Text>Sex: {route.params.sex}</Text>
-                    <Text>City of birth: {route.params.city}</Text>                  
-                    <Text>Registration Number: {route.params.registrationNumber}</Text>   
+                    <Text>City of birth: {route.params.city}</Text>
+                    <Text>Registration Number: {route.params.registrationNumber}</Text>
                     <Text>Language: {route.params.language}</Text>
                     <Text>Region: {route.params.region}</Text>
                     <Text>Ethnicity: {route.params.ethnicity}</Text>
@@ -201,6 +205,7 @@ export default function PatientProfile({ route, navigation }) {
                                     <Icon name={'close-circle'} color={'#B72303'} size={30}/>
                                 </TouchableOpacity>
 
+
                             </View>
                         </View>
                     </Modal>
@@ -208,4 +213,4 @@ export default function PatientProfile({ route, navigation }) {
             </View>
         </View>
     );
-  }
+}

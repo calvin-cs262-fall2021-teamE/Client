@@ -46,10 +46,12 @@ export default function addPatient({ navigation }) {
     Keyboard.dismiss();
     //let form = {doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, notes}    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
     //  setVisitList([...visitList, visit]);
+
     let patient = { name, DOB, registrationNumber, sex, city, region, ethnicity, language, date, doctor, student, 
                     primaryDiseases, secondaryDiseases, dischargedDate, notes }    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
     setPatientList([...patientList, patient]);
     setName(null);    
+
     setDOB(null);
     setRegistrationNumber(null);
     setSex(null);
@@ -97,7 +99,9 @@ export default function addPatient({ navigation }) {
 
       {/* searchbar */}
       <View>
+
         <TextInput style={[modalStyles.searchBar,]} placeholder={'search'} value={searchBar} onChangeText={text => 
+
           setSearchBar(text)} />
       </View>
 
@@ -110,7 +114,9 @@ export default function addPatient({ navigation }) {
             return (
               <TouchableOpacity key={index} onPress={() => navigation.navigate('Patient Profile', item)}>
                 <PatientEntry text={item.name} />
-              </TouchableOpacity> )})
+
+              </TouchableOpacity>)
+          })
         }
       </View>
 
@@ -126,7 +132,6 @@ export default function addPatient({ navigation }) {
           }} >
           <View style={modalStyles.centeredView}>
             <View style={modalStyles.modalView}>
-
 
               {/* Allows for swiping between 'Add Patient' and 'Add Visit' views */}
               <Swiper style={modalStyles.swiper}
@@ -178,7 +183,9 @@ export default function addPatient({ navigation }) {
                   <TouchableOpacity
                     style={[modalStyles.buttonClose]}
                     onPress={() => {
+
                       //setModalVisible(!modalVisible)  if code runs right, we can delete this line
+
                       handleAddPatientEntry()
                     }}>
                     <Text style={modalStyles.textStyle2}>Add Patient</Text>
@@ -225,7 +232,9 @@ export default function addPatient({ navigation }) {
                     style={[modalStyles.buttonClose,]}
                     onPress={() => {
                       setModalVisible(!modalVisible)
+
                       handleAddVisitEntry()
+
                     }} >
                     <Text style={modalStyles.textStyle2}>Add Visit</Text>
                   </Pressable>
@@ -254,6 +263,7 @@ export default function addPatient({ navigation }) {
         <Icon name={'plus-circle'} color={'#B72303'} size={70} />
       </TouchableOpacity>
     </View>
+
   );
 }
 
