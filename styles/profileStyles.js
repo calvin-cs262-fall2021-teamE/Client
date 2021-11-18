@@ -12,9 +12,12 @@ export const profileStyles = StyleSheet.create({
     marginTop: 10,
     paddingVertical: 6,
     left: 150,
-    bottom: 130,
+    //bottom: 100,
     width: 200
   },
+  // visitContainer: {       //if the visit list looks weird, copy the container from homework1Styles.js and see if that is better
+  //   flex: 1,
+  // },
   name: {
     fontSize: 30,
     fontWeight: 'bold',
