@@ -100,9 +100,7 @@ export default function addPatient({ navigation }) {
 
       {/* searchbar */}
       <View>
-
         <TextInput style={[modalStyles.searchBar,]} placeholder={'search'} value={searchBar} onChangeText={text => 
-
           setSearchBar(text)} />
       </View>
 
