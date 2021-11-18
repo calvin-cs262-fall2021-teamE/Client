@@ -145,6 +145,10 @@ export const modalStyles = StyleSheet.create({
     width: 80,
     height: 80,
     paddingTop: 60,
-    paddingLeft: 20
+    paddingLeft: 20,
+  },
+  sync: {
+    position: "absolute",
+    paddingHorizontal: 10,
   },
 });
