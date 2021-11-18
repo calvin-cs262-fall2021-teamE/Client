@@ -59,10 +59,10 @@ export default function PatientProfile({ route, navigation }) {
             </View>
 
             {/*Visit list contatiner*/}
-            <View style={styles.container}>
-                <View style={styles.tasksWrapper}>
-                    <Text style={styles.sectionTitle}>Visits</Text> 
-                    <ScrollView style={styles.items}>
+            <View style={profileStyles.container}>
+                <View style={profileStyles.tasksWrapper}>
+                    <Text style={profileStyles.sectionTitle}>Visits</Text> 
+                    <ScrollView style={profileStyles.items}>
 
                         {/* Visits displayed here */}
                         {visitList.map((item, index) => {
