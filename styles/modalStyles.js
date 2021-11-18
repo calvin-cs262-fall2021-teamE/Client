@@ -43,6 +43,10 @@ export const modalStyles = StyleSheet.create({
     // shadowOpacity: 0.25,
     // shadowRadius: 4,
   },
+  buttonAdd2: {
+    top: 450,
+    left: 170,
+  },
   buttonClose: {
     position: "absolute",
     top: 650,
@@ -120,6 +124,8 @@ export const modalStyles = StyleSheet.create({
     paddingLeft: 5,
   },
   fieldStyle: {
+    textAlign: 'left',
+    width: 500,
   },
   add: {
     flex: 1,
