@@ -76,22 +76,19 @@ export default function addPatient({ navigation }) {
 
 
   /* Adds a patient at start of app */
-  /*
+  
   const addStartingPatient = () => {
-    let visitss = [{date: "11/04/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note"},
-    {date: "11/05/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note"},
-    {date: "11/05/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note"},
-    {date: "11/05/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note"},
-    {date: "11/05/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note"},
-
-    {date: "11/06/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note"} ]
+    let visits = [
+    {date: "11/04/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note1"},
+    {date: "11/05/2021", doctor:"Owen", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note2"},
+    {date: "11/06/2021", doctor:"Adam", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note3"} ]
     let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
-                    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visitss}
+                    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
     setPatientList([...patientList, patient]);
   }
   useEffect(() => {
     addStartingPatient();
-    }, [])  */
+    }, [])  
 
 
   return (
