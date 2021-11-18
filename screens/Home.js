@@ -46,9 +46,8 @@ export default function addPatient({ navigation }) {
     Keyboard.dismiss();
     //let form = {doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, notes}    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
     //  setVisitList([...visitList, visit]);
-
-    let patient = { name, DOB, registrationNumber, sex, city, region, ethnicity, language, date, doctor, student, 
-                    primaryDiseases, secondaryDiseases, dischargedDate, notes }    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
+    let visits = [];
+    let patient = { name, DOB, registrationNumber, sex, city, region, ethnicity, language, visits }    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
     setPatientList([...patientList, patient]);
     setName(null);    
 
