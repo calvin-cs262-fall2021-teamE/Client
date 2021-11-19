@@ -46,7 +46,7 @@ export const profileStyles = StyleSheet.create({
     marginBottom: 10,
   },
   form: {
-    right: 55s,
+    right: 55,
   },
   tasksWrapper: {
     paddingTop: 10,
