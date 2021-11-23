@@ -16,8 +16,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 /*
  * Main page where patients are displayed, added, and searched. Also holds menu and allows adding visits for patients.
 */
-export default function addPatient({ navigation }) {
+export default function Home({ navigation }) {
 
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
 
   /* Patient information variables */
   const [modalVisible, setModalVisible] = useState(false);
@@ -40,7 +42,17 @@ export default function addPatient({ navigation }) {
   const [date, setDate] = useState();
   const [searchBar, setSearchBar] = useState();
 
-
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={[modalStyles.sync]}
+          onPress={() => { updatePatients() }} >
+          <Icon name={'cloud-sync'} color={'#B72303'} size={40} />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
   /* Lets patient object be filled with input information */
   const handleAddPatientEntry = () => {
     Keyboard.dismiss();
@@ -89,8 +101,27 @@ export default function addPatient({ navigation }) {
                     region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
     setPatientList([...patientList, patient]);
   }
+
+  function updatePatients() {
+    fetch('https://cs262-monopoly.herokuapp.com/patients')
+        .then((response) => response.json())
+        .then((json) => setData(json))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
+        // for(let i = 0; i < data.length; i++) {
+        //   patientList.shift();
+        // }
+
+        for(let i = 0; i < data.length; i++) {
+          let patient = {name: (data[i].name), DOB: data[i].dob, registrationNumber: data[i].registrationnumber, sex: data[i].sex, city: data[i].city, 
+          region: data[i].region, ethnicity: data[i].ethnicity, language: data[i].lang, visits: []}
+          patientList.push(patient);
+        }
+  }
+  
+
   // useEffect(() => {
-  //   addStartingPatient();
+  //   updatePatients();
   //   }, [])  
 
 

@@ -11,6 +11,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Instructions from './Instructions'
 import About from './About'
 import Home from './Home'
+//import updatePatients from '../patient/updatePatients';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { modalStyles } from "../styles/modalStyles";
 
@@ -25,12 +26,13 @@ export default function DrawerScreen({ navigation }) {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={Home} 
-        options={{headerRight: () => <TouchableOpacity
-          style={[modalStyles.sync]}
-          onPress={() => {
-          }} >
-          <Icon name={'cloud-sync'} color={'#B72303'} size={40} />
-        </TouchableOpacity>}} />
+        // options={{headerRight: () => <TouchableOpacity
+        //   style={[modalStyles.sync]}
+        //   onPress={() => { Home.updatePatients()
+        //   }} >
+        //   <Icon name={'cloud-sync'} color={'#B72303'} size={40} />
+        //</TouchableOpacity>}} 
+        />
       <Drawer.Screen name="About" component={About} />
       <Drawer.Screen name="Instructions" component={Instructions} />
     </Drawer.Navigator>
