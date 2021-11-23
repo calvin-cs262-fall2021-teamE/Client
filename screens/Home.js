@@ -122,7 +122,7 @@ export default function Home({ navigation }) {
 
    useEffect(() => {
   //   updatePatients();
-  addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
+  //addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
      }, [])  
 
   return (
