@@ -120,10 +120,10 @@ export default function Home({ navigation }) {
   }
   
 
-  // useEffect(() => {
+   useEffect(() => {
   //   updatePatients();
-  //   }, [])  
-
+  addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
+     }, [])  
 
   return (
 

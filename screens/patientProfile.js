@@ -6,6 +6,8 @@ import { profileStyles } from '../styles/profileStyles';
 import { modalStyles } from '../styles/modalStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/AntDesign';
+import Icon3 from 'react-native-vector-icons/SimpleLineIcons';  //for editing pencil
+import EvilIcons from 'react-native-vector-icons/EvilIcons';    //for deleting trashcan
 import VisitEntry from '../patient/VisitEntry';
 import { styles } from "../styles/homework1Styles";
 
@@ -23,10 +25,12 @@ export default function PatientProfile({ route, navigation }) {
     const [primaryDiseases, setPrimaryDiseases] = useState();
     const [secondaryDiseases, setSecondaryDiseases] = useState();
     const [dischargedDate, setDischargedDate] = useState();
-    const [notes, setNotes] = useState();
+    const [note, setNote] = useState();
     const [date, setDate] = useState();
-    var visitClickedIndex = 0;   //This var is set to the index of the visit clicked to allow that visit's info to be shown
-    let visitList = route.params.visits;    //list of visit objects is stored in this variable.  Passed here from home page
+    const [editMode, setEditMode] = useState(false);    //used to track if the user is editing a visit
+    const [index, setIndex] = useState();               //used to set and save the index of the visit clicked (could be leveraged more)
+    var visitClickedIndex = 0;                          //This var is set to the index of the visit clicked to allow that visit's info to be shown
+    let visitList = route.params.visits;                //list of visit objects is stored in this variable.  Passed here from home page
 
 
     {/* Sets all data fields to null */ }
@@ -37,7 +41,7 @@ export default function PatientProfile({ route, navigation }) {
         setPrimaryDiseases(null);
         setSecondaryDiseases(null);
         setDischargedDate(null);
-        setNotes(null);
+        setNote(null);
     }
 
     return (
@@ -72,6 +76,7 @@ export default function PatientProfile({ route, navigation }) {
                             <TouchableOpacity key={index} onPress={() => {
 
                                 /* sets variables to be shown in visit view modal */
+                                setIndex(index);
                                 visitClickedIndex = index;
                                 setDate(visitList[visitClickedIndex].date)
                                 setDoctor(visitList[visitClickedIndex].doctor)
@@ -79,7 +84,7 @@ export default function PatientProfile({ route, navigation }) {
                                 setPrimaryDiseases(visitList[visitClickedIndex].primaryDiseases)
                                 setSecondaryDiseases(visitList[visitClickedIndex].secondaryDiseases)
                                 setDischargedDate(visitList[visitClickedIndex].dischargedDate)
-                                setNotes(visitList[visitClickedIndex].note)
+                                setNote(visitList[visitClickedIndex].note)
 
                                 setVisitModalVisible(true);
                             }}>
@@ -128,7 +133,7 @@ export default function PatientProfile({ route, navigation }) {
                                             <TextInput style={[modalStyles.input,]} placeholder={'Primary diseases'} value={primaryDiseases} onChangeText={text => setPrimaryDiseases(text)} />
                                             <TextInput style={[modalStyles.input,]} placeholder={'Secondary diseases'} value={secondaryDiseases} onChangeText={text => setSecondaryDiseases(text)} />
                                             <TextInput style={[modalStyles.input,]} placeholder={'mm/dd/yyyy'} value={dischargedDate} onChangeText={text => setDischargedDate(text)} />
-                                            <TextInput style={[modalStyles.input,]} placeholder={'Notes'} value={notes} onChangeText={text => setNotes(text)} />
+                                            <TextInput style={[modalStyles.input,]} placeholder={'Notes'} value={note} onChangeText={text => setNote(text)} />
                                         </View>
                                 </ScrollView>
 
@@ -138,7 +143,7 @@ export default function PatientProfile({ route, navigation }) {
                                     style={[modalStyles.buttonClose, { bottom: 100 }]}
                                     onPress={() => {
                                         setAddVisitModalVisible(!addVisitModalVisible)
-                                        let visit = { date, doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, notes }
+                                        let visit = { date, doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, note }
                                         visitList.unshift(visit);  //adds created visit to the patient's visit list
                                         setVisitFieldsToNull(); //prevents old data from showing up in add patient modal fields
                                     }}>
@@ -183,12 +188,12 @@ export default function PatientProfile({ route, navigation }) {
                                     <Text style={modalStyles.field}>Primary diseases: {primaryDiseases}</Text>
                                     <Text style={modalStyles.field}>Secondary diseases: {secondaryDiseases}</Text>
                                     <Text style={modalStyles.field}>Discharged Date: {dischargedDate}</Text>
-                                    <Text style={modalStyles.field}>Notes: {notes}</Text>
+                                    <Text style={modalStyles.field}>Notes: {note}</Text>
                                 </View>
                             </View>
 
 
-                            {/* Button to close modal */}
+                            {/* Button to edit visit */}
                             <TouchableOpacity
                                 style={[modalStyles.close]}
                                 onPress={() => {
@@ -199,6 +204,106 @@ export default function PatientProfile({ route, navigation }) {
                             </TouchableOpacity>
 
 
+                            {/* Button to delete visit */}
+                            <TouchableOpacity
+                                style={[modalStyles.delete]}
+                                onPress={() => {
+                                    setEditMode(false);  //makes edit modal invisible
+                                    setVisitModalVisible(false) //makes visit viewing modal invisible (as well)
+                                    let visitIndex = index;
+                                    visitList = visitList.splice(visitIndex, 1);
+                                    setVisitFieldsToNull();
+                                }} >
+                                <EvilIcons name={'trash'} color={'#B72303'} size={40} />
+                            </TouchableOpacity>
+
+
+                            {/* Button to close modal */}
+                            <TouchableOpacity
+                                style={[modalStyles.editVisit]}
+                                onPress={() => {
+                                    setEditMode(true);
+                                }} >
+                                <EvilIcons name={'pencil'} color={'#B72303'} size={40} />
+                            </TouchableOpacity>
+
+
+                        </View>
+                    </View>
+                </Modal>
+            </View>
+
+
+            {/* EDIT visit modal */}
+            <View style={modalStyles.centeredView}>
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={editMode}
+                    onRequestClose={() => {
+                        setEditMode(true);
+                    }}>
+                    <View style={modalStyles.centeredView}>
+                        <View style={modalStyles.modalView}>
+
+
+                            <ScrollView style={styles.items}>
+                                <Text style={[modalStyles.modalText, ]}>Edit {date} Visit</Text>
+
+
+                                {/* Names of information fields */}
+                                <View style={modalStyles.fieldStyle}>
+                                    <Text style={modalStyles.field}>Date:</Text>
+                                    <Text style={modalStyles.field}>Doctor:</Text>
+                                    <Text style={modalStyles.field}>Student:</Text>
+                                    <Text style={modalStyles.field}>Primary diseases:</Text>
+                                    <Text style={modalStyles.field}>Secondary diseases:</Text>
+                                    <Text style={modalStyles.field}>Discharged date:</Text>
+                                    <Text style={modalStyles.field}>Notes:</Text>
+                                    <Text style={modalStyles.field}>Attatchments:</Text>
+                                </View>
+
+
+                                {/* Fields where information is entered */}
+                                <View style={modalStyles.fieldWrapper} >
+                                    <TextInput style={[modalStyles.input,]} placeholder={date} value={date} onChangeText={text => setDate(text)} />
+                                    <TextInput style={[modalStyles.input,]} placeholder={doctor} value={doctor} onChangeText={text => setDoctor(text)} />
+                                    <TextInput style={[modalStyles.input,]} placeholder={student} value={student} onChangeText={text => setStudent(text)} />
+                                    <TextInput style={[modalStyles.input,]} placeholder={primaryDiseases} value={primaryDiseases} onChangeText={text => setPrimaryDiseases(text)} />
+                                    <TextInput style={[modalStyles.input,]} placeholder={secondaryDiseases} value={secondaryDiseases} onChangeText={text => setSecondaryDiseases(text)} />
+                                    <TextInput style={[modalStyles.input,]} placeholder={dischargedDate} value={dischargedDate} onChangeText={text => setDischargedDate(text)} />
+                                    <TextInput style={[modalStyles.input,]} placeholder={note} value={note} onChangeText={text => setNote(text)} />
+                                </View>
+                            </ScrollView>
+
+
+                            {/* Button to close visit edit */}
+                            <TouchableOpacity
+                                style={[modalStyles.close]}
+                                onPress={() => {
+                                    setVisitFieldsToNull();  //Sets all data fields to null to more easily show errors in the app
+                                    setEditMode(!editMode);  //makes edit modal invisible
+                                    setVisitModalVisible(!visitModalVisible);  //makes visit viewing modal invisible (as well)
+                                }} >
+                                <Icon name={'close-circle'} color={'#B72303'} size={30} />
+                            </TouchableOpacity>
+
+                            {/* Button to close modal and save visit changes */}
+                            <Pressable
+                                style={[modalStyles.buttonClose, { bottom: 100 }]}
+                                onPress={() => {
+                                    setEditMode(false);  //makes edit modal invisible
+                                    setVisitModalVisible(false) //makes visit viewing modal invisible (as well)
+
+                                    //sets the old visit to the newly created visit
+                                    let visit = { date, doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, note }
+                                    let visitIndex = index;
+                                    visitList[visitIndex] = visit;   
+
+                                    setVisitFieldsToNull(); //prevents old data from showing up in add patient modal fields
+                                }}>
+                                <Text style={modalStyles.textStyle2}>Save Changes</Text>
+                            </Pressable>
                         </View>
                     </View>
                 </Modal>
