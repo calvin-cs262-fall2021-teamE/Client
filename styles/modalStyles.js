@@ -49,7 +49,7 @@ export const modalStyles = StyleSheet.create({
   },
   buttonClose: {
     position: "absolute",
-    top: 650,
+    top: 690,
     right: 15,
     borderRadius: 5,
     width: 110,
@@ -109,7 +109,7 @@ export const modalStyles = StyleSheet.create({
     backgroundColor: '#E8EAED',
     borderRadius: 2,
     borderWidth: 0.5,
-    width: 300,
+    width: 320,
     marginTop: 39,
   },
   field: {
