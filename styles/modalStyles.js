@@ -82,6 +82,32 @@ export const modalStyles = StyleSheet.create({
       height: 2
     }
   },
+  editVisit: {  //edit visit pencil in edit visit modal
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 31,
+    height: 31,
+    bottom: 50,
+    left: 167,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    }
+  },
+  delete: {   //delete visit trash can in edit visit modal
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 31,
+    height: 31,
+    bottom: 50,
+    left: 145,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    }
+  },
   textStyle: {
     color: "white",
     fontWeight: "bold",
