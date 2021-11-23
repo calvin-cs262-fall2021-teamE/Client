@@ -29,6 +29,7 @@ export default function PatientProfile({ route, navigation }) {
     const [date, setDate] = useState();
     const [editMode, setEditMode] = useState(false);    //used to track if the user is editing a visit
     const [index, setIndex] = useState();               //used to set and save the index of the visit clicked (could be leveraged more)
+    const [deleteDoubleCheckVisible, setDeleteDoubleCheckVisible] = useState(false);   //used to track if the delete visit double check modal is visible
     var visitClickedIndex = 0;                          //This var is set to the index of the visit clicked to allow that visit's info to be shown
     let visitList = route.params.visits;                //list of visit objects is stored in this variable.  Passed here from home page
 
@@ -208,11 +209,7 @@ export default function PatientProfile({ route, navigation }) {
                             <TouchableOpacity
                                 style={[modalStyles.delete]}
                                 onPress={() => {
-                                    setEditMode(false);  //makes edit modal invisible
-                                    setVisitModalVisible(false) //makes visit viewing modal invisible (as well)
-                                    let visitIndex = index;
-                                    visitList = visitList.splice(visitIndex, 1);
-                                    setVisitFieldsToNull();
+                                    setDeleteDoubleCheckVisible(true);
                                 }} >
                                 <EvilIcons name={'trash'} color={'#B72303'} size={40} />
                             </TouchableOpacity>
@@ -228,6 +225,48 @@ export default function PatientProfile({ route, navigation }) {
                             </TouchableOpacity>
 
 
+                        </View>
+                    </View>
+                </Modal>
+            </View>
+
+
+            {/* DELETE visit double check modal */}
+            <View style={modalStyles.centeredView}>
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={deleteDoubleCheckVisible}
+                    onRequestClose={() => {
+                        setDeleteDoubleCheckVisible(true);
+                    }}>
+                    <View style={modalStyles.centeredView}>
+                        <View style={modalStyles.deleteDoubleCheckModal}>
+
+                            <Text> Are You Sure You Want To Delete This Visit? </Text>
+
+                            {/* Button to delete visit*/}
+                            <Pressable
+                                style={[modalStyles.buttonClose, { bottom: 100 }]}
+                                onPress={() => {
+                                    setDeleteDoubleCheckVisible(false);
+                                    setEditMode(false);  //makes edit modal invisible
+                                    setVisitModalVisible(false) //makes visit viewing modal invisible (as well)
+                                    let visitIndex = index;
+                                    visitList = visitList.splice(visitIndex, 1);
+                                    setVisitFieldsToNull();
+                                }}>
+                                <Text style={modalStyles.textStyle2}>Delete Visit</Text>
+                            </Pressable>
+
+                            {/* Button to close modal and NOT delete visit*/}
+                            <Pressable
+                                style={[modalStyles.buttonGoBack, { bottom: 100 }]}
+                                onPress={() => {
+                                    setDeleteDoubleCheckVisible(false);
+                                }}>
+                                <Text style={modalStyles.textStyle2}>Go Back</Text>
+                            </Pressable>
                         </View>
                     </View>
                 </Modal>
@@ -308,6 +347,7 @@ export default function PatientProfile({ route, navigation }) {
                     </View>
                 </Modal>
             </View>
+
 
             {/* Plus button to open ADD visit modal */}
             <TouchableOpacity
