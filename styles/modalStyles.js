@@ -25,6 +25,24 @@ export const modalStyles = StyleSheet.create({
     elevation: 5,
     flex: 1,
   },
+  deleteDoubleCheckModal: {
+    height: 300,
+    width: 300,
+    margin: 10,
+    backgroundColor: "white",
+    borderRadius: 8,
+    padding: 15,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    flex: 1,
+  },
   buttonAdd: {
     position: "absolute",
     borderRadius: 60,
@@ -58,6 +76,17 @@ export const modalStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  buttonGoBack: {
+    position: "absolute",
+    top: 650,
+    left: 15,
+    borderRadius: 5,
+    width: 110,
+    height: 40,
+    backgroundColor: "#B72303",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   bClose: {
     borderRadius: 60,
     padding: 10,
@@ -76,6 +105,32 @@ export const modalStyles = StyleSheet.create({
     height: 31,
     bottom: 732,
     left: 167,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    }
+  },
+  editVisit: {  //edit visit pencil in edit visit modal
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 31,
+    height: 31,
+    bottom: 50,
+    left: 167,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    }
+  },
+  delete: {   //delete visit trash can in edit visit modal
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 31,
+    height: 31,
+    bottom: 50,
+    left: 145,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
