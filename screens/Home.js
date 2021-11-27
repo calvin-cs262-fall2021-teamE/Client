@@ -21,6 +21,8 @@ export default function Home({ navigation }) {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
+  const [data2, setData2] = useState([]);
+
   /* Patient information variables */
   const [modalVisible, setModalVisible] = useState(false);
   const [patientList, setPatientList] = useState([]);
@@ -102,25 +104,61 @@ export default function Home({ navigation }) {
     setPatientList([...patientList, patient]);
   }
 
-  function updatePatients() {
-    fetch('https://cs262-monopoly.herokuapp.com/patients')
+  function uploadPatients() {
+    let patient = {registrationNumber: 20, name:"Test Patient", sex:"Male", dob:"05/14/1999", city:"Addis Ababa", 
+    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", lang:"Amharic"}
+    fetch('https://opus-data.herokuapp.com/patients',{
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"registrationNumber":"20", "name": "Billy Bob Joe", "sex":"Male", "DOB":"05/14/1999", "city":"Addis Ababa", 
+      "region":"Addis Ababa", "ethnicity":"Ethiopian (Habesha)", "lang":"Amharic"})
+    })
         .then((response) => response.json())
         .then((json) => setData(json))
         .catch((error) => console.error(error))
         .finally(() => setLoading(false));
-        // for(let i = 0; i < data.length; i++) {
-        //   patientList.shift();
-        // }
+  }
+
+  function updatePatients() {
+
+    fetch('https://opus-data.herokuapp.com/patients')
+        .then((response) => response.json())
+        .then((json) => setData(json))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
+        for(let i = 0; i < data.length; i++) {
+          patientList.shift();
+        }
 
         for(let i = 0; i < data.length; i++) {
           let patient = {name: (data[i].name), DOB: data[i].dob, registrationNumber: data[i].registrationnumber, sex: data[i].sex, city: data[i].city, 
           region: data[i].region, ethnicity: data[i].ethnicity, language: data[i].lang, visits: []}
           patientList.push(patient);
         }
+        fetch('https://opus-data.herokuapp.com/visits')
+        .then((response) => response.json())
+        .then((json) => setData2(json))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
+        
+
+        for(let i = 0; i < data2.length; i++) {
+          let visit = {date: data2[i].visitdate, doctor: data2[i].doctor, student: data2[i].student, primaryDiseases: data2[i].primarydiseases, secondaryDiseases: data2[i].secondarydiseases, dischargedDate: data2[i].dischargeddate, note: data2[i].notes};
+          for (let j = 0; j < patientList.length; j++) {
+            if (patientList[j].registrationNumber == data2[i].patient) {
+              patientList[i].visits.push(visit);
+            }
+          }
+         }
+
   }
   
 
    useEffect(() => {
+     uploadPatients();
   //   updatePatients();
   //addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
      }, [])  
