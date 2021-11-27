@@ -60,9 +60,7 @@ export default function PatientProfile({ route, navigation }) {
             <View><Text style={profileStyles.sectionTitle}>Visits</Text></View>
 
 
-
             {/*Visit list contatiner*/}
-
             <View style={profileStyles.tasksWrapper}>
                 <ScrollView style={styles.items}>
 
@@ -80,7 +78,6 @@ export default function PatientProfile({ route, navigation }) {
                                 setSecondaryDiseases(visitList[visitClickedIndex].secondaryDiseases)
                                 setDischargedDate(visitList[visitClickedIndex].dischargedDate)
                                 setNotes(visitList[visitClickedIndex].note)
-
                                 setVisitModalVisible(true);
                             }}>
                                 <VisitEntry text={item.date} />

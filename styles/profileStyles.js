@@ -6,7 +6,7 @@ export const profileStyles = StyleSheet.create({
   top: {
     borderBottomColor: 'black',
     borderBottomWidth: 0.5,
-    height: 250,
+    height: 265,
     backgroundColor: 'white',
   },
   container: {       //if the visit list looks weird, copy the container from homework1Styles.js and see if that is better
