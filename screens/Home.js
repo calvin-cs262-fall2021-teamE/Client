@@ -22,6 +22,8 @@ export default function Home({ navigation }) {
   const [data, setData] = useState([]);
   const [LoginModalVisible, setLoginModalVisible] = useState(false);
 
+  const [data2, setData2] = useState([]);
+
   /* Patient information variables */
   const [modalVisible, setModalVisible] = useState(false);
   const [patientList, setPatientList] = useState([]);
