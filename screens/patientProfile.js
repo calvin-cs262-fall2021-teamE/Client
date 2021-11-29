@@ -83,7 +83,7 @@ export default function PatientProfile({ route, navigation }) {
                                 setPrimaryDiseases(visitList[visitClickedIndex].primaryDiseases)
                                 setSecondaryDiseases(visitList[visitClickedIndex].secondaryDiseases)
                                 setDischargedDate(visitList[visitClickedIndex].dischargedDate)
-                                setNotes(visitList[visitClickedIndex].note)
+                                setNote(visitList[visitClickedIndex].note)
                                 setVisitModalVisible(true);
                             }}>
                                 <VisitEntry text={item.date} />
@@ -178,7 +178,7 @@ export default function PatientProfile({ route, navigation }) {
 
                             {/* Displays clicked Patient Visit */}
                             <View style={modalStyles.add}>
-                                <Text style={[modalStyles.modalText, { right: 60 }]}> Visit - {date}</Text>
+                                <Text style={[modalStyles.modalText, { right: 90 }]}> Visit - {date}</Text>
                                 <View style={profileStyles.form}>
                                     <Text style={modalStyles.field}>Date: {date}</Text>
                                     <Text style={modalStyles.field}>Doctor: {doctor}</Text>
@@ -191,9 +191,9 @@ export default function PatientProfile({ route, navigation }) {
                             </View>
 
 
-                            {/* Button to edit visit */}
+                            {/* Button to close modal */}
                             <TouchableOpacity
-                                style={[modalStyles.close]}
+                                style={[profileStyles.close]}
                                 onPress={() => {
                                     setVisitFieldsToNull();  //Sets all data fields to null to more easily show errors in the app
                                     setVisitModalVisible(!visitModalVisible)
@@ -204,21 +204,21 @@ export default function PatientProfile({ route, navigation }) {
 
                             {/* Button to delete visit */}
                             <TouchableOpacity
-                                style={[modalStyles.delete]}
+                                style={[profileStyles.delete]}
                                 onPress={() => {
                                     setDeleteDoubleCheckVisible(true);
                                 }} >
-                                <EvilIcons name={'trash'} color={'#B72303'} size={40} />
+                                <EvilIcons name={'trash'} color={'#B72303'} size={65} />
                             </TouchableOpacity>
 
 
-                            {/* Button to close modal */}
+                            {/* Button to edit visit */}
                             <TouchableOpacity
-                                style={[modalStyles.editVisit]}
+                                style={[profileStyles.editVisit]}
                                 onPress={() => {
                                     setEditMode(true);
                                 }} >
-                                <EvilIcons name={'pencil'} color={'#B72303'} size={40} />
+                                <EvilIcons name={'pencil'} color={'#B72303'} size={65} />
                             </TouchableOpacity>
 
 
@@ -229,7 +229,7 @@ export default function PatientProfile({ route, navigation }) {
 
 
             {/* DELETE visit double check modal */}
-            <View style={modalStyles.centeredView}>
+            <View style={profileStyles.centeredView}>
                 <Modal
                     animationType="fade"
                     transparent={true}
@@ -237,14 +237,14 @@ export default function PatientProfile({ route, navigation }) {
                     onRequestClose={() => {
                         setDeleteDoubleCheckVisible(true);
                     }}>
-                    <View style={modalStyles.centeredView}>
-                        <View style={modalStyles.deleteDoubleCheckModal}>
+                    <View style={profileStyles.centeredView}>
+                        <View style={profileStyles.deleteDoubleCheckModal}>
 
                             <Text> Are You Sure You Want To Delete This Visit? </Text>
 
                             {/* Button to delete visit*/}
                             <Pressable
-                                style={[modalStyles.buttonClose, { bottom: 100 }]}
+                                style={[modalStyles.buttonClose, { bottom: 200 }]}
                                 onPress={() => {
                                     setDeleteDoubleCheckVisible(false);
                                     setEditMode(false);  //makes edit modal invisible
@@ -258,7 +258,7 @@ export default function PatientProfile({ route, navigation }) {
 
                             {/* Button to close modal and NOT delete visit*/}
                             <Pressable
-                                style={[modalStyles.buttonGoBack, { bottom: 100 }]}
+                                style={[profileStyles.buttonGoBack, { bottom: 200 }]}
                                 onPress={() => {
                                     setDeleteDoubleCheckVisible(false);
                                 }}>

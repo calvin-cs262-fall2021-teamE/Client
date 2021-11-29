@@ -72,7 +72,7 @@ export default function Home({ navigation }) {
       headerRight: () => (
         <TouchableOpacity
           style={[modalStyles.sync]}
-          onPress={setLoginModalVisible(true)} >
+          onPress={updatePatients} >
           <Icon name={'cloud-sync'} color={'#B72303'} size={40} />
         </TouchableOpacity>
       ),
