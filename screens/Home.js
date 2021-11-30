@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import {
   Alert, KeyboardAvoidingView, StyleSheet, Text, View, TextInput, Modal, Pressable,
-  Platform, TouchableOpacity, Keyboard, FlatList, ScrollView, SnapshotViewIOSComponent
+  Platform, TouchableOpacity, Keyboard, FlatList, ScrollView, SnapshotViewIOSComponent,
 } from 'react-native';
 import PatientEntry from '../patient/PatientEntry';
 import { modalStyles } from "../styles/modalStyles";
@@ -23,6 +23,7 @@ export default function Home({ navigation }) {
   const [LoginModalVisible, setLoginModalVisible] = useState(false);
 
   const [data2, setData2] = useState([]);
+  //const [text, setText] = useState([]);
 
   /* Patient information variables */
   const [modalVisible, setModalVisible] = useState(false);
@@ -134,20 +135,26 @@ export default function Home({ navigation }) {
     setPatientList([...patientList, patient]);
   }
 
-  function uploadPatients() {
+  function uploadPatient(patient) {
     fetch('https://opus-data.herokuapp.com/patients',{
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({"registrationNumber":"21", "name": "Test Patient", "sex":"Male", "DOB":"05/14/1999", "city":"Addis Ababa", 
-      "region":"Addis Ababa", "ethnicity":"Ethiopian (Habesha)", "lang":"Amharic"})
+      body: JSON.stringify({"registrationNumber": patient.registrationNumber, "name": patient.name, "sex": patient.sex, "DOB": patient.DOB, "city": patient.city, 
+      "region": patient.region, "ethnicity": patient.ethnicity, "lang":patient.language})
     })
         .then((response) => response.json())
         .then((json) => setData(json))
         .catch((error) => console.error(error))
         .finally(() => setLoading(false));
+      //   let patient2 = {name: text};
+      // setPatientList([...patientList, patient2]);
+  }
+
+  function refreshPage() {
+    window.location.reload(false);
   }
 
 
@@ -160,7 +167,20 @@ export default function Home({ navigation }) {
         .then((json) => setData(json))
         .catch((error) => console.error(error))
         .finally(() => setLoading(false));
+        
         for(let i = 0; i < data.length; i++) {
+          for(let j = 0; j < patientList.length; j++) {
+            if(patientList[j].registrationNumber == data[i].registrationnumber) {
+              patientList.splice(j, 1);
+            }
+          }
+        }
+        
+        for(let i = 0; i < patientList.length; i++) {
+          uploadPatient(patientList[i]);
+        }
+
+        for(let i = 0; i < patientList.length; i++) {
           patientList.shift();
         }
 
@@ -180,19 +200,20 @@ export default function Home({ navigation }) {
           let visit = {date: data2[i].visitdate, doctor: data2[i].doctor, student: data2[i].student, primaryDiseases: data2[i].primarydiseases, secondaryDiseases: data2[i].secondarydiseases, dischargedDate: data2[i].dischargeddate, note: data2[i].notes};
           for (let j = 0; j < patientList.length; j++) {
             if (patientList[j].registrationNumber == data2[i].patient) {
-              patientList[i].visits.push(visit);
+              patientList[j].visits.push(visit);
             }
           }
          }
+         //setPatientList([...patientList]);
   }
 
   
 
-   useEffect(() => {
-  //   uploadPatients();
-  //   updatePatients();
-  //addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
-     }, [])  
+  //  useEffect(() => {
+  // //   uploadPatients();
+  // //   updatePatients();
+  // //addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
+  //    }, [])  
 
 
 
