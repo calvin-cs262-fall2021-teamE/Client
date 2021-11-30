@@ -121,21 +121,80 @@ export default function Home({ navigation }) {
   }
 
 
-  /* Update patient information from database */
-  function updatePatients() {
-    fetch('https://cs262-monopoly.herokuapp.com/patients')
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-    for (let i = 0; i < data.length; i++) {
-      let patient = {
-        name: (data[i].name), DOB: data[i].dob, registrationNumber: data[i].registrationnumber, sex: data[i].sex, city: data[i].city,
-        region: data[i].region, ethnicity: data[i].ethnicity, language: data[i].lang, visits: []
-      }
-      patientList.push(patient);
-    }
+
+  /* Adds a patient at start of app */
+  
+  const addStartingPatient = () => {
+    let visits = [
+    {date: "11/04/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note1"},
+    {date: "11/05/2021", doctor:"Owen", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note2"},
+    {date: "11/06/2021", doctor:"Adam", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note3"} ]
+    let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
+                    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
+    setPatientList([...patientList, patient]);
   }
+
+  function uploadPatients() {
+    fetch('https://opus-data.herokuapp.com/patients',{
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"registrationNumber":"21", "name": "Test Patient", "sex":"Male", "DOB":"05/14/1999", "city":"Addis Ababa", 
+      "region":"Addis Ababa", "ethnicity":"Ethiopian (Habesha)", "lang":"Amharic"})
+    })
+        .then((response) => response.json())
+        .then((json) => setData(json))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
+  }
+
+
+  /* Update patient information from database */
+
+  function updatePatients() {
+
+    fetch('https://opus-data.herokuapp.com/patients')
+        .then((response) => response.json())
+        .then((json) => setData(json))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
+        for(let i = 0; i < data.length; i++) {
+          patientList.shift();
+        }
+
+        for(let i = 0; i < data.length; i++) {
+          let patient = {name: (data[i].name), DOB: data[i].dob, registrationNumber: data[i].registrationnumber, sex: data[i].sex, city: data[i].city, 
+          region: data[i].region, ethnicity: data[i].ethnicity, language: data[i].lang, visits: []}
+          patientList.push(patient);
+        }
+        fetch('https://opus-data.herokuapp.com/visits')
+        .then((response) => response.json())
+        .then((json) => setData2(json))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
+        
+
+        for(let i = 0; i < data2.length; i++) {
+          let visit = {date: data2[i].visitdate, doctor: data2[i].doctor, student: data2[i].student, primaryDiseases: data2[i].primarydiseases, secondaryDiseases: data2[i].secondarydiseases, dischargedDate: data2[i].dischargeddate, note: data2[i].notes};
+          for (let j = 0; j < patientList.length; j++) {
+            if (patientList[j].registrationNumber == data2[i].patient) {
+              patientList[i].visits.push(visit);
+            }
+          }
+         }
+  }
+
+  
+
+   useEffect(() => {
+  //   uploadPatients();
+  //   updatePatients();
+  //addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
+     }, [])  
+
+
 
   return (
 
@@ -149,7 +208,7 @@ export default function Home({ navigation }) {
 
 
       {/* Diplay of patient list on screen */}
-      <View style={styles.tasksWrapper}>
+      <ScrollView style={styles.tasksWrapper}>
         <Text style={styles.sectionTitle}>Patients</Text>
         {
           patientList.map((item, index) => {
@@ -159,7 +218,7 @@ export default function Home({ navigation }) {
               </TouchableOpacity>)
           })
         }
-      </View>
+      </ScrollView>
 
 
       {/* 'Add Patient' form modal */}
