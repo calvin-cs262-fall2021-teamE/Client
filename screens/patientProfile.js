@@ -173,22 +173,22 @@ export default function PatientProfile({ route, navigation }) {
                         setVisitModalVisible(true);
                     }}>
                     <View style={modalStyles.centeredView}>
-                        <View style={modalStyles.modalView}>
+                        <View style={profileStyles.modalView}>
 
 
                             {/* Displays clicked Patient Visit */}
-                            <View style={modalStyles.add}>
-                                <Text style={[modalStyles.modalText, { right: 90 }]}> Visit - {date}</Text>
+                           { /*<View style={profileStyles.add}>*/}
+                                <Text style={[profileStyles.modalText, { }]}> Visit - {date}</Text>
                                 <View style={profileStyles.form}>
-                                    <Text style={modalStyles.field}>Date: {date}</Text>
-                                    <Text style={modalStyles.field}>Doctor: {doctor}</Text>
-                                    <Text style={modalStyles.field}>Student: {student}</Text>
-                                    <Text style={modalStyles.field}>Primary diseases: {primaryDiseases}</Text>
-                                    <Text style={modalStyles.field}>Secondary diseases: {secondaryDiseases}</Text>
-                                    <Text style={modalStyles.field}>Discharged Date: {dischargedDate}</Text>
-                                    <Text style={modalStyles.field}>Notes: {note}</Text>
+                                    <Text style={profileStyles.field}>Date: {date}</Text>
+                                    <Text style={profileStyles.field}>Doctor: {doctor}</Text>
+                                    <Text style={profileStyles.field}>Student: {student}</Text>
+                                    <Text style={profileStyles.field}>Primary diseases: {primaryDiseases}</Text>
+                                    <Text style={profileStyles.field}>Secondary diseases: {secondaryDiseases}</Text>
+                                    <Text style={profileStyles.field}>Discharged Date: {dischargedDate}</Text>
+                                    <Text style={profileStyles.field}>Notes: {note}</Text>
                                 </View>
-                            </View>
+                           { /*</View>*/}
 
 
                             {/* Button to close modal */}
