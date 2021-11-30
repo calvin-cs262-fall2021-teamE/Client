@@ -105,15 +105,13 @@ export default function Home({ navigation }) {
   }
 
   function uploadPatients() {
-    let patient = {registrationNumber: 20, name:"Test Patient", sex:"Male", dob:"05/14/1999", city:"Addis Ababa", 
-    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", lang:"Amharic"}
     fetch('https://opus-data.herokuapp.com/patients',{
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({"registrationNumber":"20", "name": "Billy Bob Joe", "sex":"Male", "DOB":"05/14/1999", "city":"Addis Ababa", 
+      body: JSON.stringify({"registrationNumber":"21", "name": "Test Patient", "sex":"Male", "DOB":"05/14/1999", "city":"Addis Ababa", 
       "region":"Addis Ababa", "ethnicity":"Ethiopian (Habesha)", "lang":"Amharic"})
     })
         .then((response) => response.json())
@@ -158,7 +156,7 @@ export default function Home({ navigation }) {
   
 
    useEffect(() => {
-     uploadPatients();
+  //   uploadPatients();
   //   updatePatients();
   //addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
      }, [])  
@@ -175,7 +173,7 @@ export default function Home({ navigation }) {
 
 
       {/* Diplay of patient list on screen */}
-      <View style={styles.tasksWrapper}>
+      <ScrollView style={styles.tasksWrapper}>
         <Text style={styles.sectionTitle}>Patients</Text>
         {
           patientList.map((item, index) => {
@@ -186,7 +184,7 @@ export default function Home({ navigation }) {
               </TouchableOpacity>)
           })
         }
-      </View>
+      </ScrollView>
 
 
       {/* 'Add Patient' + 'Add Visit' form modal */}
