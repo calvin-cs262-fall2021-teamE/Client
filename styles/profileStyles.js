@@ -6,7 +6,7 @@ export const profileStyles = StyleSheet.create({
   top: {
     borderBottomColor: 'black',
     borderBottomWidth: 0.5,
-    height: 250,
+    height: 265,
     backgroundColor: 'white',
   },
   container: {       //if the visit list looks weird, copy the container from homework1Styles.js and see if that is better
@@ -68,6 +68,53 @@ export const profileStyles = StyleSheet.create({
     height: 200,
     backgroundColor: '#F9F9F9',
     marginTop: 10,
-  }
+  },
+  editVisit: {  //edit visit pencil in edit visit modal
+    bottom: 15,
+    left: 150,
+  },
+  delete: {   //delete visit trash can in edit visit modal
+    top: 42,
+    right: 143,
+  },
+  close: {
+    bottom: 630,
+    left: 165,
+  },
+  deleteDoubleCheckModal: {
+    height: 100,
+    width: 380,
+    margin: 10,
+    backgroundColor: "white",
+    borderRadius: 8,
+    padding: 15,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    flex: 1,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 5
+  },
+  buttonGoBack: {
+    position: "absolute",
+    top: 689,
+    left: 15,
+    borderRadius: 5,
+    width: 110,
+    height: 40,
+    backgroundColor: "#B72303",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 

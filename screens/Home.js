@@ -9,8 +9,8 @@ import { modalStyles } from "../styles/modalStyles";
 import { styles } from "../styles/homework1Styles";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Swiper from 'react-native-swiper/src';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+//import Login from '../screens/Login';
 
 
 /*
@@ -20,6 +20,7 @@ export default function Home({ navigation }) {
 
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [LoginModalVisible, setLoginModalVisible] = useState(false);
 
   const [data2, setData2] = useState([]);
 
@@ -44,17 +45,44 @@ export default function Home({ navigation }) {
   const [date, setDate] = useState();
   const [searchBar, setSearchBar] = useState();
 
+
+  const Login = () => {
+     return (
+
+    <View>
+    <Modal
+      animationType="none"
+      transparent={true}
+      visible={LoginModalVisible}
+      onRequestClose={() => {
+        setLoginModalVisible(false);
+      }
+      } >
+      <View style={modalStyles.centeredView}>
+        <View style={modalStyles.modalView}>
+        </View>
+      </View>
+    </Modal>
+  </View>
+     );
+ }
+
+
+  /* Sync button to login and sync patient information */
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
           style={[modalStyles.sync]}
-          onPress={() => { updatePatients() }} >
+          onPress={updatePatients} >
           <Icon name={'cloud-sync'} color={'#B72303'} size={40} />
         </TouchableOpacity>
       ),
     });
   }, [navigation]);
+
+
+
   /* Lets patient object be filled with input information */
   const handleAddPatientEntry = () => {
     Keyboard.dismiss();
@@ -63,7 +91,7 @@ export default function Home({ navigation }) {
     let visits = [];
     let patient = { name, DOB, registrationNumber, sex, city, region, ethnicity, language, visits }    //this is the only way I could create the patient object without getting an error.  Not optimal I know, but it works
     setPatientList([...patientList, patient]);
-    setName(null);    
+    setName(null);
 
     setDOB(null);
     setRegistrationNumber(null);
@@ -76,11 +104,12 @@ export default function Home({ navigation }) {
     navigation.navigate('Patient Profile', patient);
   }
 
-  /* Lets entered visit object be filled */ 
+
+  /* Lets entered visit object be filled */
   const handleAddVisitEntry = (visits) => {
     Keyboard.dismiss();
     let patient = paitentList.pop();    //removes most recently created patient from patient list *******pop may not work on this variable
-    patient.visits = [{date, doctor, student,primaryDiseases, secondaryDiseases, dischargedDate, notes}] //adds forms to that patient
+    patient.visits = [{ date, doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, notes }] //adds forms to that patient
     setPatientList([...patientList, patient]);     //pushes that patient back onto list
     setDate(null);
     setDoctor(null);
@@ -92,76 +121,21 @@ export default function Home({ navigation }) {
   }
 
 
-  /* Adds a patient at start of app */
-  
-  const addStartingPatient = () => {
-    let visits = [
-    {date: "11/04/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note1"},
-    {date: "11/05/2021", doctor:"Owen", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note2"},
-    {date: "11/06/2021", doctor:"Adam", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note3"} ]
-    let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
-                    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
-    setPatientList([...patientList, patient]);
-  }
-
-  function uploadPatients() {
-    let patient = {registrationNumber: 20, name:"Test Patient", sex:"Male", dob:"05/14/1999", city:"Addis Ababa", 
-    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", lang:"Amharic"}
-    fetch('https://opus-data.herokuapp.com/patients',{
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({"registrationNumber":"20", "name": "Billy Bob Joe", "sex":"Male", "DOB":"05/14/1999", "city":"Addis Ababa", 
-      "region":"Addis Ababa", "ethnicity":"Ethiopian (Habesha)", "lang":"Amharic"})
-    })
-        .then((response) => response.json())
-        .then((json) => setData(json))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
-  }
-
+  /* Update patient information from database */
   function updatePatients() {
-
-    fetch('https://opus-data.herokuapp.com/patients')
-        .then((response) => response.json())
-        .then((json) => setData(json))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
-        for(let i = 0; i < data.length; i++) {
-          patientList.shift();
-        }
-
-        for(let i = 0; i < data.length; i++) {
-          let patient = {name: (data[i].name), DOB: data[i].dob, registrationNumber: data[i].registrationnumber, sex: data[i].sex, city: data[i].city, 
-          region: data[i].region, ethnicity: data[i].ethnicity, language: data[i].lang, visits: []}
-          patientList.push(patient);
-        }
-        fetch('https://opus-data.herokuapp.com/visits')
-        .then((response) => response.json())
-        .then((json) => setData2(json))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
-        
-
-        for(let i = 0; i < data2.length; i++) {
-          let visit = {date: data2[i].visitdate, doctor: data2[i].doctor, student: data2[i].student, primaryDiseases: data2[i].primarydiseases, secondaryDiseases: data2[i].secondarydiseases, dischargedDate: data2[i].dischargeddate, note: data2[i].notes};
-          for (let j = 0; j < patientList.length; j++) {
-            if (patientList[j].registrationNumber == data2[i].patient) {
-              patientList[i].visits.push(visit);
-            }
-          }
-         }
-
+    fetch('https://cs262-monopoly.herokuapp.com/patients')
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+    for (let i = 0; i < data.length; i++) {
+      let patient = {
+        name: (data[i].name), DOB: data[i].dob, registrationNumber: data[i].registrationnumber, sex: data[i].sex, city: data[i].city,
+        region: data[i].region, ethnicity: data[i].ethnicity, language: data[i].lang, visits: []
+      }
+      patientList.push(patient);
+    }
   }
-  
-
-   useEffect(() => {
-     uploadPatients();
-  //   updatePatients();
-  //addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
-     }, [])  
 
   return (
 
@@ -169,7 +143,7 @@ export default function Home({ navigation }) {
 
       {/* searchbar */}
       <View>
-        <TextInput style={[modalStyles.searchBar,]} placeholder={'search'} value={searchBar} onChangeText={text => 
+        <TextInput style={[modalStyles.searchBar,]} placeholder={'search'} value={searchBar} onChangeText={text =>
           setSearchBar(text)} />
       </View>
 
@@ -182,133 +156,68 @@ export default function Home({ navigation }) {
             return (
               <TouchableOpacity key={index} onPress={() => navigation.navigate('Patient Profile', item)}>
                 <PatientEntry text={item.name} />
-
               </TouchableOpacity>)
           })
         }
       </View>
 
 
-      {/* 'Add Patient' + 'Add Visit' form modal */}
+      {/* 'Add Patient' form modal */}
       <View style={modalStyles.centeredView}>
         <Modal
           animationType="slide"
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => {
-            setModalVisible(true);
+            setModalVisible(false);
           }} >
           <View style={modalStyles.centeredView}>
             <View style={modalStyles.modalView}>
 
-              {/* Allows for swiping between 'Add Patient' and 'Add Visit' views */}
-              <Swiper style={modalStyles.swiper}
-                from={0}
-                minDistanceForAction={0.1}
-                loop={false}
-                controlsProps={{
-                  dotsTouchable: true,
-                }} >
+
+              { /* 'Add Patient' portion of modal allowing for creation of a new patient object */}
+              <ScrollView style={styles.items}>
+                <KeyboardAvoidingView style={modalStyles.add}
+                  behavior='postion'>
+                  <Text style={modalStyles.modalText}>Add a new patient</Text>
 
 
-                { /* 'Add Patient' portion of modal allowing for creation of a new patient object */}
-                <View>
-                  <ScrollView style={styles.items}>
-                    <KeyboardAvoidingView style={modalStyles.add}
-                      behavior='postion'>
-                      <Text style={modalStyles.modalText}>Add a new patient</Text>
+                  {/* Names of information fields */}
+                  <View style={modalStyles.fieldStyle}>
+                    <Text style={modalStyles.field}>Name:</Text>
+                    <Text style={modalStyles.field}>Date of Birth:</Text>
+                    <Text style={modalStyles.field}>Registration number:</Text>
+                    <Text style={modalStyles.field}>Sex:</Text>
+                    <Text style={modalStyles.field}>City (town/village):</Text>
+                    <Text style={modalStyles.field}>Region:</Text>
+                    <Text style={modalStyles.field}>Ethnicity:</Text>
+                    <Text style={modalStyles.field}>Language:</Text>
+                  </View>
 
 
-                      {/* Names of information fields */}
-                      <View style={modalStyles.fieldStyle}>
-                        <Text style={modalStyles.field}>Name:</Text>
-                        <Text style={modalStyles.field}>Date of Birth:</Text>
-                        <Text style={modalStyles.field}>Registration number:</Text>
-                        <Text style={modalStyles.field}>Sex:</Text>
-                        <Text style={modalStyles.field}>City (town/village):</Text>
-                        <Text style={modalStyles.field}>Region:</Text>
-                        <Text style={modalStyles.field}>Ethnicity:</Text>
-                        <Text style={modalStyles.field}>Language:</Text>
-                      </View>
+                  {/* Fields where patient information is entered */}
+                  <View style={modalStyles.fieldWrapper} >
+                    <TextInput style={[modalStyles.input,]} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} />
+                    <TextInput style={[modalStyles.input,]} placeholder={'mm/dd/yyyy'} value={DOB} onChangeText={text => setDOB(text)} />
+                    <TextInput style={[modalStyles.input,]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)} />
+                    <TextInput style={[modalStyles.input,]} placeholder={'M/F'} value={sex} onChangeText={text => setSex(text)} />
+                    <TextInput style={[modalStyles.input,]} placeholder={'City (town/village)'} value={city} onChangeText={text => setCity(text)} />
+                    <TextInput style={[modalStyles.input,]} placeholder={'Region'} value={region} onChangeText={text => setRegion(text)} />
+                    <TextInput style={[modalStyles.input,]} placeholder={'Ethnicity'} value={ethnicity} onChangeText={text => setEthnicity(text)} />
+                    <TextInput style={[modalStyles.input,]} placeholder={'Language'} value={language} onChangeText={text => setLanguage(text)} />
+                  </View>
+                </KeyboardAvoidingView>
+              </ScrollView>
 
 
-                      {/* Fields where patient information is entered */}
-                      <View style={modalStyles.fieldWrapper} >
-                        <TextInput style={[modalStyles.input,]} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} />
-                        <TextInput style={[modalStyles.input,]} placeholder={'mm/dd/yyyy'} value={DOB} onChangeText={text => setDOB(text)} />
-                        <TextInput style={[modalStyles.input,]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)} />
-                        <TextInput style={[modalStyles.input,]} placeholder={'M/F'} value={sex} onChangeText={text => setSex(text)} />
-                        <TextInput style={[modalStyles.input,]} placeholder={'City (town/village)'} value={city} onChangeText={text => setCity(text)} />
-                        <TextInput style={[modalStyles.input,]} placeholder={'Region'} value={region} onChangeText={text => setRegion(text)} />
-                        <TextInput style={[modalStyles.input,]} placeholder={'Ethnicity'} value={ethnicity} onChangeText={text => setEthnicity(text)} />
-                        <TextInput style={[modalStyles.input,]} placeholder={'Language'} value={language} onChangeText={text => setLanguage(text)} />
-                      </View>
-                    </KeyboardAvoidingView>
-                  </ScrollView>
-
-
-                  {/* Button to close modal and add patient object */}
-                  <TouchableOpacity
-                    style={[modalStyles.buttonClose]}
-                    onPress={() => {
-
-                      //setModalVisible(!modalVisible)  if code runs right, we can delete this line
-
-                      handleAddPatientEntry()
-                      
-                    }}>
-                    <Text style={modalStyles.textStyle2}>Add Patient</Text>
-                  </TouchableOpacity>
-                </View>
-
-
-                {/* 'Add Visit' form portion of modal allowing to add a visit for a specific patient */}
-                <View>
-                  <ScrollView style={styles.items}>
-                    <KeyboardAvoidingView style={modalStyles.add}>
-                      <Text style={[modalStyles.modalText]}>Add a new visit</Text>
-
-
-                      {/* Names of information fields */}
-                      <View>
-                        <Text style={modalStyles.field}>Date:</Text>
-                        <Text style={modalStyles.field}>Doctor:</Text>
-                        <Text style={modalStyles.field}>Student:</Text>
-                        <Text style={modalStyles.field}>Primary diseases:</Text>
-                        <Text style={modalStyles.field}>Secondary diseases:</Text>
-                        <Text style={modalStyles.field}>Discharged date:</Text>
-                        <Text style={modalStyles.field}>Notes:</Text>
-                        <Text style={modalStyles.field}>Attatchments:</Text>
-                      </View>
-
-
-                      {/* Fields where patient visit information is entered */}
-                      <View style={modalStyles.fieldWrapper} >
-                        <TextInput style={[modalStyles.input,]} placeholder={'Date'} value={date} onChangeText={text => setDate(text)} />
-                        <TextInput style={[modalStyles.input,]} placeholder={'Doctor'} value={doctor} onChangeText={text => setDoctor(text)} />
-                        <TextInput style={[modalStyles.input,]} placeholder={'Student'} value={student} onChangeText={text => setStudent(text)} />
-                        <TextInput style={[modalStyles.input,]} placeholder={'Primary diseases'} value={primaryDiseases} onChangeText={text => setPrimaryDiseases(text)} />
-                        <TextInput style={[modalStyles.input,]} placeholder={'Secondary diseases'} value={secondaryDiseases} onChangeText={text => setSecondaryDiseases(text)} />
-                        <TextInput style={[modalStyles.input,]} placeholder={'mm/dd/yyyy'} value={dischargedDate} onChangeText={text => setDischargedDate(text)} />
-                        <TextInput style={[modalStyles.input,]} placeholder={'Notes'} value={notes} onChangeText={text => setNotes(text)} />
-                      </View>
-                    </KeyboardAvoidingView>
-                  </ScrollView>
-
-
-                  {/* Button to close modal and add visit form to the specific patient profile */}
-                  <Pressable
-                    style={[modalStyles.buttonClose,]}
-                    onPress={() => {
-                      setModalVisible(!modalVisible)
-
-                      handleAddVisitEntry()
-
-                    }} >
-                    <Text style={modalStyles.textStyle2}>Add Visit</Text>
-                  </Pressable>
-                </View>
-              </Swiper>
+              {/* Button to close modal and add patient object */}
+              <TouchableOpacity
+                style={[modalStyles.buttonClose]}
+                onPress={() => {
+                  handleAddPatientEntry()
+                }}>
+                <Text style={modalStyles.textStyle2}>Add Patient</Text>
+              </TouchableOpacity>
 
 
               {/* Button to close modal without adding patient or visit form */}
