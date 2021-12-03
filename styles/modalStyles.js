@@ -155,4 +155,22 @@ export const modalStyles = StyleSheet.create({
     position: "absolute",
     paddingHorizontal: 10,
   },
+  searchButton: {
+    position: "absolute",
+    borderRadius: 60,
+    flex: 1,
+    width: 25,
+    height: 25,
+    alignItems: "center",
+    justifyContent: "flex-end",
+    top: 18,
+    left: 365,
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
+  },
 });

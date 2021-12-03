@@ -11,6 +11,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import SearchIcon from 'react-native-vector-icons/Fontisto';
+
 //import Login from '../screens/Login';
 
 
@@ -29,10 +31,15 @@ export default function Home({ navigation }) {
   const [data2, setData2] = useState([]);
   //const [text, setText] = useState([]);
 
-  /* Patient information variables */
   const [modalVisible, setModalVisible] = useState(false);
+  const [searchModalVisible, setSearchModalVisible] = useState(false);
   const [patientList, setPatientList] = useState([]);
+  const [tempPatientList, setTempPatientList] = useState([]);
   const [visitList, setVisitList] = useState([]);
+  const [searchBar, setSearchBar] = useState();
+
+
+  /* Patient information variables */
   const [name, setName] = useState();
   // const [DOB, setDOB] = useState(new Date());
   const [registrationNumber, setRegistrationNumber] = useState();
@@ -42,6 +49,7 @@ export default function Home({ navigation }) {
   const [ethnicity, setEthnicity] = useState();
   const [language, setLanguage] = useState();
   const [searchBar, setSearchBar] = useState();
+
 
 
   const [DOB, setDOB] = useState();
@@ -216,14 +224,67 @@ export default function Home({ navigation }) {
     //setPatientList([...patientList]);
   }
 
-  useEffect(() => {
-    //setDOB(new Date());
-  })
+
+  //updates the list of patients shown to user based on what is in the search bar
+  //Returns: a list of patients whoes names contain the text in the search bar
+  function updatePatientListSearchBar (searchedText) {  
+
+      let patientListWithSearchString = [];
+      for (let i = 0; i < patientList.length; i++) {
+        if (patientList[i].name.toLowerCase().includes(searchedText.toLowerCase()) || searchBar == "" || searchBar == null) {
+          patientListWithSearchString.push(patientList[i]);  //adds patient from master list of patients to list that will be returned if that patient's name
+        }                                                    //contains the string in the search bar
+      }
+      return patientListWithSearchString;  //returns updated patient list containing only patients whoes names include the search string
+  }
+
+  //not currentl used, but maybe userful later
+  function updatePatientListSearchBar2 () {
+
+    let patientListWithSearchString = [];
+    for (let i = 0; i < patientList.length; i++) {
+      if (patientList[i].name.toLowerCase().includes(searchBar.toLowerCase()) || searchBar == "" || searchBar == null) {
+        patientListWithSearchString.push(patientList[i]);
+      }
+    }
+    return patientListWithSearchString;  //returns updated patient list containing only patients whoes names include the search string
+}
+
+  function handleSearchBarChange(text) {  //called when search bar texted is updated, updates searchBar var and updates shown patient list
+    setSearchBar(text);
+    setTempPatientList(updatePatientListSearchBar(text));
+  }
+
+
+  function change2() {    // not currently used, but maybe useful later
+    setTempPatientList(updatePatientListSearchBar2());
+  }
+
+
+    useEffect(() => {
+      addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
+   //   uploadPatients();
+   //   updatePatients();
+      }, [])  
 
   return (
 
     <View style={styles.container}>
 
+      {/* Searchbar View (handles text entering)*/}
+      <View>
+        <TextInput style={[modalStyles.searchBar,]} placeholder={'search'} value={searchBar}  onChangeText={text => handleSearchBarChange(text)} />
+        {/*         onChange={() => setTempPatientList(updatePatientListSearchBar(searchBar))}  inside of TextInput does not work, but is close*/}
+
+        
+        {/* search Button   ----- maybe could be deleted*/}
+        <TouchableOpacity
+          style={[modalStyles.searchButton]}
+          onPress={() => setTempPatientList(updatePatientListSearchBar(searchBar))} >
+          <SearchIcon name={'search'} color={'#B72303'} size={22} />
+        </TouchableOpacity> 
+
+      </View>
 
       {/* Diplay of patient list on screen */}
       <ScrollView style={styles.tasksWrapper}>
@@ -236,13 +297,15 @@ export default function Home({ navigation }) {
 
 
         <Text style={styles.sectionTitle}>Patients</Text>
-        {
-          patientList.map((item, index) => {
-            return (
-              <TouchableOpacity key={index} onPress={() => navigation.navigate('Patient Profile', item)}>
-                <PatientEntry text={item.name} />
-              </TouchableOpacity>)
-          })
+
+        { 
+            tempPatientList.map((item, index) => {
+              //if (searchBar == "")  {  //not searching a patient, displays all patients
+               return (
+                <TouchableOpacity key={index} onPress={() => navigation.navigate('Patient Profile', item)}>
+                  <PatientEntry text={item.name} />
+                </TouchableOpacity>)
+            })
         }
       </ScrollView>
 
@@ -328,7 +391,6 @@ export default function Home({ navigation }) {
         </Modal>
       </View >
 
-
       {/* Plus button to open modal to add patient and/or visit form */}
       < TouchableOpacity
         style={[modalStyles.buttonAdd]}
@@ -340,6 +402,3 @@ export default function Home({ navigation }) {
 
   );
 }
-
-
-
