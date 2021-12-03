@@ -10,6 +10,7 @@ import { styles } from "../styles/homework1Styles";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import SearchIcon from 'react-native-vector-icons/Fontisto';
 //import Login from '../screens/Login';
 
 
@@ -25,10 +26,15 @@ export default function Home({ navigation }) {
   const [data2, setData2] = useState([]);
   //const [text, setText] = useState([]);
 
-  /* Patient information variables */
   const [modalVisible, setModalVisible] = useState(false);
+  const [searchModalVisible, setSearchModalVisible] = useState(false);
   const [patientList, setPatientList] = useState([]);
+  const [tempPatientList, setTempPatientList] = useState([]);
   const [visitList, setVisitList] = useState([]);
+  const [searchBar, setSearchBar] = useState();
+
+
+  /* Patient information variables */
   const [name, setName] = useState();
   const [DOB, setDOB] = useState();
   const [registrationNumber, setRegistrationNumber] = useState();
@@ -44,7 +50,7 @@ export default function Home({ navigation }) {
   const [dischargedDate, setDischargedDate] = useState();
   const [notes, setNotes] = useState();
   const [date, setDate] = useState();
-  const [searchBar, setSearchBar] = useState();
+
 
 
   const Login = () => {
@@ -132,7 +138,10 @@ export default function Home({ navigation }) {
     {date: "11/06/2021", doctor:"Adam", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note3"} ]
     let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
                     region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
-    setPatientList([...patientList, patient]);
+                    let patient2 = {name:"Josiah", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
+                    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
+    setPatientList([...patientList, patient, patient2]);
+    setTempPatientList([...tempPatientList, patient, patient2]);
   }
 
   function uploadPatient(patient) {
@@ -207,37 +216,82 @@ export default function Home({ navigation }) {
          //setPatientList([...patientList]);
   }
 
-  
 
-  //  useEffect(() => {
-  // //   uploadPatients();
-  // //   updatePatients();
-  // //addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
-  //    }, [])  
+  //updates the list of patients shown to user based on what is in the search bar
+  //Returns: a list of patients whoes names contain the text in the search bar
+  function updatePatientListSearchBar (searchedText) {  
 
+      let patientListWithSearchString = [];
+      for (let i = 0; i < patientList.length; i++) {
+        if (patientList[i].name.toLowerCase().includes(searchedText.toLowerCase()) || searchBar == "" || searchBar == null) {
+          patientListWithSearchString.push(patientList[i]);  //adds patient from master list of patients to list that will be returned if that patient's name
+        }                                                    //contains the string in the search bar
+      }
+      return patientListWithSearchString;  //returns updated patient list containing only patients whoes names include the search string
+  }
+
+  //not currentl used, but maybe userful later
+  function updatePatientListSearchBar2 () {
+
+    let patientListWithSearchString = [];
+    for (let i = 0; i < patientList.length; i++) {
+      if (patientList[i].name.toLowerCase().includes(searchBar.toLowerCase()) || searchBar == "" || searchBar == null) {
+        patientListWithSearchString.push(patientList[i]);
+      }
+    }
+    return patientListWithSearchString;  //returns updated patient list containing only patients whoes names include the search string
+}
+
+  function handleSearchBarChange(text) {  //called when search bar texted is updated, updates searchBar var and updates shown patient list
+    setSearchBar(text);
+    setTempPatientList(updatePatientListSearchBar(text));
+  }
+
+
+  function change2() {    // not currently used, but maybe useful later
+    setTempPatientList(updatePatientListSearchBar2());
+  }
+
+
+    useEffect(() => {
+      addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
+   //   uploadPatients();
+   //   updatePatients();
+      }, [])  
 
 
   return (
 
     <View style={styles.container}>
 
-      {/* searchbar */}
+      {/* Searchbar View (handles text entering)*/}
       <View>
-        <TextInput style={[modalStyles.searchBar,]} placeholder={'search'} value={searchBar} onChangeText={text =>
-          setSearchBar(text)} />
+        <TextInput style={[modalStyles.searchBar,]} placeholder={'search'} value={searchBar}  onChangeText={text => handleSearchBarChange(text)} />
+        {/*         onChange={() => setTempPatientList(updatePatientListSearchBar(searchBar))}  inside of TextInput does not work, but is close*/}
+
+        
+        {/* search Button   ----- maybe could be deleted*/}
+        <TouchableOpacity
+          style={[modalStyles.searchButton]}
+          onPress={() => setTempPatientList(updatePatientListSearchBar(searchBar))} >
+          <SearchIcon name={'search'} color={'#B72303'} size={22} />
+        </TouchableOpacity> 
+
       </View>
 
 
       {/* Diplay of patient list on screen */}
       <ScrollView style={styles.tasksWrapper}>
         <Text style={styles.sectionTitle}>Patients</Text>
-        {
-          patientList.map((item, index) => {
-            return (
-              <TouchableOpacity key={index} onPress={() => navigation.navigate('Patient Profile', item)}>
-                <PatientEntry text={item.name} />
-              </TouchableOpacity>)
-          })
+
+        { 
+            tempPatientList.map((item, index) => {
+              //if (searchBar == "")  {  //not searching a patient, displays all patients
+               return (
+                <TouchableOpacity key={index} onPress={() => navigation.navigate('Patient Profile', item)}>
+                  <PatientEntry text={item.name} />
+                </TouchableOpacity>)
+            })
         }
       </ScrollView>
 
@@ -313,7 +367,6 @@ export default function Home({ navigation }) {
         </Modal>
       </View>
 
-
       {/* Plus button to open modal to add patient and/or visit form */}
       <TouchableOpacity
         style={[modalStyles.buttonAdd]}
@@ -324,6 +377,3 @@ export default function Home({ navigation }) {
 
   );
 }
-
-
-
