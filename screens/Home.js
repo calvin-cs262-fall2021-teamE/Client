@@ -52,7 +52,7 @@ export default function Home({ navigation }) {
 
 
 
-  const [DOB, setDOB] = useState(new Date());
+  const [DOB, setDOB] = useState();  //useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
@@ -260,7 +260,9 @@ export default function Home({ navigation }) {
     setTempPatientList(updatePatientListSearchBar2());
   }
 
-
+  useEffect(() => {
+    setTempPatientList(patientList);
+  });
     // *************************** uncomment to have preadded patient *************************************************************
    //   uploadPatients();
    //   updatePatients();
@@ -349,7 +351,7 @@ export default function Home({ navigation }) {
                         display="default"
                         onChange={onChange}
                       />
-                    )}
+                    )}  
                     <TextInput style={[modalStyles.input,]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)} />
                     <TextInput style={[modalStyles.input,]} placeholder={'M/F'} value={sex} onChangeText={text => setSex(text)} />
                     <TextInput style={[modalStyles.input,]} placeholder={'City (town/village)'} value={city} onChangeText={text => setCity(text)} />
