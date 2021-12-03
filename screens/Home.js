@@ -48,11 +48,11 @@ export default function Home({ navigation }) {
   const [region, setRegion] = useState();
   const [ethnicity, setEthnicity] = useState();
   const [language, setLanguage] = useState();
-  const [searchBar, setSearchBar] = useState();
+  
 
 
 
-  const [DOB, setDOB] = useState();
+  const [DOB, setDOB] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
@@ -183,17 +183,17 @@ export default function Home({ navigation }) {
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
 
-    for (let i = 0; i < data.length; i++) {
-      for (let j = 0; j < patientList.length; j++) {
-        if (patientList[j].registrationNumber == data[i].registrationnumber) {
-          patientList.splice(j, 1);
-        }
-      }
-    }
+    // for (let i = 0; i < data.length; i++) {
+    //   for (let j = 0; j < patientList.length; j++) {
+    //     if (patientList[j].registrationNumber == data[i].registrationnumber) {
+    //       patientList.splice(j, 1);
+    //     }
+    //   }
+    // }
 
-    for (let i = 0; i < patientList.length; i++) {
-      uploadPatient(patientList[i]);
-    }
+    // for (let i = 0; i < patientList.length; i++) {
+    //   uploadPatient(patientList[i]);
+    // }
 
     for (let i = 0; i < patientList.length; i++) {
       patientList.shift();
@@ -261,11 +261,10 @@ export default function Home({ navigation }) {
   }
 
 
-    useEffect(() => {
-      addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
+    // *************************** uncomment to have preadded patient *************************************************************
    //   uploadPatients();
    //   updatePatients();
-      }, [])  
+    
 
   return (
 
@@ -288,12 +287,6 @@ export default function Home({ navigation }) {
 
       {/* Diplay of patient list on screen */}
       <ScrollView style={styles.tasksWrapper}>
-
-        {/* searchbar */}
-        <View>
-          <TextInput style={[modalStyles.searchBar,]} placeholder={'search'} value={searchBar} onChangeText={text =>
-            setSearchBar(text)} />
-        </View>
 
 
         <Text style={styles.sectionTitle}>Patients</Text>
