@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import {
   Alert, KeyboardAvoidingView, StyleSheet, Text, View, TextInput, Modal, Pressable,
-  Platform, TouchableOpacity, Keyboard, FlatList, ScrollView, SnapshotViewIOSComponent,
+  Platform, TouchableOpacity, Keyboard, FlatList, ScrollView, SnapshotViewIOSComponent, Button,
 } from 'react-native';
 import PatientEntry from '../patient/PatientEntry';
 import { modalStyles } from "../styles/modalStyles";
@@ -10,13 +10,17 @@ import { styles } from "../styles/homework1Styles";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import DateTimePicker from '@react-native-community/datetimepicker';
 //import Login from '../screens/Login';
 
 
 /*
- * Main page where patients are displayed, added, and searched. Also holds menu and allows adding visits for patients.
+ * Main page where patients are displayed, added, and searched. Also holds menu, sync, and allows adding visits for patients.
 */
 export default function Home({ navigation }) {
+
+
+  const [open, setOpen] = useState(false);
 
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -30,43 +34,57 @@ export default function Home({ navigation }) {
   const [patientList, setPatientList] = useState([]);
   const [visitList, setVisitList] = useState([]);
   const [name, setName] = useState();
-  const [DOB, setDOB] = useState();
+  // const [DOB, setDOB] = useState(new Date());
   const [registrationNumber, setRegistrationNumber] = useState();
   const [sex, setSex] = useState();
   const [city, setCity] = useState();
   const [region, setRegion] = useState();
   const [ethnicity, setEthnicity] = useState();
   const [language, setLanguage] = useState();
-  const [doctor, setDoctor] = useState();
-  const [student, setStudent] = useState();
-  const [primaryDiseases, setPrimaryDiseases] = useState();
-  const [secondaryDiseases, setSecondaryDiseases] = useState();
-  const [dischargedDate, setDischargedDate] = useState();
-  const [notes, setNotes] = useState();
-  const [date, setDate] = useState();
   const [searchBar, setSearchBar] = useState();
 
 
-  const Login = () => {
-     return (
+  const [DOB, setDOB] = useState();
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
 
-    <View>
-    <Modal
-      animationType="none"
-      transparent={true}
-      visible={LoginModalVisible}
-      onRequestClose={() => {
-        setLoginModalVisible(false);
-      }
-      } >
-      <View style={modalStyles.centeredView}>
-        <View style={modalStyles.modalView}>
-        </View>
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || DOB;
+    setShow(Platform.OS === 'ios');
+    setDOB(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+
+
+  const Login = () => {
+    return (
+
+      <View>
+        <Modal
+          animationType="none"
+          transparent={true}
+          visible={LoginModalVisible}
+          onRequestClose={() => {
+            setLoginModalVisible(false);
+          }
+          } >
+          <View style={modalStyles.centeredView}>
+            <View style={modalStyles.modalView}>
+            </View>
+          </View>
+        </Modal>
       </View>
-    </Modal>
-  </View>
-     );
- }
+    );
+  }
 
 
   /* Sync button to login and sync patient information */
@@ -122,35 +140,24 @@ export default function Home({ navigation }) {
   }
 
 
-
-  /* Adds a patient at start of app */
-  
-  const addStartingPatient = () => {
-    let visits = [
-    {date: "11/04/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note1"},
-    {date: "11/05/2021", doctor:"Owen", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note2"},
-    {date: "11/06/2021", doctor:"Adam", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note3"} ]
-    let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
-                    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
-    setPatientList([...patientList, patient]);
-  }
-
   function uploadPatient(patient) {
-    fetch('https://opus-data.herokuapp.com/patients',{
+    fetch('https://opus-data.herokuapp.com/patients', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({"registrationNumber": patient.registrationNumber, "name": patient.name, "sex": patient.sex, "DOB": patient.DOB, "city": patient.city, 
-      "region": patient.region, "ethnicity": patient.ethnicity, "lang":patient.language})
+      body: JSON.stringify({
+        "registrationNumber": patient.registrationNumber, "name": patient.name, "sex": patient.sex, "DOB": patient.DOB, "city": patient.city,
+        "region": patient.region, "ethnicity": patient.ethnicity, "lang": patient.language
+      })
     })
-        .then((response) => response.json())
-        .then((json) => setData(json))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
-      //   let patient2 = {name: text};
-      // setPatientList([...patientList, patient2]);
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+    //   let patient2 = {name: text};
+    // setPatientList([...patientList, patient2]);
   }
 
   function refreshPage() {
@@ -163,73 +170,71 @@ export default function Home({ navigation }) {
   function updatePatients() {
 
     fetch('https://opus-data.herokuapp.com/patients')
-        .then((response) => response.json())
-        .then((json) => setData(json))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
-        
-        for(let i = 0; i < data.length; i++) {
-          for(let j = 0; j < patientList.length; j++) {
-            if(patientList[j].registrationNumber == data[i].registrationnumber) {
-              patientList.splice(j, 1);
-            }
-          }
-        }
-        
-        for(let i = 0; i < patientList.length; i++) {
-          uploadPatient(patientList[i]);
-        }
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
 
-        for(let i = 0; i < patientList.length; i++) {
-          patientList.shift();
+    for (let i = 0; i < data.length; i++) {
+      for (let j = 0; j < patientList.length; j++) {
+        if (patientList[j].registrationNumber == data[i].registrationnumber) {
+          patientList.splice(j, 1);
         }
+      }
+    }
 
-        for(let i = 0; i < data.length; i++) {
-          let patient = {name: (data[i].name), DOB: data[i].dob, registrationNumber: data[i].registrationnumber, sex: data[i].sex, city: data[i].city, 
-          region: data[i].region, ethnicity: data[i].ethnicity, language: data[i].lang, visits: []}
-          patientList.push(patient);
+    for (let i = 0; i < patientList.length; i++) {
+      uploadPatient(patientList[i]);
+    }
+
+    for (let i = 0; i < patientList.length; i++) {
+      patientList.shift();
+    }
+
+    for (let i = 0; i < data.length; i++) {
+      let patient = {
+        name: (data[i].name), DOB: data[i].dob, registrationNumber: data[i].registrationnumber, sex: data[i].sex, city: data[i].city,
+        region: data[i].region, ethnicity: data[i].ethnicity, language: data[i].lang, visits: []
+      }
+      patientList.push(patient);
+    }
+    fetch('https://opus-data.herokuapp.com/visits')
+      .then((response) => response.json())
+      .then((json) => setData2(json))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+
+
+    for (let i = 0; i < data2.length; i++) {
+      let visit = { date: data2[i].visitdate, doctor: data2[i].doctor, student: data2[i].student, primaryDiseases: data2[i].primarydiseases, secondaryDiseases: data2[i].secondarydiseases, dischargedDate: data2[i].dischargeddate, note: data2[i].notes };
+      for (let j = 0; j < patientList.length; j++) {
+        if (patientList[j].registrationNumber == data2[i].patient) {
+          patientList[j].visits.push(visit);
         }
-        fetch('https://opus-data.herokuapp.com/visits')
-        .then((response) => response.json())
-        .then((json) => setData2(json))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
-        
-
-        for(let i = 0; i < data2.length; i++) {
-          let visit = {date: data2[i].visitdate, doctor: data2[i].doctor, student: data2[i].student, primaryDiseases: data2[i].primarydiseases, secondaryDiseases: data2[i].secondarydiseases, dischargedDate: data2[i].dischargeddate, note: data2[i].notes};
-          for (let j = 0; j < patientList.length; j++) {
-            if (patientList[j].registrationNumber == data2[i].patient) {
-              patientList[j].visits.push(visit);
-            }
-          }
-         }
-         //setPatientList([...patientList]);
+      }
+    }
+    //setPatientList([...patientList]);
   }
 
-  
-
-  //  useEffect(() => {
-  // //   uploadPatients();
-  // //   updatePatients();
-  // //addStartingPatient();    // *************************** uncomment to have preadded patient *************************************************************
-  //    }, [])  
-
-
+  useEffect(() => {
+    //setDOB(new Date());
+  })
 
   return (
 
     <View style={styles.container}>
 
-      {/* searchbar */}
-      <View>
-        <TextInput style={[modalStyles.searchBar,]} placeholder={'search'} value={searchBar} onChangeText={text =>
-          setSearchBar(text)} />
-      </View>
-
 
       {/* Diplay of patient list on screen */}
       <ScrollView style={styles.tasksWrapper}>
+
+        {/* searchbar */}
+        <View>
+          <TextInput style={[modalStyles.searchBar,]} placeholder={'search'} value={searchBar} onChangeText={text =>
+            setSearchBar(text)} />
+        </View>
+
+
         <Text style={styles.sectionTitle}>Patients</Text>
         {
           patientList.map((item, index) => {
@@ -264,21 +269,31 @@ export default function Home({ navigation }) {
 
                   {/* Names of information fields */}
                   <View style={modalStyles.fieldStyle}>
-                    <Text style={modalStyles.field}>Name:</Text>
-                    <Text style={modalStyles.field}>Date of Birth:</Text>
-                    <Text style={modalStyles.field}>Registration number:</Text>
-                    <Text style={modalStyles.field}>Sex:</Text>
-                    <Text style={modalStyles.field}>City (town/village):</Text>
-                    <Text style={modalStyles.field}>Region:</Text>
-                    <Text style={modalStyles.field}>Ethnicity:</Text>
-                    <Text style={modalStyles.field}>Language:</Text>
+                    <Text style={modalStyles.field}>Name: </Text>
+                    <Text style={modalStyles.field}>Date of Birth: </Text>
+                    <Text style={modalStyles.field}>Registration number: </Text>
+                    <Text style={modalStyles.field}>Sex: </Text>
+                    <Text style={modalStyles.field}>City (town/village): </Text>
+                    <Text style={modalStyles.field}>Region: </Text>
+                    <Text style={modalStyles.field}>Ethnicity: </Text>
+                    <Text style={modalStyles.field}>Language: </Text>
                   </View>
 
 
                   {/* Fields where patient information is entered */}
                   <View style={modalStyles.fieldWrapper} >
                     <TextInput style={[modalStyles.input,]} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} />
-                    <TextInput style={[modalStyles.input,]} placeholder={'mm/dd/yyyy'} value={DOB} onChangeText={text => setDOB(text)} />
+                    <TextInput style={[modalStyles.input,]} placeholder={'mm/dd/yyyy'} value={DOB} onPressIn={showDatepicker} />               
+                    {show && (
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={DOB}
+                        mode={"date"}
+                        format="DD-MM-YYYY"
+                        display="default"
+                        onChange={onChange}
+                      />
+                    )}
                     <TextInput style={[modalStyles.input,]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)} />
                     <TextInput style={[modalStyles.input,]} placeholder={'M/F'} value={sex} onChangeText={text => setSex(text)} />
                     <TextInput style={[modalStyles.input,]} placeholder={'City (town/village)'} value={city} onChangeText={text => setCity(text)} />
@@ -311,16 +326,17 @@ export default function Home({ navigation }) {
             </View>
           </View>
         </Modal>
-      </View>
+      </View >
 
 
       {/* Plus button to open modal to add patient and/or visit form */}
-      <TouchableOpacity
+      < TouchableOpacity
         style={[modalStyles.buttonAdd]}
-        onPress={() => setModalVisible(true)} >
+        onPress={() => setModalVisible(true)
+        } >
         <Icon name={'plus-circle'} color={'#B72303'} size={70} />
-      </TouchableOpacity>
-    </View>
+      </TouchableOpacity >
+    </View >
 
   );
 }

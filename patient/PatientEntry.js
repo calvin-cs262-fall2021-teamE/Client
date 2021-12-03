@@ -13,7 +13,7 @@ const PatientEntry = (props) => {
                 <View style={styles.square}></View>
                 <Text style={styles.itemText}>{props.text}</Text>
             </View>
-            <View style={styles.circular}></View>
+
         </View>
     )
 }
@@ -21,12 +21,12 @@ const PatientEntry = (props) => {
 const styles = StyleSheet.create({
     item: {
         backgroundColor: '#FFF',
-        padding: 5,
+        padding: 8,
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: 2,
+        marginBottom: 3,
         borderWidth: 1,
         borderColor: '#ECECEC',
     },

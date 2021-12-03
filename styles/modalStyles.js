@@ -139,9 +139,9 @@ export const modalStyles = StyleSheet.create({
     backgroundColor: '#E8EAED',
     borderRadius: 2,
     borderWidth: 0.5,
-    width: 372,
-    marginTop: 20,
-    marginLeft: 20,
+    width: 383,
+    marginLeft: 5,
+    marginBottom: 20,
   },
   patientFormButton: {
     position: "absolute",

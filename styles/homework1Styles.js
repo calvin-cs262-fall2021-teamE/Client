@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: 500,
-    backgroundColor: '#F9F9F9',
+    backgroundColor: '#F0F0F0',
   },
   tasksWrapper: {
     paddingTop: 25,
