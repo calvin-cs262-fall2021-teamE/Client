@@ -133,15 +133,16 @@ export const modalStyles = StyleSheet.create({
   searchBar: {
     fontSize: 18,
     color: 'gray',
-    paddingVertical: 1,
-    paddingHorizontal: 10,
+    paddingVertical: 3,
+    paddingHorizontal: 45,
     borderColor: 'gray',
-    backgroundColor: '#E8EAED',
+    backgroundColor: 'white',
     borderRadius: 2,
     borderWidth: 0.5,
-    width: 383,
+    width: 400,
     marginLeft: 5,
-    marginBottom: 20,
+    marginBottom: 25,
+
   },
   patientFormButton: {
     position: "absolute",
@@ -156,21 +157,7 @@ export const modalStyles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   searchButton: {
-    position: "absolute",
-    borderRadius: 60,
-    flex: 1,
-    width: 25,
-    height: 25,
-    alignItems: "center",
-    justifyContent: "flex-end",
-    top: 18,
-    left: 365,
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
+    right: 392,
+    top: 6,
   },
 });
