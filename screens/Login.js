@@ -13,26 +13,26 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 /* Login modal allowing user to enter credentuals to verify sync */
-export default function Login() {
+// export default function Login() {
 
-    const [modalVisible, setModalVisible] = useState(false);
+//     const [loginModalVisible, setLoginModalVisible] = useState(false);
 
-    return (
+//     return (
 
-        <View>
-            <Modal
-                animationType="none"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    setModalVisible(!modalVisible);
-                }
-                } >
-                <View style={modalStyles.centeredView}>
-                    <View style={modalStyles.modalView}>
-                    </View>
-                </View>
-            </Modal>
-        </View>
-    );
-}
+//         <View>
+//             <Modal
+//                 animationType="none"
+//                 transparent={true}
+//                 visible={loginModalVisible}
+//                 onRequestClose={() => {
+//                     setLoginModalVisible(!loginModalVisible);
+//                 }
+//                 } >
+//                 <View style={modalStyles.centeredView}>
+//                     <View style={modalStyles.modalView}>
+//                     </View>
+//                 </View>
+//             </Modal>
+//         </View>
+//     );
+// }
