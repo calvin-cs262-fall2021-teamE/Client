@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import {
-  Alert, KeyboardAvoidingView, StyleSheet, Text, View, TextInput, Modal, Pressable,
+  Alert, KeyboardAvoidingView, Image, StyleSheet, Text, View, TextInput, Modal, Pressable,
   Platform, TouchableOpacity, Keyboard, FlatList, ScrollView, SnapshotViewIOSComponent, Button,
 } from 'react-native';
 import PatientEntry from '../patient/PatientEntry';
@@ -12,14 +12,17 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SearchIcon from 'react-native-vector-icons/Fontisto';
+//import Login from './Login';
 
 
 /*
  * Main page where patients are displayed, added, and searched. Also holds menu, sync, and allows adding visits for patients.
 */
 export default function Home({ navigation }) {
-
+  
   /* Random variables */
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
   const [open, setOpen] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -68,7 +71,7 @@ export default function Home({ navigation }) {
       headerRight: () => (
         <TouchableOpacity
           style={[modalStyles.sync]}
-          onPress={updatePatients} >
+          onPress={() => setLoginModalVisible(true)} >
           <Icon name={'cloud-sync'} color={'#B72303'} size={40} />
         </TouchableOpacity>
       ),
@@ -109,7 +112,7 @@ export default function Home({ navigation }) {
   }
 
 
-  /* Uploads and downloads patient information from database */
+  /* Uploads patient information to database */
   function uploadPatient(patient) {
     fetch('https://opus-data.herokuapp.com/patients', {
       method: 'POST',
@@ -127,13 +130,51 @@ export default function Home({ navigation }) {
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
   }
-  function refreshPage() {
-    window.location.reload(false);
+
+  function uploadVisit(visit) {
+    fetch('https://opus-data.herokuapp.com/patients', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "visitDate": visit.visitdate, "patient": visit.patient, "doctor": visit.doctor, "student": visit.student, "primarydiseases": visit.primaryDiseases,
+        "secondarydiseases": visit.secondaryDiseases, "dischargeddate": visit.dischargedDate, "notes": visit.note
+      })
+    })
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
   }
 
 
   /* Update patient information from database */
   function updatePatients() {
+    let pListLen = patientList.length;
+    setLoginModalVisible(false);
+
+    fetch('https://opus-data.herokuapp.com/patients')
+    .then((response) => response.json())
+    .then((json) => setData(json))
+    .catch((error) => console.error(error))
+    .finally(() => setLoading(false));
+  for (let i = 0; i < patientList.length; i++) {
+    for (let j = 0; j < data.length; j++){
+      if (patientList[i].registrationNumber == data[j].registrationnumber) {
+        patientList.splice(i);
+        i--;
+      }
+    }
+  }
+  for (let i = 0; i < patientList.length; i++) {
+    uploadPatient(patientList[i]);
+    // for (let j = 0; j < patientList[i].visits.length; j++) {
+    //   uploadVisit(patientList[i].visits[j]);
+    // }
+  }
+
     fetch('https://opus-data.herokuapp.com/patients')
       .then((response) => response.json())
       .then((json) => setData(json))
@@ -161,6 +202,23 @@ export default function Home({ navigation }) {
           patientList[j].visits.push(visit);
         }
       }
+    }
+    if (pListLen != patientList.length) {
+      Alert.alert("Succesfully Synced with Server!");
+    } 
+    else {
+      if (pListLen == 0 ) {
+        Alert.alert("Communication with Server Failed. Please try again.")
+      }
+    }
+    
+  }
+  function authenticateLogin() {
+    if((username == 'adamBrink') && (password == 'blueberry')) {
+      updatePatients();
+    }
+    else {
+      Alert.alert("Password Incorrect");
     }
   }
 
@@ -228,7 +286,46 @@ export default function Home({ navigation }) {
         }
       </ScrollView>
 
-
+      {/* Login Modal */}
+      <View>
+          <Modal
+              animationType="slide"
+              transparent={true}
+              visible={LoginModalVisible}
+              onRequestClose={() => {
+                  setLoginModalVisible(false);
+              }
+              } >
+              <View style={modalStyles.centeredView}>
+                  <View style={modalStyles.modalView}>
+                    <Text style = {styles.sectionTitle}>Login Page</Text>
+                    <TouchableOpacity
+                      style={{bottom: -10, left: 150}}
+                      onPress={() => {
+                      setLoginModalVisible(false);
+                      setNull();
+                    }} >
+                      <Icon name={'close-circle'} color={'#B72303'} size={30} />
+                    </TouchableOpacity>
+                    <Image source = {require('../opusLogo.png')}/>
+                    <Text>Username: </Text>
+                    <TextInput style={[modalStyles.input,]} placeholder={'Username'}
+                    placeholder={'Username'} value={username} onChangeText={text => setUsername(text)}/>
+                    <Text>Password: </Text>
+                    <TextInput style={[modalStyles.input,]} placeholder={'Password'}
+                    placeholder={'Password'} secureTextEntry={true} value={password} onChangeText={text => setPassword(text)}/>
+                    <TouchableOpacity
+                      style={[modalStyles.buttonClose]}
+                      onPress={() => {
+                      authenticateLogin()
+                      }}>
+                      <Text style={modalStyles.textStyle2}>Login</Text>
+                    </TouchableOpacity>
+                  </View>
+              </View>
+          </Modal>
+      </View>
+      
       {/* 'Add Patient' form modal */}
       <View style={modalStyles.centeredView}>
         <Modal
