@@ -35,13 +35,6 @@ export const modalStyles = StyleSheet.create({
     justifyContent: "flex-end",
     bottom: 28,
     right: 30,
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
   },
   buttonAdd2: {
     top: 450,
@@ -140,7 +133,7 @@ export const modalStyles = StyleSheet.create({
     borderRadius: 2,
     borderWidth: 0.5,
     width: 400,
-    marginLeft: 5,
+    marginLeft: 2,
     marginBottom: 25,
 
   },

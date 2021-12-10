@@ -12,14 +12,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SearchIcon from 'react-native-vector-icons/Fontisto';
-//import Login from './Login';
+import {loginStyles} from '../styles/loginStyles';
 
 
 /*
  * Main page where patients are displayed, added, and searched. Also holds menu, sync, and allows adding visits for patients.
 */
 export default function Home({ navigation }) {
-  
+
   /* Random variables */
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
@@ -154,27 +154,25 @@ export default function Home({ navigation }) {
   function updatePatients() {
     let pListLen = patientList.length;
     setLoginModalVisible(false);
-
     fetch('https://opus-data.herokuapp.com/patients')
-    .then((response) => response.json())
-    .then((json) => setData(json))
-    .catch((error) => console.error(error))
-    .finally(() => setLoading(false));
-  for (let i = 0; i < patientList.length; i++) {
-    for (let j = 0; j < data.length; j++){
-      if (patientList[i].registrationNumber == data[j].registrationnumber) {
-        patientList.splice(i);
-        i--;
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+    for (let i = 0; i < patientList.length; i++) {
+      for (let j = 0; j < data.length; j++) {
+        if (patientList[i].registrationNumber == data[j].registrationnumber) {
+          patientList.splice(i);
+          i--;
+        }
       }
     }
-  }
-  for (let i = 0; i < patientList.length; i++) {
-    uploadPatient(patientList[i]);
-    // for (let j = 0; j < patientList[i].visits.length; j++) {
-    //   uploadVisit(patientList[i].visits[j]);
-    // }
-  }
-
+    for (let i = 0; i < patientList.length; i++) {
+      uploadPatient(patientList[i]);
+      // for (let j = 0; j < patientList[i].visits.length; j++) {
+      //   uploadVisit(patientList[i].visits[j]);
+      // }
+    }
     fetch('https://opus-data.herokuapp.com/patients')
       .then((response) => response.json())
       .then((json) => setData(json))
@@ -205,20 +203,22 @@ export default function Home({ navigation }) {
     }
     if (pListLen != patientList.length) {
       Alert.alert("Succesfully Synced with Server!");
-    } 
+    }
     else {
-      if (pListLen == 0 ) {
+      if (pListLen == 0) {
         Alert.alert("Communication with Server Failed. Please try again.")
       }
     }
-    
+
   }
+
+  /* Authenticate user info for login */
   function authenticateLogin() {
-    if((username == 'adamBrink') && (password == 'blueberry')) {
+    if ((username == 'adamBrink') && (password == 'blueberry')) {
       updatePatients();
     }
     else {
-      Alert.alert("Password Incorrect");
+      Alert.alert("Incorrect username or password");
     }
   }
 
@@ -255,12 +255,10 @@ export default function Home({ navigation }) {
   });
 
 
-  
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.tasksWrapper}>
-
+      <ScrollView style={[styles.tasksWrapper, styles.absoluteFill]} >
 
         {/* Searchbar View (handles text entering)*/}
         <View style={{ flexDirection: 'row' }}>
@@ -275,7 +273,7 @@ export default function Home({ navigation }) {
 
         {/* Diplay of patient list on screen */}
         <Text style={styles.sectionTitle}>Patients</Text>
-         {
+        {
           tempPatientList.map((item, index) => {
             //if (searchBar == "")  {  //not searching a patient, displays all patients
             return (
@@ -286,46 +284,58 @@ export default function Home({ navigation }) {
         }
       </ScrollView>
 
+
       {/* Login Modal */}
       <View>
-          <Modal
-              animationType="slide"
-              transparent={true}
-              visible={LoginModalVisible}
-              onRequestClose={() => {
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={LoginModalVisible}
+          onRequestClose={() => {
+            setLoginModalVisible(false);
+          }
+          } >
+          <View style={loginStyles.centeredView}>
+            <View style={loginStyles.modalView}>
+              <Text style={styles.sectionTitle}>Login </Text>
+
+              {/* Button to exit login */}
+              <TouchableOpacity
+                style={loginStyles.close}
+                onPress={() => {
                   setLoginModalVisible(false);
-              }
-              } >
-              <View style={modalStyles.centeredView}>
-                  <View style={modalStyles.modalView}>
-                    <Text style = {styles.sectionTitle}>Login Page</Text>
-                    <TouchableOpacity
-                      style={{bottom: -10, left: 150}}
-                      onPress={() => {
-                      setLoginModalVisible(false);
-                      setNull();
-                    }} >
-                      <Icon name={'close-circle'} color={'#B72303'} size={30} />
-                    </TouchableOpacity>
-                    <Image source = {require('../opusLogo.png')}/>
-                    <Text>Username: </Text>
-                    <TextInput style={[modalStyles.input,]} placeholder={'Username'}
-                    placeholder={'Username'} value={username} onChangeText={text => setUsername(text)}/>
-                    <Text>Password: </Text>
-                    <TextInput style={[modalStyles.input,]} placeholder={'Password'}
-                    placeholder={'Password'} secureTextEntry={true} value={password} onChangeText={text => setPassword(text)}/>
-                    <TouchableOpacity
-                      style={[modalStyles.buttonClose]}
-                      onPress={() => {
-                      authenticateLogin()
-                      }}>
-                      <Text style={modalStyles.textStyle2}>Login</Text>
-                    </TouchableOpacity>
-                  </View>
+                  setNull();
+                }} >
+                <Icon name={'close-circle'} color={'#B72303'} size={30} />
+              </TouchableOpacity>
+
+              {/* Fields */}
+              <Image style={loginStyles.logo} source={require('../opusLogo.png')} />
+
+              <View style={loginStyles.fieldStyle}>
+                <Text style={loginStyles.field}>Username: </Text>
+                <Text style={loginStyles.field}>Password: </Text>
               </View>
-          </Modal>
+
+              <TextInput style={[loginStyles.input,]} placeholder={'Username'}
+                placeholder={'Username'} value={username} onChangeText={text => setUsername(text)} />
+              <TextInput style={[loginStyles.input,]} placeholder={'Password'}
+                placeholder={'Password'} secureTextEntry={true} value={password} onChangeText={text => setPassword(text)} />
+              
+              {/* Button to submit login */}
+              <TouchableOpacity
+                style={[modalStyles.buttonClose]}
+                onPress={() => {
+                  authenticateLogin()
+                }}>
+                <Text style={modalStyles.textStyle2}>Login</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
-      
+
+
       {/* 'Add Patient' form modal */}
       <View style={modalStyles.centeredView}>
         <Modal
