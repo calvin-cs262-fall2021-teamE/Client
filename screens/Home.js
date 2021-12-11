@@ -227,7 +227,7 @@ export default function Home({ navigation }) {
   function updatePatientListSearchBar(searchedText) {
     let patientListWithSearchString = [];
     for (let i = 0; i < patientList.length; i++) {
-      if (patientList[i].name.toLowerCase().includes(searchedText.toLowerCase()) || searchBar == "" || searchBar == null) {
+      if (patientList[i].name.toLowerCase().includes(searchedText.toLowerCase()) || searchedText == "" || searchedText == null) {
         patientListWithSearchString.push(patientList[i]);  //adds patient from master list of patients to list that will be returned if that patient's name
       }                                                    //contains the string in the search bar
     }
@@ -241,7 +241,8 @@ export default function Home({ navigation }) {
         patientListWithSearchString.push(patientList[i]);
       }
     }
-    return patientListWithSearchString;  //returns updated patient list containing only patients whoes names include the search string
+
+    return  patientListWithSearchString  //returns updated patient list containing only patients whoes names include the search string
   }
   function handleSearchBarChange(text) {  //called when search bar texted is updated, updates searchBar var and updates shown patient list
     setSearchBar(text);
@@ -251,7 +252,10 @@ export default function Home({ navigation }) {
     setTempPatientList(updatePatientListSearchBar2());
   }
   useEffect(() => {
-    setTempPatientList(patientList);
+    let visits = [];
+    let name = "Josiah";
+    let patient = { name, DOB, registrationNumber, sex, city, region, ethnicity, language, visits };
+    setTempPatientList([...patientList, patient]);
   });
 
 
@@ -262,12 +266,12 @@ export default function Home({ navigation }) {
 
         {/* Searchbar View (handles text entering)*/}
         <View style={{ flexDirection: 'row' }}>
-          <TextInput style={[modalStyles.searchBar,]} placeholder={'search...'} value={searchBar} onChangeText={text => handleSearchBarChange(text)} />
+          <TextInput style={[modalStyles.searchBar,]} placeholder={'search...'} value={searchBar} onChangeText={text => handleSearchBarChange(text)} /> 
           <TouchableOpacity
             style={[modalStyles.searchButton]}
-            onPress={() => setTempPatientList(updatePatientListSearchBar(searchBar))} >
+            onPress={() => setTempPatientList(updatePatientListSearchBar(searchBar))}  >
             <SearchIcon name={'search'} color={'#B72303'} size={22} />
-          </TouchableOpacity>
+          </TouchableOpacity>  
         </View>
 
 
@@ -322,11 +326,13 @@ export default function Home({ navigation }) {
               <TextInput style={[loginStyles.input,]} placeholder={'Password'}
                 placeholder={'Password'} secureTextEntry={true} value={password} onChangeText={text => setPassword(text)} />
               
-              {/* Button to submit login */}
+              {/* Button to submit login */} 
               <TouchableOpacity
                 style={[modalStyles.buttonClose]}
                 onPress={() => {
                   authenticateLogin()
+                  //setUsername(null);  //prevents password being saved in fields, prevents hacking
+                  //setPassword(null);
                 }}>
                 <Text style={modalStyles.textStyle2}>Login</Text>
               </TouchableOpacity>
