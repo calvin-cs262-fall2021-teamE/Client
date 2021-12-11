@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -10,8 +10,14 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
  */
 export default function Instructions() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Instructions</Text>
+    <View>
+      <Text style={styles.instructions}>Instructions</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  instructions: {
+
+  },
+})
