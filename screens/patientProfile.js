@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, FlatList, KeyboardAvoidingView, Pressable, Text, TextInput, TouchableOpacity, Modal, ScrollView, View } from 'react-native';
+import { Alert, Button, FlatList, KeyboardAvoidingView, Pressable, Text, TextInput, TouchableOpacity, Modal, ScrollView, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { profileStyles } from '../styles/profileStyles';
@@ -235,7 +235,23 @@ export default function PatientProfile({ route, navigation }) {
                             <TouchableOpacity
                                 style={[profileStyles.delete]}
                                 onPress={() => {
-                                    setDeleteDoubleCheckVisible(true);
+                                    Alert.alert(
+                                        "Delete Visit",
+                                        "Are you sure you want to delete this visit?",
+                                        [
+                                          {
+                                            text: "Cancel",
+                                            onPress: () => console.log("Cancel Pressed")
+                                          },
+                                          { text: "Yes", onPress: () => {
+                                            setEditMode(false);  //makes edit modal invisible
+                                            setVisitModalVisible(false) //makes visit viewing modal invisible (as well)
+                                            let visitIndex = index;
+                                            visitList = visitList.splice(visitIndex, 1);
+                                            setVisitFieldsToNull();
+                                          } }
+                                        ]
+                                      );
                                 }} >
                                 <EvilIcons name={'trash'} color={'#B72303'} size={65} />
                             </TouchableOpacity>
