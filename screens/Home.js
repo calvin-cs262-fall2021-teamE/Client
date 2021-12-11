@@ -12,7 +12,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SearchIcon from 'react-native-vector-icons/Fontisto';
-import {loginStyles} from '../styles/loginStyles';
+import { loginStyles } from '../styles/loginStyles';
 
 
 /*
@@ -264,6 +264,7 @@ export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <ScrollView style={[styles.tasksWrapper, styles.absoluteFill]} >
+        <View style={[{paddingBottom: 20}]}>
 
         {/* Searchbar View (handles text entering)*/}
         <View style={{ flexDirection: 'row' }}>
@@ -287,6 +288,7 @@ export default function Home({ navigation }) {
               </TouchableOpacity>)
           })
         }
+        </View>
       </ScrollView>
 
 
@@ -304,16 +306,6 @@ export default function Home({ navigation }) {
             <View style={loginStyles.modalView}>
               <Text style={styles.sectionTitle}>Login </Text>
 
-              {/* Button to exit login
-              <TouchableOpacity
-                style={loginStyles.close}
-                onPress={() => {
-                  setLoginModalVisible(false);
-                  setNull();
-                }} >
-                <Icon name={'close-circle'} color={'#B72303'} size={30} />
-              </TouchableOpacity> */}
-
               {/* Fields */}
               <Image style={loginStyles.logo} source={require('../opusLogo.png')} />
 
@@ -326,7 +318,7 @@ export default function Home({ navigation }) {
                 placeholder={'Username'} value={username} onChangeText={text => setUsername(text)} />
               <TextInput style={[loginStyles.input,]} placeholder={'Password'}
                 placeholder={'Password'} secureTextEntry={true} value={password} onChangeText={text => setPassword(text)} />
-              
+
               {/* Button to submit login */}
               <TouchableOpacity
                 style={[modalStyles.buttonClose]}
@@ -351,51 +343,53 @@ export default function Home({ navigation }) {
             setModalVisible(false);
           }} >
           <View style={modalStyles.centeredView}>
-            <View style={modalStyles.modalView}>
+            <View style={[modalStyles.modalView]}>
 
 
               { /* 'Add Patient' portion of modal allowing for creation of a new patient object */}
-              <ScrollView style={styles.items}>
-                <KeyboardAvoidingView style={modalStyles.add}
-                  behavior='postion'>
-                  <Text style={modalStyles.modalText}>Add a new patient</Text>
+              <ScrollView style={[styles.items, {}]}>
+                <View style={[{ paddingBottom: 11 }]}>
+                  <KeyboardAvoidingView style={modalStyles.add}
+                    behavior='postion'>
+                    <Text style={modalStyles.modalText}>Add a new patient</Text>
 
 
-                  {/* Names of information fields */}
-                  <View style={modalStyles.fieldStyle}>
-                    <Text style={modalStyles.field}>Name: </Text>
-                    <Text style={modalStyles.field}>Date of Birth: </Text>
-                    <Text style={modalStyles.field}>Registration number: </Text>
-                    <Text style={modalStyles.field}>Sex: </Text>
-                    <Text style={modalStyles.field}>City (town/village): </Text>
-                    <Text style={modalStyles.field}>Region: </Text>
-                    <Text style={modalStyles.field}>Ethnicity: </Text>
-                    <Text style={modalStyles.field}>Language: </Text>
-                  </View>
+                    {/* Names of information fields */}
+                    <View style={modalStyles.fieldStyle}>
+                      <Text style={modalStyles.field}>Name: </Text>
+                      <Text style={modalStyles.field}>Date of Birth: </Text>
+                      <Text style={modalStyles.field}>Registration number: </Text>
+                      <Text style={modalStyles.field}>Sex: </Text>
+                      <Text style={modalStyles.field}>City (town/village): </Text>
+                      <Text style={modalStyles.field}>Region: </Text>
+                      <Text style={modalStyles.field}>Ethnicity: </Text>
+                      <Text style={modalStyles.field}>Language: </Text>
+                    </View>
 
 
-                  {/* Fields where patient information is entered */}
-                  <View style={modalStyles.fieldWrapper} >
-                    <TextInput style={[modalStyles.input,]} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} />
-                    <TextInput style={[modalStyles.input,]} placeholder={'mm/dd/yyyy'} value={date.toLocaleDateString()} onPressIn={showDatepicker} onEndEditing={() => setDOB(date.toLocaleDateString('en-US'))} />
-                    {show && (
-                      <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode={"date"}
-                        format="DD-MM-YYYY"
-                        display="default"
-                        onChange={onChange}
-                      />
-                    )}
-                    <TextInput style={[modalStyles.input,]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)} />
-                    <TextInput style={[modalStyles.input,]} placeholder={'M/F'} value={sex} onChangeText={text => setSex(text)} />
-                    <TextInput style={[modalStyles.input,]} placeholder={'City (town/village)'} value={city} onChangeText={text => setCity(text)} />
-                    <TextInput style={[modalStyles.input,]} placeholder={'Region'} value={region} onChangeText={text => setRegion(text)} />
-                    <TextInput style={[modalStyles.input,]} placeholder={'Ethnicity'} value={ethnicity} onChangeText={text => setEthnicity(text)} />
-                    <TextInput style={[modalStyles.input,]} placeholder={'Language'} value={language} onChangeText={text => setLanguage(text)} />
-                  </View>
-                </KeyboardAvoidingView>
+                    {/* Fields where patient information is entered */}
+                    <View style={modalStyles.fieldWrapper} >
+                      <TextInput style={[modalStyles.input,]} placeholder={'Full name'} value={name} onChangeText={text => setName(text)} />
+                      <TextInput style={[modalStyles.input,]} placeholder={'mm/dd/yyyy'} value={date.toLocaleDateString()} onPressIn={showDatepicker} onEndEditing={() => setDOB(date.toLocaleDateString('en-US'))} />
+                      {show && (
+                        <DateTimePicker
+                          testID="dateTimePicker"
+                          value={date}
+                          mode={"date"}
+                          format="DD-MM-YYYY"
+                          display="default"
+                          onChange={onChange}
+                        />
+                      )}
+                      <TextInput style={[modalStyles.input,]} placeholder={'Registration number'} value={registrationNumber} onChangeText={text => setRegistrationNumber(text)} />
+                      <TextInput style={[modalStyles.input,]} placeholder={'M/F'} value={sex} onChangeText={text => setSex(text)} />
+                      <TextInput style={[modalStyles.input,]} placeholder={'City (town/village)'} value={city} onChangeText={text => setCity(text)} />
+                      <TextInput style={[modalStyles.input,]} placeholder={'Region'} value={region} onChangeText={text => setRegion(text)} />
+                      <TextInput style={[modalStyles.input,]} placeholder={'Ethnicity'} value={ethnicity} onChangeText={text => setEthnicity(text)} />
+                      <TextInput style={[modalStyles.input,]} placeholder={'Language'} value={language} onChangeText={text => setLanguage(text)} />
+                    </View>
+                  </KeyboardAvoidingView>
+                </View>
               </ScrollView>
 
 

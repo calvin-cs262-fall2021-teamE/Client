@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -10,27 +10,50 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
  */
 export default function Instructions() {
   return (
-    <View style={{ flex: 1, justifyContent: 'right', alignItems: 'left' }}>
-      <Text style = {{fontweight: 'bold'}}>Section 1 :- Creating a patient profile:</Text>
-      <Text>  -	Start by clicking the add a patient button (“+” button) at the bottom right corner</Text>
-      <Text>  -	Fill out all the necessary fields that appear on the popup page.</Text>
-      <Text>  -	Click the “add patient” button. This should create a new profile for the patient at hand</Text>
-      <Text> </Text>
-      <Text style = {{fontweight: 'bold'}}>Section 2 :- Accessing visit forms that already exist:</Text>
-      <Text>  -	Start by searching the name of the desired patient</Text>
-      <Text>  -	Proceed by clicking on the patient profile that appears on the home screen </Text>
-      <Text>  - You should see a list of previous patient visits. Select the desired form</Text>
-      <Text> </Text>
-      <Text style = {{fontweight: 'bold'}}>Section 3:- Finding and editing/updating a patient visit that already exists: </Text>
-      <Text>  -	Click on the search bar and proceed by entering the full name of the patient.</Text>
-      <Text>  -	Click on the first patient profile that appear on the home screen</Text>
-      <Text>  -	After being redirected to the next page, click on visit form you want to edit</Text>
-      <Text>  -	Click on the delete button to delete or the edit button to edit the visit form</Text>
-      <Text> </Text>
-      <Text style = {{fontweight: 'bold'}}>Section 4:- Syncing the patient  database: </Text>
-      <Text>  -	Click on the sync button at the top right corner</Text>
-      <Text>  - This should synchronize your database accross all your devices</Text>
+    <View style={[{marginTop: 10}]}>
+      <Text style={styles.heading}>Creating a patient profile:</Text>
+      <Text style={styles.instructions}> 
+        -	Click the "+" button in the bottom right corner of the home screen {'\n'}
+        -	Fill out all of the necessary fields{'\n'}
+        -	Click the “Add Patient” button in the bottom right corner{'\n'}
+      </Text>
 
+      <Text style={styles.heading}>Accessing patient profile:</Text>
+      <Text style={styles.instructions}>  
+        -	Look for desired patient or search for the name using the search bar at the top of the home screen{'\n'}
+        -	Click on the patient; you will be taken to their profile page{'\n'}
+        - You should see a list of previous patient visits. Click on any visit form to view it's details{'\n'}
+      </Text>
+
+      <Text style={styles.heading}>Add/edit a patient visit: </Text>
+      <Text style={styles.instructions}>  
+        -	Access a patient's profile{'\n'}
+        -	Click the "+" button in the bottom right corner of the profile screen{'\n'}
+        -	Fill out all of the necessary fields{'\n'}
+        -	Click the "Add Visit" button in the bottom right corner{'\n'}
+        - To edit a visit, view the details of desired visit and click the pencil icon{'\n'}
+        - Edit desired information then click the "Save Changes" button in the bottom right corner{'\n'}
+        - To delete a visit, view the details of desired visit and click the trash can icon then confirm deletion{'\n'}
+      </Text>
+
+      <Text style={styles.heading}>Syncing the patient database: </Text>
+      <Text style={styles.instructions}>  
+        -	Click on the cloud button in the top right corner of the home screen. This will download all patients from the server
+          and upload any patients you have created
+      </Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  instructions: {
+    marginLeft: 20,
+    marginRight: 20,
+    lineHeight: 20,
+  },
+  heading: {
+    paddingTop: 10,
+    marginLeft: 20,
+    fontWeight: 'bold',
+  }
+})
