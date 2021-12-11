@@ -26,7 +26,7 @@ export default function Home({ navigation }) {
   const [open, setOpen] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  const [LoginModalVisible, setLoginModalVisible] = useState(false);
+  const [LoginModalVisible, setLoginModalVisible] = useState(true);
   const [data2, setData2] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [searchModalVisible, setSearchModalVisible] = useState(false);
@@ -71,7 +71,7 @@ export default function Home({ navigation }) {
       headerRight: () => (
         <TouchableOpacity
           style={[modalStyles.sync]}
-          onPress={() => setLoginModalVisible(true)} >
+          onPress={() => updatePatients()} >
           <Icon name={'cloud-sync'} color={'#B72303'} size={40} />
         </TouchableOpacity>
       ),
@@ -109,6 +109,8 @@ export default function Home({ navigation }) {
     setEthnicity(null);
     setLanguage(null);
     setDate(new Date());
+    setUsername(null);
+    setPassword(null);
   }
 
 
@@ -153,7 +155,8 @@ export default function Home({ navigation }) {
   /* Update patient information from database */
   function updatePatients() {
     let pListLen = patientList.length;
-    setLoginModalVisible(false);
+    //setLoginModalVisible(false);
+    //setNull();
     fetch('https://opus-data.herokuapp.com/patients')
       .then((response) => response.json())
       .then((json) => setData(json))
@@ -215,7 +218,8 @@ export default function Home({ navigation }) {
   /* Authenticate user info for login */
   function authenticateLogin() {
     if ((username == 'adamBrink') && (password == 'blueberry')) {
-      updatePatients();
+      setLoginModalVisible(false);
+      setNull();
     }
     else {
       Alert.alert("Incorrect username or password");
@@ -252,6 +256,7 @@ export default function Home({ navigation }) {
   }
   useEffect(() => {
     setTempPatientList(patientList);
+    //setLoginModalVisible(true);
   });
 
 
@@ -299,7 +304,7 @@ export default function Home({ navigation }) {
             <View style={loginStyles.modalView}>
               <Text style={styles.sectionTitle}>Login </Text>
 
-              {/* Button to exit login */}
+              {/* Button to exit login
               <TouchableOpacity
                 style={loginStyles.close}
                 onPress={() => {
@@ -307,7 +312,7 @@ export default function Home({ navigation }) {
                   setNull();
                 }} >
                 <Icon name={'close-circle'} color={'#B72303'} size={30} />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               {/* Fields */}
               <Image style={loginStyles.logo} source={require('../opusLogo.png')} />
