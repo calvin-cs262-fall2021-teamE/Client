@@ -34,7 +34,7 @@ export default function DrawerScreen({ navigation }) {
         //</TouchableOpacity>}} 
         />
       <Drawer.Screen name="About" component={About} />
-      <Drawer.Screen name="Instructions" component={Instructions} />
+      <Drawer.Screen name="Help" component={Instructions} />
     </Drawer.Navigator>
       );
 }
