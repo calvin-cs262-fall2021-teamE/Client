@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, componentDidMount } from 'react';
 import {
   Alert, KeyboardAvoidingView, Image, StyleSheet, Text, View, TextInput, Modal, Pressable,
   Platform, TouchableOpacity, Keyboard, FlatList, ScrollView, SnapshotViewIOSComponent, Button,
@@ -181,12 +181,16 @@ export default function Home({ navigation }) {
     for (let i = 0; i < patientList.length; i++) {
       patientList.shift();
     }
+    for (let i = 0; i < tempPatientList.length; i++) {
+      tempPatientList.shift();
+    }
     for (let i = 0; i < data.length; i++) {
       let patient = {
         name: (data[i].name), DOB: data[i].dob, registrationNumber: data[i].registrationnumber, sex: data[i].sex, city: data[i].city,
         region: data[i].region, ethnicity: data[i].ethnicity, language: data[i].lang, visits: []
       }
       patientList.push(patient);
+      tempPatientList.push(patient);    
     }
     fetch('https://opus-data.herokuapp.com/visits')
       .then((response) => response.json())
@@ -198,6 +202,7 @@ export default function Home({ navigation }) {
       for (let j = 0; j < patientList.length; j++) {
         if (patientList[j].registrationNumber == data2[i].patient) {
           patientList[j].visits.push(visit);
+          tempPatientList[j].visits.push(visit); //loads patients into tempPatientList too
         }
       }
     }
@@ -227,23 +232,13 @@ export default function Home({ navigation }) {
   function updatePatientListSearchBar(searchedText) {
     let patientListWithSearchString = [];
     for (let i = 0; i < patientList.length; i++) {
-      if (patientList[i].name.toLowerCase().includes(searchedText.toLowerCase()) || searchedText == "" || searchedText == null) {
+      if (patientList[i].name.toLowerCase().includes(searchedText.toLowerCase()) || searchBar == "" || searchBar == null) {
         patientListWithSearchString.push(patientList[i]);  //adds patient from master list of patients to list that will be returned if that patient's name
       }                                                    //contains the string in the search bar
     }
     return patientListWithSearchString;  //returns updated patient list containing only patients whoes names include the search string
   }
-  //not currentl used, but maybe userful later
-  function updatePatientListSearchBar2() {
-    let patientListWithSearchString = [];
-    for (let i = 0; i < patientList.length; i++) {
-      if (patientList[i].name.toLowerCase().includes(searchBar.toLowerCase()) || searchBar == "" || searchBar == null) {
-        patientListWithSearchString.push(patientList[i]);
-      }
-    }
 
-    return  patientListWithSearchString  //returns updated patient list containing only patients whoes names include the search string
-  }
   function handleSearchBarChange(text) {  //called when search bar texted is updated, updates searchBar var and updates shown patient list
     setSearchBar(text);
     setTempPatientList(updatePatientListSearchBar(text));
@@ -251,14 +246,29 @@ export default function Home({ navigation }) {
   function change2() {    // not currently used, but maybe useful later
     setTempPatientList(updatePatientListSearchBar2());
   }
+
+  const addStartingPatient = () => {
+    let visits = [
+    {date: "11/04/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note1"},
+    {date: "11/05/2021", doctor:"Owen", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note2"},
+    {date: "11/06/2021", doctor:"Adam", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note3"} ]
+    let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
+                    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
+    let patient2 = {name:"Josiah", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
+                    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
+    setPatientList([...patientList, patient, patient2]);
+    //handleSearchBarChange("");
+    //setSearchBar("");
+    //setTempPatientList(updatePatientListSearchBar(searchBar));
+  }
+
   useEffect(() => {
-    let visits = [];
-    let name = "Josiah";
-    let patient = { name, DOB, registrationNumber, sex, city, region, ethnicity, language, visits };
-    setTempPatientList([...patientList, patient]);
-  });
-
-
+    addStartingPatient();    // adds starting paients to patient list
+    handleSearchBarChange("");  // should copy patient list into tempPatientList, but it fails.  But it is NEEDED because it 'setSearchBar("");'
+    for (let i = 0; i < patientList.length; i++) {
+      tempPatientList.push(patientList[i]);
+    } 
+  }, [])  
 
   return (
     <View style={styles.container}>
