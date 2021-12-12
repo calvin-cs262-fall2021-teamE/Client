@@ -85,6 +85,7 @@ export default function Home({ navigation }) {
     let visits = [];
     let patient = { name, DOB, registrationNumber, sex, city, region, ethnicity, language, visits }
     setPatientList([...patientList, patient]);
+    setTempPatientList([...patientList, patient]);
     setName(null);
     setDOB(null);
     setRegistrationNumber(null);
@@ -163,6 +164,7 @@ export default function Home({ navigation }) {
       for (let j = 0; j < data.length; j++) {
         if (patientList[i].registrationNumber == data[j].registrationnumber) {
           patientList.splice(i);
+          tempPatientList.splice(i);
           i--;
         }
       }
@@ -178,7 +180,7 @@ export default function Home({ navigation }) {
       .then((json) => setData(json))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-    for (let i = 0; i < patientList.length; i++) {
+    for (let i = 0; i < patientList.length; i++) { 
       patientList.shift();
     }
     for (let i = 0; i < tempPatientList.length; i++) {
@@ -265,9 +267,9 @@ export default function Home({ navigation }) {
   useEffect(() => {
     addStartingPatient();    // adds starting paients to patient list
     handleSearchBarChange("");  // should copy patient list into tempPatientList, but it fails.  But it is NEEDED because it 'setSearchBar("");'
-    for (let i = 0; i < patientList.length; i++) {
-      tempPatientList.push(patientList[i]);
-    } 
+    //for (let i = 0; i < patientList.length; i++) {
+    //  tempPatientList.push(patientList[i]);
+    //} 
   }, [])  
 
   return (
@@ -277,7 +279,7 @@ export default function Home({ navigation }) {
         {/* Searchbar View (handles text entering)*/}
         <View style={{ flexDirection: 'row' }}>
           <TextInput style={[modalStyles.searchBar,]} placeholder={'search...'} value={searchBar} onChangeText={text => handleSearchBarChange(text)} /> 
-          <TouchableOpacity
+          <TouchableOpacity 
             style={[modalStyles.searchButton]}
             onPress={() => setTempPatientList(updatePatientListSearchBar(searchBar))}  >
             <SearchIcon name={'search'} color={'#B72303'} size={22} />
@@ -414,7 +416,7 @@ export default function Home({ navigation }) {
               <TouchableOpacity
                 style={[modalStyles.buttonClose]}
                 onPress={() => {
-                  handleAddPatientEntry()
+                  handleAddPatientEntry();
                 }}>
                 <Text style={modalStyles.textStyle2}>Add Patient</Text>
               </TouchableOpacity>
