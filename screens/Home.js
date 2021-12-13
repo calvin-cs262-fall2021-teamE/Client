@@ -225,7 +225,7 @@ export default function Home({ navigation }) {
 
   /* Authenticate user info for login */
   function authenticateLogin() {
-    if ((username == 'adamBrink') && (password == 'blueberry')) {
+    if ((username == 'AdamBrink') && (password == 'Blueberry')) {
       setLoginModalVisible(false);
       setNull();
     }
