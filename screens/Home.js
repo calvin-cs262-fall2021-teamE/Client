@@ -207,7 +207,7 @@ export default function Home({ navigation }) {
       for (let j = 0; j < patientList.length; j++) {
         if (patientList[j].registrationNumber == data2[i].patient) {
           patientList[j].visits.push(visit);
-          tempPatientList[j].visits.push(visit); //loads patients into tempPatientList too
+          //tempPatientList[j].visits.push(visit); //loads patients into tempPatientList too
         }
       }
     }
