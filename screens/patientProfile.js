@@ -28,11 +28,11 @@ export default function PatientProfile({ route, navigation }) {
     const [dischargedDate, setDischargedDate] = useState();
     const [note, setNote] = useState();
     const [date, setDate] = useState();
-    const [editMode, setEditMode] = useState(false);    //used to track if the user is editing a visit
-    const [index, setIndex] = useState();               //used to set and save the index of the visit clicked (could be leveraged more)
-    const [deleteDoubleCheckVisible, setDeleteDoubleCheckVisible] = useState(false);   //used to track if the delete visit double check modal is visible
-    var visitClickedIndex = 0;                          //This var is set to the index of the visit clicked to allow that visit's info to be shown
-    let visitList = route.params.visits;                //list of visit objects is stored in this variable.  Passed here from home page
+    const [editMode, setEditMode] = useState(false);    
+    const [index, setIndex] = useState();               
+    const [deleteDoubleCheckVisible, setDeleteDoubleCheckVisible] = useState(false);   
+    var visitClickedIndex = 0;                          
+    let visitList = route.params.visits;                
 
 
     /* Code for Calender */
@@ -65,7 +65,9 @@ export default function PatientProfile({ route, navigation }) {
     }
 
 
+
     return (
+
         /*Displays the Patient information*/
         <View>
             <View style={profileStyles.top}>
@@ -92,7 +94,6 @@ export default function PatientProfile({ route, navigation }) {
                     {visitList.map((item, index) => {
                         return (
                             <TouchableOpacity key={index} onPress={() => {
-
 
                                 /* sets variables to be shown in visit view modal */
                                 setIndex(index);
@@ -128,7 +129,6 @@ export default function PatientProfile({ route, navigation }) {
                             <ScrollView style={styles.items}>
                                 <Text style={[modalStyles.modalText,]}>Add a new visit</Text>
 
-
                                 {/* Names of information fields */}
                                 <View style={modalStyles.fieldStyle}>
                                     <Text style={modalStyles.field}>Date:</Text>
@@ -140,7 +140,6 @@ export default function PatientProfile({ route, navigation }) {
                                     <Text style={modalStyles.field}>Notes:</Text>
                                     <Text style={modalStyles.field}>Attatchments:</Text>
                                 </View>
-
 
                                 {/* Fields where information is entered */}
                                 <View style={modalStyles.fieldWrapper} >
@@ -164,7 +163,6 @@ export default function PatientProfile({ route, navigation }) {
                                 </View>
                             </ScrollView>
 
-
                             {/* Button to close modal and add visit */}
                             <Pressable
                                 style={[modalStyles.buttonClose, { bottom: 100 }]}
@@ -176,7 +174,6 @@ export default function PatientProfile({ route, navigation }) {
                                 }}>
                                 <Text style={modalStyles.textStyle2}>Add Visit</Text>
                             </Pressable>
-
 
                             {/* Button to close modal without adding patient */}
                             <TouchableOpacity
@@ -204,9 +201,7 @@ export default function PatientProfile({ route, navigation }) {
                     <View style={modalStyles.centeredView}>
                         <View style={profileStyles.modalView}>
 
-
                             {/* Displays clicked Patient Visit */}
-                            { /*<View style={profileStyles.add}>*/}
                             <Text style={[profileStyles.modalText, {}]}> Visit - {date}</Text>
                             <View style={profileStyles.form}>
                                 <Text style={profileStyles.field}>Date: {date}</Text>
@@ -217,9 +212,7 @@ export default function PatientProfile({ route, navigation }) {
                                 <Text style={profileStyles.field}>Discharged Date: {dischargedDate}</Text>
                                 <Text style={profileStyles.field}>Notes: {note}</Text>
                             </View>
-                            { /*</View>*/}
-
-
+                
                             {/* Button to close modal */}
                             <TouchableOpacity
                                 style={[profileStyles.close]}
@@ -239,19 +232,21 @@ export default function PatientProfile({ route, navigation }) {
                                         "Delete Visit",
                                         "Are you sure you want to delete this visit?",
                                         [
-                                          {
-                                            text: "Cancel",
-                                            onPress: () => console.log("Cancel Pressed")
-                                          },
-                                          { text: "Yes", onPress: () => {
-                                            setEditMode(false);  //makes edit modal invisible
-                                            setVisitModalVisible(false) //makes visit viewing modal invisible (as well)
-                                            let visitIndex = index;
-                                            visitList = visitList.splice(visitIndex, 1);
-                                            setVisitFieldsToNull();
-                                          } }
+                                            {
+                                                text: "Cancel",
+                                                onPress: () => console.log("Cancel Pressed")
+                                            },
+                                            {
+                                                text: "Yes", onPress: () => {
+                                                    setEditMode(false);  //makes edit modal invisible
+                                                    setVisitModalVisible(false) //makes visit viewing modal invisible (as well)
+                                                    let visitIndex = index;
+                                                    visitList = visitList.splice(visitIndex, 1);
+                                                    setVisitFieldsToNull();
+                                                }
+                                            }
                                         ]
-                                      );
+                                    );
                                 }} >
                                 <EvilIcons name={'trash'} color={'#B72303'} size={65} />
                             </TouchableOpacity>
@@ -328,7 +323,6 @@ export default function PatientProfile({ route, navigation }) {
                             <ScrollView style={styles.items}>
                                 <Text style={[modalStyles.modalText,]}>Edit {date} Visit</Text>
 
-
                                 {/* Names of information fields */}
                                 <View style={modalStyles.fieldStyle}>
                                     <Text style={modalStyles.field}>Date:</Text>
@@ -341,7 +335,6 @@ export default function PatientProfile({ route, navigation }) {
                                     <Text style={modalStyles.field}>Attatchments:</Text>
                                 </View>
 
-
                                 {/* Fields where information is entered */}
                                 <View style={modalStyles.fieldWrapper} >
                                     <TextInput style={[modalStyles.input,]} placeholder={'mm/dd/yyyy'} value={d.toLocaleDateString('en-US')} onPressIn={showDatepicker} onEndEditing={() => setDate(d.toLocaleDateString('en-US'))} />
@@ -352,7 +345,7 @@ export default function PatientProfile({ route, navigation }) {
                                             mode={"date"}
                                             format="DD-MM-YYYY"
                                             display="default"
-                                            onChange={onChange}/>)}
+                                            onChange={onChange} />)}
                                     <TextInput style={[modalStyles.input,]} placeholder={doctor} value={doctor} onChangeText={text => setDoctor(text)} />
                                     <TextInput style={[modalStyles.input,]} placeholder={student} value={student} onChangeText={text => setStudent(text)} />
                                     <TextInput style={[modalStyles.input,]} placeholder={primaryDiseases} value={primaryDiseases} onChangeText={text => setPrimaryDiseases(text)} />
@@ -361,7 +354,6 @@ export default function PatientProfile({ route, navigation }) {
                                     <TextInput style={[modalStyles.input,]} placeholder={note} value={note} onChangeText={text => setNote(text)} />
                                 </View>
                             </ScrollView>
-
 
                             {/* Button to close visit edit */}
                             <TouchableOpacity
@@ -379,14 +371,12 @@ export default function PatientProfile({ route, navigation }) {
                             <Pressable
                                 style={[modalStyles.buttonClose, { bottom: 100 }]}
                                 onPress={() => {
-                                    setEditMode(false); 
-                                    setVisitModalVisible(false) 
-
-                                    //sets the old visit to the newly created visit
+                                    setEditMode(false);
+                                    setVisitModalVisible(false)
                                     let visit = { date, doctor, student, primaryDiseases, secondaryDiseases, dischargedDate, note }
                                     let visitIndex = index;
                                     visitList[visitIndex] = visit;
-                                    setVisitFieldsToNull(); 
+                                    setVisitFieldsToNull();
                                 }}>
                                 <Text style={modalStyles.textStyle2}>Save Changes</Text>
                             </Pressable>

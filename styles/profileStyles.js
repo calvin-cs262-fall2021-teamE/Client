@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 
+/* Style sheet for patient profile page */
 export const profileStyles = StyleSheet.create({
   top: {
     borderBottomColor: 'black',
@@ -9,7 +10,7 @@ export const profileStyles = StyleSheet.create({
     height: 250,
     backgroundColor: 'white',
   },
-  container: {       //if the visit list looks weird, copy the container from homework1Styles.js and see if that is better
+  container: {
     paddingVertical: 6,
     left: 150,
     bottom: 115,
@@ -23,7 +24,6 @@ export const profileStyles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 8,
     padding: 15,
-   // alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -34,9 +34,6 @@ export const profileStyles = StyleSheet.create({
     elevation: 5,
     flex: 1,
   },
-  // visitContainer: {       //if the visit list looks weird, copy the container from homework1Styles.js and see if that is better
-  //   flex: 1,
-  // },
   name: {
     fontSize: 30,
     fontWeight: 'bold',
@@ -79,7 +76,7 @@ export const profileStyles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
   },
-    add: {
+  add: {
     flex: 1,
   },
   tasksWrapper: {
@@ -103,15 +100,11 @@ export const profileStyles = StyleSheet.create({
     backgroundColor: '#F9F9F9',
     marginTop: 10,
   },
-  editVisit: {  //edit visit pencil in edit visit modal
-    //paddingVertical: 10,  // change to padding
+  editVisit: {
     left: 283,
     top: 55,
-
   },
-  delete: {   //delete visit trash can in edit visit modal
-    //paddingVertical: 50,
-    //paddingLeft: 10,
+  delete: {
     top: 110,
   },
   close: {

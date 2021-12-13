@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 
+
+/* Style sheet for login page */
 export const loginStyles = StyleSheet.create({
     centeredView: {
         flex: 1,

@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 
+
+/* Style sheet for Home page + many modals throughout app */
 export const modalStyles = StyleSheet.create({
   centeredView: {
     flex: 1,
