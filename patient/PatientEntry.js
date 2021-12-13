@@ -13,11 +13,11 @@ const PatientEntry = (props) => {
                 <View style={styles.square}></View>
                 <Text style={styles.itemText}>{props.text}</Text>
             </View>
-
         </View>
     )
 }
 
+// Style sheet
 const styles = StyleSheet.create({
     item: {
         backgroundColor: '#FFF',

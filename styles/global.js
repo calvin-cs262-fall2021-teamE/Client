@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+
+/* Some random global styles */
 export const globalStyles = StyleSheet.create({
     container: {
         flex: 1,

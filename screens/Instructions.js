@@ -45,6 +45,7 @@ export default function Instructions() {
   );
 }
 
+// Style Sheet
 const styles = StyleSheet.create({
   instructions: {
     marginLeft: 20,

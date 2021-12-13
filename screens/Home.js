@@ -134,6 +134,8 @@ export default function Home({ navigation }) {
       .finally(() => setLoading(false));
   }
 
+
+  /* Upload visit to database */
   function uploadVisit(visit) {
     fetch('https://opus-data.herokuapp.com/patients', {
       method: 'POST',
@@ -156,8 +158,6 @@ export default function Home({ navigation }) {
   /* Update patient information from database */
   function updatePatients() {
     let pListLen = patientList.length;
-    //setLoginModalVisible(false);
-    //setNull();
     fetch('https://opus-data.herokuapp.com/patients')
       .then((response) => response.json())
       .then((json) => setData(json))
@@ -174,16 +174,13 @@ export default function Home({ navigation }) {
     }
     for (let i = 0; i < patientList.length; i++) {
       uploadPatient(patientList[i]);
-      // for (let j = 0; j < patientList[i].visits.length; j++) {
-      //   uploadVisit(patientList[i].visits[j]);
-      // }
     }
     fetch('https://opus-data.herokuapp.com/patients')
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
-    for (let i = 0; i < patientList.length; i++) { 
+    for (let i = 0; i < patientList.length; i++) {
       patientList.shift();
     }
     for (let i = 0; i < tempPatientList.length; i++) {
@@ -195,7 +192,7 @@ export default function Home({ navigation }) {
         region: data[i].region, ethnicity: data[i].ethnicity, language: data[i].lang, visits: []
       }
       patientList.push(patient);
-      tempPatientList.push(patient);    
+      tempPatientList.push(patient);
     }
     fetch('https://opus-data.herokuapp.com/visits')
       .then((response) => response.json())
@@ -207,7 +204,6 @@ export default function Home({ navigation }) {
       for (let j = 0; j < patientList.length; j++) {
         if (patientList[j].registrationNumber == data2[i].patient) {
           patientList[j].visits.push(visit);
-          //tempPatientList[j].visits.push(visit); //loads patients into tempPatientList too
         }
       }
     }
@@ -222,6 +218,7 @@ export default function Home({ navigation }) {
     }
 
   }
+
 
   /* Authenticate user info for login */
   function authenticateLogin() {
@@ -240,70 +237,51 @@ export default function Home({ navigation }) {
     let patientListWithSearchString = [];
     for (let i = 0; i < patientList.length; i++) {
       if (patientList[i].name.toLowerCase().includes(searchedText.toLowerCase()) || searchBar == "" || searchBar == null) {
-        patientListWithSearchString.push(patientList[i]);  //adds patient from master list of patients to list that will be returned if that patient's name
-      }                                                    //contains the string in the search bar
+        patientListWithSearchString.push(patientList[i]);
+      }
     }
-    return patientListWithSearchString;  //returns updated patient list containing only patients whoes names include the search string
+    return patientListWithSearchString;
   }
-
-  function handleSearchBarChange(text) {  //called when search bar texted is updated, updates searchBar var and updates shown patient list
+  function handleSearchBarChange(text) {
     setSearchBar(text);
     setTempPatientList(updatePatientListSearchBar(text));
   }
-  function change2() {    // not currently used, but maybe useful later
-    setTempPatientList(updatePatientListSearchBar2());
-  }
-
-  const addStartingPatient = () => {
-    let visits = [
-    {date: "11/04/2021", doctor:"Josiah", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note1"},
-    {date: "11/05/2021", doctor:"Owen", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note2"},
-    {date: "11/06/2021", doctor:"Adam", student:"Adam", primaryDiseases:"Nerd", secondaryDiseases:"Straight", dischargedDate: "11/04/2021", note: "note3"} ]
-    let patient = {name:"Fitsum Maru", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
-                    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
-    let patient2 = {name:"Josiah", DOB:"05/14/1999", registrationNumber: 1234, sex:"Male", city:"Addis Ababa", 
-                    region:"Addis Ababa", ethnicity:"Ethiopian (Habesha)", language:"Amharic", visits: visits}
-    setPatientList([...patientList, patient, patient2]);
-    //handleSearchBarChange("");
-    //setSearchBar("");
-    //setTempPatientList(updatePatientListSearchBar(searchBar));
-  }
-
   useEffect(() => {
-    //addStartingPatient();    // adds starting paients to patient list
-    handleSearchBarChange("");  // should copy patient list into tempPatientList, but it fails.  But it is NEEDED because it 'setSearchBar("");'
-    //for (let i = 0; i < patientList.length; i++) {
-    //  tempPatientList.push(patientList[i]);
-    //} 
-  }, [])  
+    handleSearchBarChange("");
+  }, [])
+
+
+
+
 
   return (
+
     <View style={styles.container}>
       <ScrollView style={[styles.tasksWrapper, styles.absoluteFill]} >
-        <View style={[{paddingBottom: 20}]}>
-
-        {/* Searchbar View (handles text entering)*/}
-        <View style={{ flexDirection: 'row' }}>
-          <TextInput style={[modalStyles.searchBar,]} placeholder={'search...'} value={searchBar} onChangeText={text => handleSearchBarChange(text)} /> 
-          <TouchableOpacity 
-            style={[modalStyles.searchButton]}
-            onPress={() => setTempPatientList(updatePatientListSearchBar(searchBar))}  >
-            <SearchIcon name={'search'} color={'#B72303'} size={22} />
-          </TouchableOpacity>  
-        </View>
+        <View style={[{ paddingBottom: 20 }]}>
 
 
-        {/* Diplay of patient list on screen */}
-        <Text style={styles.sectionTitle}>Patients</Text>
-        {
-          tempPatientList.map((item, index) => {
-            //if (searchBar == "")  {  //not searching a patient, displays all patients
-            return (
-              <TouchableOpacity key={index} onPress={() => navigation.navigate('Patient Profile', item)}>
-                <PatientEntry text={item.name} />
-              </TouchableOpacity>)
-          })
-        }
+          {/* Searchbar View (handles text entering)*/}
+          <View style={{ flexDirection: 'row' }}>
+            <TextInput style={[modalStyles.searchBar,]} placeholder={'search...'} value={searchBar} onChangeText={text => handleSearchBarChange(text)} />
+            <TouchableOpacity
+              style={[modalStyles.searchButton]}
+              onPress={() => setTempPatientList(updatePatientListSearchBar(searchBar))}  >
+              <SearchIcon name={'search'} color={'#B72303'} size={22} />
+            </TouchableOpacity>
+          </View>
+
+
+          {/* Diplay of patient list on screen */}
+          <Text style={styles.sectionTitle}>Patients</Text>
+          {
+            tempPatientList.map((item, index) => {
+              return (
+                <TouchableOpacity key={index} onPress={() => navigation.navigate('Patient Profile', item)}>
+                  <PatientEntry text={item.name} />
+                </TouchableOpacity>)
+            })
+          }
         </View>
       </ScrollView>
 
@@ -324,26 +302,20 @@ export default function Home({ navigation }) {
 
               {/* Fields */}
               <Image style={loginStyles.logo} source={require('../opusLogo.png')} />
-
               <View style={loginStyles.fieldStyle}>
                 <Text style={loginStyles.field}>Username: </Text>
                 <Text style={loginStyles.field}>Password: </Text>
               </View>
-
               <TextInput style={[loginStyles.input,]} placeholder={'Username'}
                 placeholder={'Username'} value={username} onChangeText={text => setUsername(text)} />
               <TextInput style={[loginStyles.input,]} placeholder={'Password'}
                 placeholder={'Password'} secureTextEntry={true} value={password} onChangeText={text => setPassword(text)} />
 
-              
-              {/* Button to submit login */} 
-
+              {/* Button to submit login */}
               <TouchableOpacity
                 style={[modalStyles.buttonClose]}
                 onPress={() => {
                   authenticateLogin()
-                  //setUsername(null);  //prevents password being saved in fields, prevents hacking
-                  //setPassword(null);
                 }}>
                 <Text style={modalStyles.textStyle2}>Login</Text>
               </TouchableOpacity>
@@ -365,14 +337,12 @@ export default function Home({ navigation }) {
           <View style={modalStyles.centeredView}>
             <View style={[modalStyles.modalView]}>
 
-
               { /* 'Add Patient' portion of modal allowing for creation of a new patient object */}
               <ScrollView style={[styles.items, {}]}>
                 <View style={[{ paddingBottom: 11 }]}>
                   <KeyboardAvoidingView style={modalStyles.add}
                     behavior='postion'>
                     <Text style={modalStyles.modalText}>Add a new patient</Text>
-
 
                     {/* Names of information fields */}
                     <View style={modalStyles.fieldStyle}>
@@ -385,7 +355,6 @@ export default function Home({ navigation }) {
                       <Text style={modalStyles.field}>Ethnicity: </Text>
                       <Text style={modalStyles.field}>Language: </Text>
                     </View>
-
 
                     {/* Fields where patient information is entered */}
                     <View style={modalStyles.fieldWrapper} >
@@ -412,7 +381,6 @@ export default function Home({ navigation }) {
                 </View>
               </ScrollView>
 
-
               {/* Button to close modal and add patient object */}
               <TouchableOpacity
                 style={[modalStyles.buttonClose]}
@@ -421,7 +389,6 @@ export default function Home({ navigation }) {
                 }}>
                 <Text style={modalStyles.textStyle2}>Add Patient</Text>
               </TouchableOpacity>
-
 
               {/* Button to close modal without adding patient or visit form */}
               <TouchableOpacity
@@ -446,6 +413,5 @@ export default function Home({ navigation }) {
         <Icon name={'plus-circle'} color={'#B72303'} size={70} />
       </TouchableOpacity >
     </View >
-
   );
 }

@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
+
 /*
  * Displays the 'About' information of our app on the About Screen
  */
@@ -26,6 +27,7 @@ export default function About() {
   );
 }
 
+// Style sheet
 const styles = StyleSheet.create({
   vision: {
     top: 15,

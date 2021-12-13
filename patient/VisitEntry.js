@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+
 /*
  * VisitEntry displays list of visits on the screen 
  */
@@ -19,6 +20,7 @@ const VisitEntry = (props) => {
     )
 }
 
+// Style sheet
 const styles = StyleSheet.create({
     item: {
         backgroundColor: '#FFF',
