@@ -213,6 +213,7 @@ export default function Home({ navigation }) {
     }
     if (pListLen != patientList.length) {
       Alert.alert("Succesfully Synced with Server!");
+      handleSearchBarChange("");
     }
     else {
       if (pListLen == 0) {
